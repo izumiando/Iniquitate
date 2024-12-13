@@ -1,7 +1,28 @@
 import os 
+import hashlib
+import numpy as np 
+
 
 configfile: "configs/config_umap.json"
 configname = config["config_name"]
+
+# Define function to generate seeds from wildcards given the combinations
+def seed_from_wildcards(**wildcards):
+    # Sort the wildcards to ensure stable ordering
+    items = sorted(wildcards.items())
+    # Create a consistent string representation
+    rep = ",".join(f"{k}={v}" for k, v in items)
+    
+    # Hash the representation to get a big integer
+    hash_val = int(hashlib.sha256(rep.encode("utf-8")).hexdigest(), 16)
+    
+    # Initialize a NumPy RNG with this hash as the seed
+    # Since hash_val is deterministic for given wildcards, this RNG's output is too.
+    rng = np.random.default_rng(hash_val)
+    
+    # Generate a stable integer seed (for example, in range [0, 2**31))
+    seed = rng.integers(0, 2**31)
+    return seed
 
 # Get all combinations through the config file
 def get_combinations(config, config_key):
@@ -88,10 +109,6 @@ if config["celltype_list"] == "No":
                             "imbalance_summaries",
                             "celltype_imbalance_summaries",
                             "knn_classification_reports",
-                            "query_to_reference",
-                            "reference_full_annotated",
-                            "annotation_results",
-                            "annotation_scores",
                             "umap_plots",
                             "umap_plots",
                             "umap_plots"
@@ -109,10 +126,6 @@ if config["celltype_list"] == "No":
                             "imbalance_summary",
                             "celltype_imbalance_summary",
                             "knn_classification",
-                            "reference_annotated",
-                            "reference_full_annotated",
-                            "annotation_result",
-                            "annotation_score",
                             "umap_leiden",
                             "umap_celltype",
                             "umap_batch"
@@ -128,10 +141,6 @@ if config["celltype_list"] == "No":
                             "tsv",
                             "tsv",
                             "tsv",
-                            "tsv",
-                            "tsv",
-                            "h5ad",
-                            "h5ad",
                             "tsv",
                             "tsv",
                             "pdf",
@@ -291,6 +300,7 @@ rule integrate:
         "_downsample_{num_batches}_batch_ds_c_{rep}_integrated.h5ad"
     params:
         script_path = "scripts/python/integrate_data.py",
+        seed = lambda wildcards: seed_from_wildcards(**wildcards)
     log:
         "logs/{configname}/integrate/integrate_{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
         "_downsample_{num_batches}_batch_ds_c_{rep}.log"
@@ -303,33 +313,7 @@ rule integrate:
             --ds_proportions {wildcards.ds_proportion} \
             --num_batches {wildcards.num_batches} \
             --outfile {output} \
-            &> {log}
-        """
-
-# Perform PAGA integration of the indicated h5ad files from config 
-rule integrate_paga:
-    conda:
-        "envs/integrate.yaml"
-    input:
-        "../resources/h5ad_files/int_paga_datasets/{data_folder}"
-    output:
-        "../results/{configname}/paga_integrated_results/{data_folder}_root_{root_celltype}_{ds_celltype}_celltypes" +
-        "_{ds_proportion}_downsample_{num_batches}_batch_ds_c_{rep}_paga_integrated.h5ad"
-    params:
-        script_path = "scripts/python/integrate_data_paga.py",
-    log:
-        "logs/{configname}/paga_integrate/integrate_paga_{data_folder}_root_{root_celltype}_{ds_celltype}_celltypes_" + 
-        "{ds_proportion}_downsample_{num_batches}_batch_ds_c_{rep}.log"
-    priority: 0
-    shell:
-        """
-        python {params.script_path} \
-            --filedir {input} \
-            --root_celltype {wildcards.root_celltype} \
-            --ds_celltypes {wildcards.ds_celltype} \
-            --ds_proportions {wildcards.ds_proportion} \
-            --num_batches {wildcards.num_batches} \
-            --outfile {output} \
+            --seed {params.seed} \
             &> {log}
         """
         
@@ -568,59 +552,6 @@ rule celltype_imbalance_summary:
             &> {log}
         """
 
-# Get imbalance summary results for trajectory-specific datasets - integration followed by PAGA trajectory inference
-rule imbalance_summary_paga:
-    conda:
-        "envs/integrate.yaml"
-    input:
-        "../results/{configname}/paga_integrated_results/{data_folder}_root_{root_celltype}_{ds_celltype}_celltypes" +
-        "_{ds_proportion}_downsample_{num_batches}_batch_ds_c_{rep}_paga_integrated.h5ad"
-    output:
-        "../results/{configname}/paga_imbalance_summaries/{data_folder}_root_{root_celltype}_{ds_celltype}_celltypes" +
-        "_{ds_proportion}_downsample_{num_batches}_batch_ds_c_{rep}_paga_imbalance_summary.tsv"
-    params:
-        script_path = "scripts/python/imbalance_summary.py",
-    log:
-        "logs/{configname}/paga_imbalance_summary/{data_folder}_root_{root_celltype}_{ds_celltype}_celltypes" +
-        "_{ds_proportion}_downsample_{num_batches}_batch_ds_c_{rep}_paga_imbalance_summary.log"
-    priority: 100
-    shell:
-        """
-        python {params.script_path} \
-            --infile {input} \
-            --outfile {output} \
-            --dataset {wildcards.data_folder} \
-            --rep {wildcards.rep} \
-            &> {log}
-        """
-
-# Get the scoring results of PAGA-based trajectory inference 
-rule paga_scoring:
-    conda:
-        "envs/integrate.yaml"
-    input:
-        "../results/{configname}/paga_integrated_results/{data_folder}_root_{root_celltype}_{ds_celltype}_celltypes" +
-        "_{ds_proportion}_downsample_{num_batches}_batch_ds_c_{rep}_paga_integrated.h5ad"
-    output:
-        "../results/{configname}/paga_ti_scores/{data_folder}_root_{root_celltype}_{ds_celltype}_celltypes" +
-        "_{ds_proportion}_downsample_{num_batches}_batch_ds_c_{rep}_paga_ti_score.tsv"
-    params:
-        script_path = "scripts/python/ti_concordance.py"
-    log:
-        "logs/{configname}/paga_ti_scores/{data_folder}_root_{root_celltype}_{ds_celltype}_celltypes" +
-        "_{ds_proportion}_downsample_{num_batches}_batch_ds_c_{rep}_paga_ti_score.log"
-    priority: 100
-    shell:
-        """
-        python {params.script_path} \
-            --infile {input} \
-            --outfile {output} \
-            --dataset {wildcards.data_folder} \
-            --rep {wildcards.rep} \
-            &> {log}
-        """
-
-
 # Get KNN classification statistics for each celltype post integration for each method
 rule knn_classification:
     conda:
@@ -691,118 +622,6 @@ rule dge_rank_marker_subset:
             --infile_dge_rank {input.dge_file} \
             --infile_marker {input.marker_file} \
             --outfile {output} \
-            &> {log}
-        """
-
-# Perform query to reference mapping experiment and get annotations for each dataset
-rule query_to_reference:
-    conda:
-        "envs/integrate.yaml"
-    input:
-        "../results/{configname}/integrated_results/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_integrated.h5ad"
-    output:
-        "../results/{configname}/query_to_reference/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_reference_annotated.h5ad"
-    params:
-        script_path = "scripts/python/reference_annotation.py",
-        reference_path = "../resources/references/h5Seurat_files/{data_folder}/{data_folder}.h5seurat"
-    log:
-        "logs/{configname}/query_to_reference/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_reference_annotated.log"
-    priority: 0
-    shell:
-        """
-        python {params.script_path} \
-            --infile {input} \
-            --ref_file {params.reference_path} \
-            --outfile {output} \
-            &> {log}
-        """
-
-# Perform baseline reference mapping experiments and get annotations for each dataset 
-rule annotation_baseline:
-    conda:
-        "envs/integrate.yaml"
-    input:
-        "../results/{configname}/query_to_reference/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_reference_annotated.h5ad"
-    output:
-        "../results/{configname}/reference_full_annotated/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_reference_full_annotated.h5ad"
-    params:
-        script_path = "scripts/python/reference_control_annotation.py",
-        reference_path = "../resources/references/h5ad_files/{data_folder}/{data_folder}.h5ad"
-    log:
-        "logs/{configname}/reference_full_annotated/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_reference_full_annotated.log"
-    priority: 100
-    shell:
-        """
-        python {params.script_path} \
-            --infile {input} \
-            --ref_file {params.reference_path} \
-            --outfile {output} \
-            &> {log}
-        """
-
-# Returning overall query to reference annotation results - both seurat annotation and baseline annotation 
-rule annotation_result:
-    conda:
-        "envs/integrate.yaml"
-    input:
-        "../results/{configname}/reference_full_annotated/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_reference_full_annotated.h5ad"
-    output:
-        "../results/{configname}/annotation_results/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_annotation_result.tsv"
-    params:
-        script_path = "scripts/python/annotation_results.py"
-    log:
-        "logs/{configname}/annotation_results/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_annotation_result.log"
-    priority: 100
-    shell:
-        """
-        python {params.script_path} \
-            --infile {input} \
-            --outfile {output} \
-            --dataset {wildcards.data_folder} \
-            --rep {wildcards.rep} \
-            --ds_celltypes {wildcards.ds_celltype} \
-            --ds_proportions {wildcards.ds_proportion} \
-            --num_batches {wildcards.num_batches} \
-            &> {log}
-        """    
-
-# Analysis of query to reference annotation results - both seurat annotation and baseline annotation
-rule annotation_score:
-    conda:
-        "envs/integrate.yaml"
-    input:
-        "../results/{configname}/reference_full_annotated/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_reference_full_annotated.h5ad"
-    output:
-        "../results/{configname}/annotation_scores/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_annotation_score.tsv"
-    params:
-        script_path = "scripts/python/annotation_scoring.py",
-        score_guide_path = "../resources/annotation_guides/{data_folder}/{data_folder}_score_guide.tsv"
-    log:
-        "logs/{configname}/annotation_scores/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_annotation_score.log"
-    priority: 100
-    shell:
-        """
-        python {params.script_path} \
-            --infile {input} \
-            --outfile {output} \
-            --annofile {params.score_guide_path} \
-            --dataset {wildcards.data_folder} \
-            --rep {wildcards.rep} \
-            --ds_celltypes {wildcards.ds_celltype} \
-            --ds_proportions {wildcards.ds_proportion} \
-            --num_batches {wildcards.num_batches} \
             &> {log}
         """
 
