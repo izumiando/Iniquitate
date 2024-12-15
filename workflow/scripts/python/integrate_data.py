@@ -102,6 +102,7 @@ def main(h5ad_dir, save_loc, ds_celltypes, ds_proportions, num_batches):
     ])
     integrated_concat.obs_names = range(len(integrated_concat.obs_names))
     integrated_concat.obs_names_make_unique()
+    print("debug comment 1 - results concatenated!" + "\n")
     
     # Add placeholder in entire obs dataframe for kmeans clustering
     integrated_concat.obs["kmeans_faiss"] = np.zeros(len(integrated_concat.obs_names))
@@ -146,6 +147,8 @@ def main(h5ad_dir, save_loc, ds_celltypes, ds_proportions, num_batches):
             i += 1
             method_kmeans_adatas.append(adata_subset)
     
+    print("debug comment 2 - kmeans clustering done!" + "\n")
+
     # Append kmeans cluster info to integrated data
     for method, method_kmeans_adata in zip(methods, method_kmeans_adatas):
         method_kmeans_clusters = method_kmeans_adata.obs["kmeans_faiss"].__array__().astype('str')
@@ -154,23 +157,31 @@ def main(h5ad_dir, save_loc, ds_celltypes, ds_proportions, num_batches):
             "kmeans_faiss"
         ] = method_kmeans_clusters
         
+    print("debug comment 3 - appended kmeans cluster info to integrated data!" + "\n")
+
     # Add placeholder for bbknn kmeans clustering
     integrated_concat.obs.loc[
         integrated_concat.obs["integration_method"] == "bbknn",
         "kmeans_faiss"
     ] = "NA"
     
+    print("debug comment 4 - added placeholder for bbknn kmeans clustering!" + "\n")
+
     # Append information about kmeans faiss clusters to .uns of adata_concat
     integrated_concat.uns["kmeans_stats"] = {
         "kmeans_initial_k": k_initial,
         "kmeans_final_k": k
     }
 
+    print("debug comment 5 - appended info about kmeans faiss clusters!" + "\n")
+
     # If downsampled celltypes and batches are of array length greater than one, combine them 
     if len(batches_ds) > 1:
         batches_ds = np.array(",".join(batches_ds))
     if len(selected_celltypes_downsampled) > 1:
         selected_celltypes_downsampled = np.array(",".join(selected_celltypes_downsampled))
+
+    print("debug comment 6 - combined downsampled celltypes!" + "\n")
 
     # Add data about downsampling to .uns of adata_concat
     if num_batches == 0:
@@ -190,11 +201,15 @@ def main(h5ad_dir, save_loc, ds_celltypes, ds_proportions, num_batches):
             "downsampled_celltypes": selected_celltypes_downsampled
         }
         
+    print("debug comment 7 - combined downsampled celltypes!" + "\n")
+    
     # Save integrated h5ad object
     integrated_concat.write_h5ad(
         filename = save_loc,
         compression = "gzip"
     )
+
+    print("debug comment 8 - saved h5ad object! this is the end of the integrate_data.py script" + "\n")
     
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
