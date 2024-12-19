@@ -2,8 +2,6 @@ import os
 import hashlib
 import numpy as np 
 
-# git test
-
 configfile: "configs/config_umap.json"
 configname = config["config_name"]
 
