@@ -1,0 +1,15 @@
+name: iniq_integrate_uce
+channels:
+# what should I put here
+dependencies:
+  - numpy==1.26.4 # conda install -y numpy==1.26.4
+  - scipy==1.14.1 # conda install -y scipy==1.14.1
+  - pandas==2.2.2 # conda install -y pandas==2.2.2
+  - tqdm==4.66.5 # conda install -y tqdm==4.66.5
+  - torch==2.1.1 # conda install -y pytorch==2.1.1 -c pytorch
+  - scanpy==1.10.2 3 # conda install -c conda-forge scanpy=1.10.2 python-igraph leidenalg
+  - accelerate==0.24.0 # pip install accelerate==0.24.0
+  - requests==2.25.1 # conda install -y requests==2.25.1
+  - urllib3==1.26.6 # conda install -y urllib3==1.26.6
+variables:
+  TMPDIR: "/tmp" # check if this is appropriate
