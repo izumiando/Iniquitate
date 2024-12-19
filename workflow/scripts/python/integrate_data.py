@@ -15,7 +15,7 @@ def none_or_str(value):
         return None
     return value
 
-def main(h5ad_dir, save_loc, ds_celltypes, ds_proportions, num_batches):
+def main(h5ad_dir, save_loc, ds_celltypes, ds_proportions, num_batches, seed):
     # Load h5ad files 
     files_list = os.listdir(h5ad_dir)
     adata_loaded = []
@@ -33,8 +33,8 @@ def main(h5ad_dir, save_loc, ds_celltypes, ds_proportions, num_batches):
         selected_celltypes_downsampled = "None" # Placeholder - not used
         batches_ds = "None" # Placeholder - not used
     else:
-        # Initialize random number generator
-        rng = np.random.default_rng()
+        # Initialize random number generator using the seed
+        rng = np.random.default_rng(seed)
         
         # Select indices for downsampling
         selected_indices = np.random.choice(
@@ -225,11 +225,17 @@ if __name__ == "__main__":
         type = str,
         help = "Filepath for saving output from scRNA-seq integration"
     )
+    parser.add_argument(
+        "--seed",
+        type = int,
+        help = "Seed for reproducibility"
+    )
     args = parser.parse_args()
     main(
         h5ad_dir = args.filedir,
         save_loc = args.outfile,
         ds_celltypes = args.ds_celltypes,
         ds_proportions = args.ds_proportions,
-        num_batches = args.num_batches        
+        num_batches = args.num_batches,
+        seed = args.seed
     )
