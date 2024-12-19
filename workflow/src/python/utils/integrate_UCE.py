@@ -23,7 +23,7 @@ torch.manual_seed(random.randint(1, 10000000000000000000))
 # from utils.seurat_integrate import SeuratIntegrate
 # from utils.liger_integrate import LigerIntegrate
 
-class Integration:
+class IntegrationUCE:
     """Class for integrating scRNA-seq data and returning processed data."""
     
     def __init__(self, adata, gpu = True):

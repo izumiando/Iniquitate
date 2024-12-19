@@ -3,7 +3,7 @@ import hashlib
 import numpy as np 
 
 
-configfile: "configs/config_control.json"
+configfile: "configs/config_umap.json"
 configname = config["config_name"]
 
 # Define function to generate seeds from wildcards given the combinations
@@ -317,7 +317,7 @@ rule integrate:
         """
 
 # Integrate the indicated h5ad files from config, based on dataset, using the Universal Cell Embeddings foundation model
-rule integrate:
+rule integrate_uce:
     conda:
         "envs/integrate_uce.yaml"
     input:
@@ -327,6 +327,7 @@ rule integrate:
         "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_uce.h5ad"
     params:
         script_path = "scripts/python/integrate_data_UCE.py",
+	seed = lambda wildcards: seed_from_wildcards(**wildcards)
     log:
         "logs/{configname}/integrate/integrate_{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
         "_downsample_{num_batches}_batch_ds_c_{rep}_uce.log"
