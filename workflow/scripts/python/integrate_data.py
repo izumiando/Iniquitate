@@ -79,26 +79,14 @@ def main(h5ad_dir, save_loc, ds_celltypes, ds_proportions, num_batches, seed):
     # Integrate across subsets
     harmony_integrated = integration.harmony_integrate()
     scvi_integrated = integration.scvi_integrate()
-    bbknn_integrated = integration.bbknn_integrate()
-    scanorama_integrated = integration.scanorama_integrate()
-    seurat_integrated = integration.seurat_integrate()
-    liger_integrated = integration.liger_integrate()
     
     # Add integration type to each subset and concatenate
     harmony_integrated.obs["integration_method"] = "harmony" 
     scvi_integrated.obs["integration_method"] = "scvi"
-    bbknn_integrated.obs["integration_method"] = "bbknn"
-    scanorama_integrated.obs["integration_method"] = "scanorama"
-    seurat_integrated.obs["integration_method"] = "seurat"
-    liger_integrated.obs["integration_method"] = "liger"
     
     integrated_concat = ann.concat([
         harmony_integrated,
         scvi_integrated,
-        bbknn_integrated,
-        scanorama_integrated,
-        seurat_integrated,
-        liger_integrated
     ])
     integrated_concat.obs_names = range(len(integrated_concat.obs_names))
     integrated_concat.obs_names_make_unique()
@@ -110,7 +98,7 @@ def main(h5ad_dir, save_loc, ds_celltypes, ds_proportions, num_batches, seed):
     # Define method subsets and iterate over them until the same number of k clusters is found
     k = 10
     k_initial = k # Integers are immutable 
-    methods = ["harmony", "scvi", "scanorama", "seurat", "liger"]
+    methods = ["harmony", "scvi"]
     method_kmeans_adatas = []
     i = 0
     while i < len(methods):
@@ -153,12 +141,6 @@ def main(h5ad_dir, save_loc, ds_celltypes, ds_proportions, num_batches, seed):
             integrated_concat.obs["integration_method"] == method,
             "kmeans_faiss"
         ] = method_kmeans_clusters
-        
-    # Add placeholder for bbknn kmeans clustering
-    integrated_concat.obs.loc[
-        integrated_concat.obs["integration_method"] == "bbknn",
-        "kmeans_faiss"
-    ] = "NA"
     
     # Append information about kmeans faiss clusters to .uns of adata_concat
     integrated_concat.uns["kmeans_stats"] = {
