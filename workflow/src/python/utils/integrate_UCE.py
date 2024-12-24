@@ -12,7 +12,7 @@ import torch
 
 # adding imports for UCE
 import argparse
-from evaluate import AnndataProcessor
+from UCE.evaluate import AnndataProcessor
 from accelerate import Accelerator
 
 # Undoing scvi's random seed setting
@@ -48,7 +48,7 @@ class IntegrationUCE:
         else:
             self.gpu = False
 
-    def uce_integrate(self, n_neighbors = 15, n_pcs = 20):
+    def uce_integrate(self):
         print("Performing UCE integration.." + "\n")
         # auce = self.adata.copy()
 
@@ -82,7 +82,7 @@ class IntegrationUCE:
         print("Done!" + "\n")
         return auce
     
-    def setup_args():
+    def setup_args(self):
         parser = argparse.ArgumentParser(
         description='Embed a single anndata using UCE.')
 
