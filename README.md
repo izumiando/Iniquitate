@@ -10,6 +10,7 @@ This repository corresponds to the analysis and pipeline outlined in [Characteri
 - [Using the imbalanced integration guidelines](#using-the-imbalanced-integration-guidelines)
 - [Reproducing the paper analysis](#reproducing-the-paper-analysis)
 - [Custom data perturbation configuration setup](#custom-data-perturbation-configuration-setup)
+- [NEW: Running Iniquitate with foundation models]()
 - [Citation information](#citation-information)
 
 
@@ -161,6 +162,12 @@ The following steps are necessary to use a custom dataset:
     Note that the above Snakemake run utilizes a `workflow/cluster.json` configuration file and HPC parallelization of the various steps in the pipeline. Users will need to create a `cluster.json` file specific to their HPC setup that has resources for all of the rules in `workflow/Snakefile`.
     
 5) Analyze the result files using the R scripts - all of the R scripts in the `workflow/analysis/R` folder can be used to analyze the results of the perturbation experiments. **Currently, an exhaustive list of custom analysis scripts is not available, but the existing scripts can be modified to suit the needs of the user**. We provide one custom script for analysis of KNN classification accuracy in the `workflow/analysis/R/knn_example.R` file. Please note that this file still needs to be modified in the appropriate input locations, which are indicated in the comments of the file.
+
+### Running Iniquitate with foundation models
+
+To run Iniquitate with the newly incorporated foundation models, please download `33l_8ep_1024t_1280.torch` from the link below and add it to the `Iniquitate/workflow/src/python/utils/UCE` directory. The `integrate_UCE` rule cannot execute without this file.
+
+[Figshare for 33l_8ep_1024t_1280.torch](https://figshare.com/articles/dataset/Universal_Cell_Embedding_Model_Files/24320806?file=43423236)
 
 ### Citation information
 

@@ -30,3 +30,6 @@ data
 run_scripts.sh
 run_rscripts.sh
 *scratch*
+
+# torch file for UCE
+33l_8ep_1024t_1280.torch
