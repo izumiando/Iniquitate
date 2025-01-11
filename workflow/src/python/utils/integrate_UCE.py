@@ -48,34 +48,23 @@ class IntegrationUCE:
         else:
             self.gpu = False
 
-    def uce_integrate(self):
+    def uce_integrate(self, dataset_name):
         print("Performing UCE integration.." + "\n")
         # auce = self.adata.copy()
 
         # modified code from UCE/eval_single_anndata.py
         args = self.setup_args()
         accelerator = Accelerator(project_dir=args.dir)
-        processor = AnndataProcessor(args, accelerator)
-        processor.preprocess_anndata()
+        processor = AnndataProcessor(args, accelerator, dataset_name)
+        processor.preprocess_anndata(self.adata) # added argument
         processor.generate_idxs()
         auce = processor.run_evaluation(save_file=False)
-
-        # TO DO: write appropriately
-        # note: auce.absm["X_uce"] is already the embedding
-        # auce.obsm["X_kmeans"] = ...
-
-        # remove later
-        # scvi.data.setup_anndata(ascvi, batch_key = "batch")
-        # vae = scvi.model.SCVI(ascvi)
-        # vae.train(use_gpu = self.gpu)
-        # ascvi.obsm["X_scVI"] = vae.get_latent_representation()
-        # ascvi.obsm["X_kmeans"] = ascvi.obsm["X_scVI"][:, 0:n_pcs]
-        # sc.pp.neighbors(
-        #     ascvi,
-        #     n_neighbors = n_neighbors,
-        #     n_pcs = n_pcs,
-        #     use_rep = "X_scVI"
-        # )
+        
+        # debugging, checking if UCE ran - izumi
+        if "X_uce" in auce.obsm:
+            print("The .obsm['X_uce'] slot exists.")
+        else:
+            print("The .obsm['X_uce'] slot does not exist.")
 
         sc.tl.leiden(auce)
         sc.tl.umap(auce)
@@ -148,12 +137,12 @@ class IntegrationUCE:
                             help="PKL file which contains offsets for each species.")
 
         args = parser.parse_args([
-            '--adata_path', 'None', # add in
-            '--dir', './', # add in
+            '--adata_path', './Iniquitate_UCE_run/dummy/',
+            '--dir', './Iniquitate_UCE_run/',
             '--species', 'human',
             '--filter', 'True',
             '--skip', 'True',
-            '--model_loc', 'None', # add in
+            '--model_loc', './33l_8ep_1024t_1280.torch', # this must be manually added by the user
             '--batch_size', '25',
             '--pad_length', '1536',
             '--pad_token_idx', '0',

@@ -77,7 +77,8 @@ def main(h5ad_dir, save_loc, ds_celltypes, ds_proportions, num_batches, seed):
     integration_uce = IntegrationUCE(adata = adata_concat)
     
     # Integrate across subsets
-    uce_integrated = integration_UCE.uce_integrate()
+    dataset_name = h5ad_dir.split("/")[-1] # getting the dataset name
+    uce_integrated = integration_UCE.uce_integrate(dataset_name)
     
     # Add integration type to each subset and concatenate
     uce_integrated.obs["integration_method"] = "uce"
@@ -180,6 +181,9 @@ def main(h5ad_dir, save_loc, ds_celltypes, ds_proportions, num_batches, seed):
         filename = save_loc,
         compression = "gzip"
     )
+
+    # Log message for debugging
+    print("End of rule integrate_UCE (integrate_data_UCE.py)" + "\n")
     
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(

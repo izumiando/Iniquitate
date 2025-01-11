@@ -171,28 +171,31 @@ def adata_path_to_prot_chrom_starts(adata, dataset_species, spec_pe_genes, gene_
 
 
 def process_raw_anndata(row, h5_folder_path, npz_folder_path, scp, skip,
-                        additional_filter, root):
+                        additional_filter, root, ad):
         path = row.path
-        if not os.path.isfile(root + "/" + path):
-            print( "**********************************")
-            print(f"***********{root + '/' + path} File Missing****")
-            print( "**********************************")
-            print(path, root)
-            return None
+        # MOD: for Iniquitate
+        #if not os.path.isfile(root + "/" + path):
+        #    print( "**********************************")
+        #    print(f"***********{root + '/' + path} File Missing****")
+        #    print( "**********************************")
+        #    print(path, root)
+        #    return None
 
         name = path.replace(".h5ad", "")
         proc_path = path.replace(".h5ad", "_proc.h5ad")
-        if skip:
-            if os.path.isfile(h5_folder_path + proc_path):
-                print(f"{name} already processed. Skipping")
-                return None, None, None
+        # MOD: for Iniquitate
+        #if skip:
+        #    if os.path.isfile(h5_folder_path + proc_path):
+        #        print(f"{name} already processed. Skipping")
+        #        return None, None, None
 
         print(f"Proccessing {name}")
 
         species = row.species
         covar_col = row.covar_col
 
-        ad = sc.read(root + "/" + path)
+        # MOD: for Iniquitate - takes ad as an argument
+        #ad = sc.read(root + "/" + path)
         labels = []
         if "cell_type" in ad.obs.columns:
             labels.append("cell_type")
@@ -219,7 +222,7 @@ def process_raw_anndata(row, h5_folder_path, npz_folder_path, scp, skip,
         num_genes = adata.X.shape[1]
 
         adata_path = h5_folder_path + proc_path
-        adata.write(adata_path)
+        adata.write(adata_path) # keeping this as is creates a necessary interm. file
 
         arr = data_to_torch_X(adata.X).numpy()
 

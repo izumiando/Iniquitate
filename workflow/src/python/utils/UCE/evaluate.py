@@ -31,7 +31,9 @@ import torch
 
 
 class AnndataProcessor:
-    def __init__(self, args, accelerator):
+    def __init__(self, args, accelerator, dataset_name):
+        # dataset_name is directory name of the h5ad files, MOD for Iniquitate
+
         self.args = args
         self.accelerator = accelerator
         self.h5_folder_path = self.args.dir
@@ -42,15 +44,19 @@ class AnndataProcessor:
         self.check_paths()
 
         # Set up the anndata
-        self.adata_name = self.args.adata_path.split("/")[-1]
-        self.adata_root_path = self.args.adata_path.replace(self.adata_name, "")
-        self.name = self.adata_name.replace(".h5ad", "")
+        # MOD for Iniquitate, prev used to create self.adata_root_path, self.name, and row.path all now replaced
+        self.adata_name = dataset_name
+        # MOD for Iniquitate, prev used as input in function process_raw_anndata, but commented out section that used the argument
+        self.adata_root_path = dataset_name
+        # MOD for Iniquitate, used to name files later, dataset_name should suffice
+        self.name = dataset_name
         self.proc_h5_path = self.h5_folder_path + f"{self.name}_proc.h5ad"
         self.adata = None
 
         # Set up the row
         row = pd.Series()
-        row.path = self.adata_name
+        # MOD for Iniquitate, not really used for anything
+        row.path = dataset_name
         row.covar_col = np.nan
         row.species = self.args.species
         self.row = row
@@ -88,7 +94,7 @@ class AnndataProcessor:
                 self.args.model_loc)
 
 
-    def preprocess_anndata(self):
+    def preprocess_anndata(self, adata):
         if self.accelerator.is_main_process:
             self.adata, num_cells, num_genes = \
                 process_raw_anndata(self.row,
@@ -97,7 +103,8 @@ class AnndataProcessor:
                                     self.scp,
                                     self.args.skip,
                                     self.args.filter,
-                                    root=self.adata_root_path)
+                                    root=self.adata_root_path,
+                                    adata)
             if (num_cells is not None) and (num_genes is not None):
                 self.save_shapes_dict(self.name, num_cells, num_genes,
                                        self.shapes_dict_path)
