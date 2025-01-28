@@ -13,7 +13,6 @@ conda activate snakemake
 # not specifying partitions for Graham
 snakemake --unlock
 snakemake -j 10 \
-		--snakefile Snakefile_uce \
     --use-conda \
     --cluster-config cluster_cedar.json \
     --cluster "sbatch \

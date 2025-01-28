@@ -32,7 +32,7 @@
     {
         "mem": "148G",
         "gpu": 1,
-        "time": "28-00:00:00",
+        "time": "0-05:00:00",
         "account": "def-kieranc",
         "mail-user": "izumi.ando@mail.utoronto.ca",
         "mail-type": "ALL"
@@ -40,9 +40,8 @@
     "integrate_uce":
     {
         "mem": "75G",
-        "gpu": 0,
-        "cpus-per-task": 10,
-        "time": "2-00:00:00",
+        "gpu": 1,
+        "time": "0-06:00:00",
         "account": "def-kieranc",
         "mail-user": "izumi.ando@mail.utoronto.ca",
         "mail-type": "ALL"
