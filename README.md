@@ -169,6 +169,19 @@ To run Iniquitate with the newly incorporated foundation models, please download
 
 [Figshare for 33l_8ep_1024t_1280.torch](https://figshare.com/articles/dataset/Universal_Cell_Embedding_Model_Files/24320806?file=43423236)
 
+Additionally, the following conda set up was used to run scGPT on Cedar (Compute Canada HPC). 
+
+```
+conda create --name scGPT_p310 python=3.10 # you can select your own env name
+module load gcc arrow/18.1.0 python/3.10 # scgpt requires python <3.11
+conda activate scGPT_p310
+python -c "import pyarrow" # check to see if arrow was properly loaded
+module load cuda # so that it does not give you the "nvcc unavailable" error
+# there is a conda installation for v2.1.2 BUT it is pytorch not torch which pip can't identify
+pip install torch==2.1.2 torchvision==0.16.2 torchaudio==2.1.2 --index-url https://download.pytorch.org/whl/cu121
+pip install scgpt
+```
+
 ### Citation information
 
 Maan, H. et al. (2024) ‘Characterizing the impacts of dataset imbalance on single-cell data integration’, Nature biotechnology. Available at: https://doi.org/10.1038/s41587-023-02097-9.
