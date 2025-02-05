@@ -43,7 +43,7 @@ class Integration:
         ascvi = self.adata.copy()
         scvi.data.setup_anndata(ascvi, batch_key = "batch")
         vae = scvi.model.SCVI(ascvi)
-        vae.train(use_gpu = self.gpu, max_epochs = 10) #TODO- reset this later
+        vae.train(use_gpu = self.gpu, max_epochs = 100) #reducing epochs for scVI
         ascvi.obsm["X_scVI"] = vae.get_latent_representation()
         ascvi.obsm["X_kmeans"] = ascvi.obsm["X_scVI"][:, 0:n_pcs]
         sc.pp.neighbors(
