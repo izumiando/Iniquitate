@@ -2,7 +2,7 @@ import numpy as np
 import scanpy as sc
 import anndata as ann
 
-def downsample(adata, num_celltypes = None, celltype_names = None, proportion = 0.5):
+def downsample(adata, num_celltypes = None, celltype_names = None, proportion = 0.5, random_state = None):
     # Initialize random number generator
     rng = np.random.default_rng()
     
@@ -35,7 +35,7 @@ def downsample(adata, num_celltypes = None, celltype_names = None, proportion = 
         adata_celltype_ds = sc.pp.subsample(
             adata_celltype, 
             fraction = proportion,
-            random_state = None,
+            random_state = random_state,
             copy = True
         )
         adata = ann.AnnData.concatenate(adata_noncelltype, adata_celltype_ds)

@@ -37,7 +37,7 @@ def main(h5ad_dir, save_loc, ds_celltypes, ds_proportions, num_batches, seed):
         rng = np.random.default_rng(seed)
         
         # Select indices for downsampling
-        selected_indices = np.random.choice(
+        selected_indices = rng.choice(
             len(adata_loaded), num_batches, replace = False
         )
         adata_selected = [adata_loaded[i] for i in selected_indices]
@@ -56,7 +56,8 @@ def main(h5ad_dir, save_loc, ds_celltypes, ds_proportions, num_batches, seed):
                 adata = adata, 
                 num_celltypes = None,
                 celltype_names = celltypes_selected,
-                proportion = ds_proportions
+                proportion = ds_proportions,
+                random_state = seed,
             )
             adata_downsampled.append(adata_ds)
         adata_loaded = adata_unselected + adata_downsampled

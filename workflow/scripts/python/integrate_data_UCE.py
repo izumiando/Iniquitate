@@ -37,7 +37,7 @@ def main(h5ad_dir, save_loc, ds_celltypes, ds_proportions, num_batches, seed):
         rng = np.random.default_rng(seed)
         
         # Select indices for downsampling
-        selected_indices = np.random.choice(
+        selected_indices = rng.choice(
             len(adata_loaded), num_batches, replace = False
         )
         adata_selected = [adata_loaded[i] for i in selected_indices]
@@ -56,7 +56,8 @@ def main(h5ad_dir, save_loc, ds_celltypes, ds_proportions, num_batches, seed):
                 adata = adata, 
                 num_celltypes = None,
                 celltype_names = celltypes_selected,
-                proportion = ds_proportions
+                proportion = ds_proportions,
+                random_state = seed
             )
             adata_downsampled.append(adata_ds)
         adata_loaded = adata_unselected + adata_downsampled
@@ -78,7 +79,7 @@ def main(h5ad_dir, save_loc, ds_celltypes, ds_proportions, num_batches, seed):
     
     # Integrate across subsets
     dataset_name = h5ad_dir.split("/")[-1] # getting the dataset name
-    uce_integrated = integration_UCE.uce_integrate(dataset_name)
+    uce_integrated = integration_uce.uce_integrate(dataset_name)
     
     # Add integration type to each subset and concatenate
     uce_integrated.obs["integration_method"] = "uce"
@@ -140,12 +141,6 @@ def main(h5ad_dir, save_loc, ds_celltypes, ds_proportions, num_batches, seed):
             "kmeans_faiss"
         ] = method_kmeans_clusters
         
-    # Add placeholder for bbknn kmeans clustering
-    integrated_concat.obs.loc[
-        integrated_concat.obs["integration_method"] == "bbknn",
-        "kmeans_faiss"
-    ] = "NA"
-    
     # Append information about kmeans faiss clusters to .uns of adata_concat
     integrated_concat.uns["kmeans_stats"] = {
         "kmeans_initial_k": k_initial,
