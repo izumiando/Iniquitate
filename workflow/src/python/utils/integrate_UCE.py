@@ -48,7 +48,7 @@ class IntegrationUCE:
         else:
             self.gpu = False
 
-    def uce_integrate(self, dataset_name):
+    def uce_integrate(self, dataset_name, n_neighbors = 15, n_pcs = 20):
         print("Performing UCE integration.." + "\n")
         # auce = self.adata.copy()
 
@@ -65,7 +65,12 @@ class IntegrationUCE:
             print("The .obsm['X_uce'] slot exists.")
         else:
             print("The .obsm['X_uce'] slot does not exist.")
-
+        sc.pp.neighbors(
+            auce,
+            n_neighbors = n_neighbors,
+            n_pcs = n_pcs,
+            use_rep = "X_uce"
+        )
         sc.tl.leiden(auce)
         sc.tl.umap(auce)
         print("Done!" + "\n")

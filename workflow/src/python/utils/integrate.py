@@ -11,6 +11,8 @@ random.seed(None)
 np.random.seed(None)
 torch.manual_seed(random.randint(1, 10000000000000000000))
 
+from .integrate_UCE import IntegrationUCE
+
 class Integration:
     """Class for integrating scRNA-seq data and returning processed data."""
     
@@ -90,4 +92,19 @@ class Integration:
     #    print("Performing UCE integration.." + "\n")
     #    auce = self.adata.copy()
     #    integration_uce = IntegrationUCE(adata = auce)
+    #    dataset_name = "placeholder" # This doesn't matter as we're saving everything as one h5ad at end
+    #    uce_integrated = integration_uce.uce_integrate(dataset_name)
+    #    auce.obsm["X_uce"] = uce_integrated.obsm["X_uce"].copy()
+    #    auce.obsm["X_kmeans"] = auce.obsm["X_uce"][:, 0:n_pcs]
+    #    sc.pp.neighbors(
+    #        auce,
+    #        n_neighbors = n_neighbors,
+    #        n_pcs = n_pcs,
+    #        use_rep = "X_uce"
+    #    )
+    #    sc.tl.leiden(auce)
+    #    sc.tl.umap(auce)
+    #    print("Done!" + "\n")
+    #    return auce
+        
         
