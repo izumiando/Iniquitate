@@ -295,7 +295,7 @@ rule integrate:
     input:
         "../resources/h5ad_files/int_datasets/{data_folder}"
     output:
-        "/scratch/hmaan/results/{configname}/integrated_results/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "../results/{configname}/integrated_results/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
         "_downsample_{num_batches}_batch_ds_c_{rep}_integrated.h5ad"
     params:
         script_path = "scripts/python/integrate_data.py",
@@ -347,7 +347,7 @@ rule downsample_summary:
     conda:
         "envs/integrate.yaml"
     input:
-        "/scratch/hmaan/results/{configname}/integrated_results/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "../results/{configname}/integrated_results/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
         "_downsample_{num_batches}_batch_ds_c_{rep}_integrated.h5ad"
     output:
         "../results/{configname}/downsample_summaries/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
@@ -373,7 +373,7 @@ rule clustering_summary:
     conda:
         "envs/integrate.yaml"
     input:
-        "/scratch/hmaan/results/{configname}/integrated_results/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "../results/{configname}/integrated_results/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
         "_downsample_{num_batches}_batch_ds_c_{rep}_integrated.h5ad"
     output:
         "../results/{configname}/clustering_summaries/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
@@ -399,7 +399,7 @@ rule clustering_concord_summary:
     conda:
         "envs/integrate.yaml"
     input:
-        "/scratch/hmaan/results/{configname}/integrated_results/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "../results/{configname}/integrated_results/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
         "_downsample_{num_batches}_batch_ds_c_{rep}_integrated.h5ad"
     output:
         "../results/{configname}/clustering_concord_summaries/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
@@ -425,7 +425,7 @@ rule dge_concord_full:
     conda:
         "envs/integrate.yaml"
     input:
-        "/scratch/hmaan/results/{configname}/integrated_results/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "../results/{configname}/integrated_results/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
         "_downsample_{num_batches}_batch_ds_c_{rep}_integrated.h5ad"
     output:
         "../results/{configname}/dge_concord_full/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
@@ -451,7 +451,7 @@ rule dge_concord_stats:
     conda:
         "envs/integrate.yaml"
     input:
-        "/scratch/hmaan/results/{configname}/integrated_results/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "../results/{configname}/integrated_results/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
         "_downsample_{num_batches}_batch_ds_c_{rep}_integrated.h5ad"
     output:
         "../results/{configname}/dge_concord_stats/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
@@ -477,7 +477,7 @@ rule dge_ranking_stats:
     conda:
         "envs/integrate.yaml"
     input:
-        "/scratch/hmaan/results/{configname}/integrated_results/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "../results/{configname}/integrated_results/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
         "_downsample_{num_batches}_batch_ds_c_{rep}_integrated.h5ad"
     output:
         "../results/{configname}/dge_ranking_stats/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
@@ -504,7 +504,7 @@ rule dge_ranking_stats_per_cluster:
     conda:
         "envs/integrate.yaml"
     input:
-        "/scratch/hmaan/results/{configname}/integrated_results/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "../results/{configname}/integrated_results/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
         "_downsample_{num_batches}_batch_ds_c_{rep}_integrated.h5ad"
     output:
         "../results/{configname}/dge_ranking_results_per_cluster/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
@@ -530,7 +530,7 @@ rule imbalance_summary:
     conda:
         "envs/integrate.yaml"
     input:
-        "/scratch/hmaan/results/{configname}/integrated_results/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "../results/{configname}/integrated_results/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
         "_downsample_{num_batches}_batch_ds_c_{rep}_integrated.h5ad"
     output:
         "../results/{configname}/imbalance_summaries/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
@@ -556,7 +556,7 @@ rule celltype_imbalance_summary:
     conda:
         "envs/integrate.yaml"
     input:
-        "/scratch/hmaan/results/{configname}/integrated_results/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "../results/{configname}/integrated_results/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
         "_downsample_{num_batches}_batch_ds_c_{rep}_integrated.h5ad"
     output:
         "../results/{configname}/celltype_imbalance_summaries/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
@@ -582,7 +582,7 @@ rule knn_classification:
     conda:
         "envs/integrate.yaml"
     input:
-        "/scratch/hmaan/results/{configname}/integrated_results/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "../results/{configname}/integrated_results/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
         "_downsample_{num_batches}_batch_ds_c_{rep}_integrated.h5ad"
     output:
         "../results/{configname}/knn_classification_reports/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
@@ -677,7 +677,7 @@ rule umap:
     conda:
         "envs/integrate.yaml"
     input:
-        "/scratch/hmaan/results/{configname}/integrated_results/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "../results/{configname}/integrated_results/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
         "_downsample_{num_batches}_batch_ds_c_{rep}_integrated.h5ad"
     output:
         leiden_plot = "../results/{configname}/umap_plots/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
