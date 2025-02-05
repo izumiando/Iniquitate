@@ -15,7 +15,7 @@ def main(h5ad_loc, leiden_save_loc, celltype_save_loc, batch_save_loc):
     adata = sc.read_h5ad(h5ad_loc)
     
     # Get the umap coordinates for all the methods and create dictionary object
-    methods = ["bbknn", "harmony", "scanorama", "scvi", "seurat"]
+    methods = ["bbknn", "harmony"]
     umap_dict = {}
     for method in methods:
         adata_sub = adata[adata.obs["integration_method"] == method]

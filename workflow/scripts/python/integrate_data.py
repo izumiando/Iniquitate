@@ -80,6 +80,7 @@ def main(h5ad_dir, save_loc, ds_celltypes, ds_proportions, num_batches, seed):
     # Integrate across subsets
     harmony_integrated = integration.harmony_integrate()
     scvi_integrated = integration.scvi_integrate()
+    
     # Add integration type to each subset and concatenate
     harmony_integrated.obs["integration_method"] = "harmony" 
     scvi_integrated.obs["integration_method"] = "scvi"
@@ -141,12 +142,6 @@ def main(h5ad_dir, save_loc, ds_celltypes, ds_proportions, num_batches, seed):
             integrated_concat.obs["integration_method"] == method,
             "kmeans_faiss"
         ] = method_kmeans_clusters
-        
-    # Add placeholder for bbknn kmeans clustering
-    integrated_concat.obs.loc[
-        integrated_concat.obs["integration_method"] == "bbknn",
-        "kmeans_faiss"
-    ] = "NA"
     
     # Append information about kmeans faiss clusters to .uns of adata_concat
     integrated_concat.uns["kmeans_stats"] = {
