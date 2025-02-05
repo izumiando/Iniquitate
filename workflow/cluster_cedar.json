@@ -3,17 +3,17 @@
     {
         "mem": "32G",
         "partition": "cpu",
-        "gpu": 0,
-        "time": "28-00:00:00",
+        "gpus": 0,
+        "time": "2-00:00:00",
         "account": "def-kieranc",
         "mail-user": "izumi.ando@mail.utoronto.ca",
         "mail-type": "ALL"
     },
     "leiden_resolution":
     {
-        "mem": "148G",
-        "gpu": 1,
-        "time": "28-00:00:00",
+        "mem": "100G",
+        "gpus": 1,
+        "time": "4:00:00",
         "account": "def-kieranc",
         "mail-user": "izumi.ando@mail.utoronto.ca",
         "mail-type": "ALL"
@@ -22,17 +22,17 @@
     {
         "mem": "32G",
         "partition": "cpu",
-        "gpu": 0,
-        "time": "28-00:00:00",
+        "gpus": 0,
+        "time": "4:00:00",
         "account": "def-kieranc",
         "mail-user": "izumi.ando@mail.utoronto.ca",
         "mail-type": "ALL"
     },
     "integrate":
     {
-        "mem": "148G",
-        "gpu": 1,
-        "time": "28-00:00:00",
+        "mem": "100G",
+        "gpus": 1,
+        "time": "4:00:00",
         "account": "def-kieranc",
         "mail-user": "izumi.ando@mail.utoronto.ca",
         "mail-type": "ALL"
@@ -40,7 +40,7 @@
     "integrate_uce":
     {
         "mem": "75G",
-        "gpu": 0,
+        "gpus": 0,
         "cpus-per-task": 10,
         "time": "2-00:00:00",
         "account": "def-kieranc",
@@ -49,18 +49,18 @@
     },
     "integrate_paga":
     {
-        "mem": "148G",
-        "gpu": 1,
-        "time": "28-00:00:00",
+        "mem": "100G",
+        "gpus": 1,
+        "time": "4:00:00",
         "account": "def-kieranc",
         "mail-user": "izumi.ando@mail.utoronto.ca",
         "mail-type": "ALL"
     },
     "query_to_reference":
     {
-        "mem": "148G",
-        "gpu": 1,
-        "time": "28-00:00:00",
+        "mem": "100G",
+        "gpus": 1,
+        "time": "4:00:00",
         "account": "def-kieranc",
         "mail-user": "izumi.ando@mail.utoronto.ca",
         "mail-type": "ALL"
@@ -68,8 +68,8 @@
     "annotation_baseline":
     {
         "mem": "32G",
-        "gpu": 1,
-        "time": "28-00:00:00",
+        "gpus": 1,
+        "time": "4:00:00",
         "account": "def-kieranc",
         "mail-user": "izumi.ando@mail.utoronto.ca",
         "mail-type": "ALL"
@@ -78,8 +78,8 @@
     {
         "mem": "32G",
         "partition": "cpu",
-        "gpu": 0,
-        "time": "28-00:00:00",
+        "gpus": 0,
+        "time": "4:00:00",
         "account": "def-kieranc",
         "mail-user": "izumi.ando@mail.utoronto.ca",
         "mail-type": "ALL"
@@ -88,8 +88,8 @@
     {
         "mem": "32G",
         "partition": "cpu",
-        "gpu": 0,
-        "time": "28-00:00:00",
+        "gpus": 0,
+        "time": "4:00:00",
         "account": "def-kieranc",
         "mail-user": "izumi.ando@mail.utoronto.ca",
         "mail-type": "ALL"
@@ -98,8 +98,8 @@
     {
         "mem": "32G",
         "partition": "cpu",
-        "gpu": 0,
-        "time": "28-00:00:00",
+        "gpus": 0,
+        "time": "4:00:00",
         "account": "def-kieranc",
         "mail-user": "izumi.ando@mail.utoronto.ca",
         "mail-type": "ALL"
@@ -108,8 +108,8 @@
     {
         "mem": "32G",
         "partition": "cpu",
-        "gpu": 0,
-        "time": "28-00:00:00",
+        "gpus": 0,
+        "time": "4:00:00",
         "account": "def-kieranc",
         "mail-user": "izumi.ando@mail.utoronto.ca",
         "mail-type": "ALL"
@@ -117,8 +117,8 @@
     "dge_concord_full": {
         "mem": "64G",
         "partition": "cpu",
-        "gpu": 0,
-        "time": "28-00:00:00",
+        "gpus": 0,
+        "time": "4:00:00",
         "account": "def-kieranc",
         "mail-user": "izumi.ando@mail.utoronto.ca",
         "mail-type": "ALL"
@@ -126,8 +126,8 @@
     "dge_concord_stats": {
         "mem": "64G",
         "partition": "cpu",
-        "gpu": 0,
-        "time": "28-00:00:00",
+        "gpus": 0,
+        "time": "4:00:00",
         "account": "def-kieranc",
         "mail-user": "izumi.ando@mail.utoronto.ca",
         "mail-type": "ALL"
@@ -135,8 +135,8 @@
     "dge_ranking_stats": {
         "mem": "32G",
         "partition": "cpu",
-        "gpu": 0,
-        "time": "28-00:00:00",
+        "gpus": 0,
+        "time": "4:00:00",
         "account": "def-kieranc",
         "mail-user": "izumi.ando@mail.utoronto.ca",
         "mail-type": "ALL"
@@ -144,8 +144,8 @@
     "dge_ranking_stats_per_cluster": {
         "mem": "64G",
         "partition": "cpu",
-        "gpu": 0,
-        "time": "28-00:00:00",
+        "gpus": 0,
+        "time": "4:00:00",
         "account": "def-kieranc",
         "mail-user": "izumi.ando@mail.utoronto.ca",
         "mail-type": "ALL"
@@ -154,8 +154,8 @@
     {
         "mem": "32G",
         "partition": "cpu",
-        "gpu": 0,
-        "time": "28-00:00:00",
+        "gpus": 0,
+        "time": "4:00:00",
         "account": "def-kieranc",
         "mail-user": "izumi.ando@mail.utoronto.ca",
         "mail-type": "ALL"
@@ -164,8 +164,8 @@
     {
         "mem": "32G",
         "partition": "cpu",
-        "gpu": 0,
-        "time": "28-00:00:00",
+        "gpus": 0,
+        "time": "4:00:00",
         "account": "def-kieranc",
         "mail-user": "izumi.ando@mail.utoronto.ca",
         "mail-type": "ALL"
@@ -174,8 +174,8 @@
     {
         "mem": "32G",
         "partition": "cpu",
-        "gpu": 0,
-        "time": "28-00:00:00",
+        "gpus": 0,
+        "time": "4:00:00",
         "account": "def-kieranc",
         "mail-user": "izumi.ando@mail.utoronto.ca",
         "mail-type": "ALL"
@@ -184,8 +184,8 @@
     {
         "mem": "32G",
         "partition": "cpu",
-        "gpu": 0,
-        "time": "28-00:00:00",
+        "gpus": 0,
+        "time": "4:00:00",
         "account": "def-kieranc",
         "mail-user": "izumi.ando@mail.utoronto.ca",
         "mail-type": "ALL"
@@ -194,8 +194,8 @@
     {
         "mem": "32G",
         "partition": "cpu",
-        "gpu": 0,
-        "time": "28-00:00:00",
+        "gpus": 0,
+        "time": "4:00:00",
         "account": "def-kieranc",
         "mail-user": "izumi.ando@mail.utoronto.ca",
         "mail-type": "ALL"
@@ -203,8 +203,8 @@
     "marker_get":{
         "mem": "32G",
         "partition": "cpu",
-        "gpu": 0,
-        "time": "28-00:00:00",
+        "gpus": 0,
+        "time": "4:00:00",
         "account": "def-kieranc",
         "mail-user": "izumi.ando@mail.utoronto.ca",
         "mail-type": "ALL"
@@ -212,8 +212,8 @@
     "dge_rank_marker_subset":{
         "mem": "64G",
         "partition": "cpu",
-        "gpu": 0,
-        "time": "28-00:00:00",
+        "gpus": 0,
+        "time": "4:00:00",
         "account": "def-kieranc",
         "mail-user": "izumi.ando@mail.utoronto.ca",
         "mail-type": "ALL"
@@ -221,8 +221,8 @@
     "annotation_score":{
         "mem": "32G",
         "partition": "cpu",
-        "gpu": 0,
-        "time": "28-00:00:00",
+        "gpus": 0,
+        "time": "4:00:00",
         "account": "def-kieranc",
         "mail-user": "izumi.ando@mail.utoronto.ca",
         "mail-type": "ALL"
@@ -230,8 +230,8 @@
     "annotation_result":{
         "mem": "32G",
         "partition": "cpu",
-        "gpu": 0,
-        "time": "28-00:00:00",
+        "gpus": 0,
+        "time": "4:00:00",
         "account": "def-kieranc",
         "mail-user": "izumi.ando@mail.utoronto.ca",
         "mail-type": "ALL"
@@ -239,8 +239,8 @@
     "relatedness_metric":{
         "mem": "32G",
         "partition": "cpu",
-        "gpu": 0,
-        "time": "28-00:00:00",
+        "gpus": 0,
+        "time": "4:00:00",
         "account": "def-kieranc",
         "mail-user": "izumi.ando@mail.utoronto.ca",
         "mail-type": "ALL"
@@ -248,8 +248,8 @@
     "downsample_control":{
         "mem": "32G",
         "partition": "cpu",
-        "gpu": 0,
-        "time": "28-00:00:00",
+        "gpus": 0,
+        "time": "4:00:00",
         "account": "def-kieranc",
         "mail-user": "izumi.ando@mail.utoronto.ca",
         "mail-type": "ALL"
@@ -257,8 +257,8 @@
     "dge_ranking_stats_control":{
         "mem": "64G",
         "partition": "cpu",
-        "gpu": 0,
-        "time": "28-00:00:00",
+        "gpus": 0,
+        "time": "4:00:00",
         "account": "def-kieranc",
         "mail-user": "izumi.ando@mail.utoronto.ca",
         "mail-type": "ALL"
@@ -266,8 +266,8 @@
     "dge_rank_control_marker_subset":{
         "mem": "64G",
         "partition": "cpu",
-        "gpu": 0,
-        "time": "28-00:00:00",
+        "gpus": 0,
+        "time": "4:00:00",
         "account": "def-kieranc",
         "mail-user": "izumi.ando@mail.utoronto.ca",
         "mail-type": "ALL"
@@ -275,8 +275,8 @@
     "control_imbalance_summary":{
         "mem": "32G",
         "partition": "cpu",
-        "gpu": 0,
-        "time": "28-00:00:00",
+        "gpus": 0,
+        "time": "4:00:00",
         "account": "def-kieranc",
         "mail-user": "izumi.ando@mail.utoronto.ca",
         "mail-type": "ALL"
@@ -284,8 +284,8 @@
     "umap":{
         "mem": "64G",
         "partition": "cpu",
-        "gpu": 0,
-        "time": "28-00:00:00",
+        "gpus": 0,
+        "time": "4:00:00",
         "account": "def-kieranc",
         "mail-user": "izumi.ando@mail.utoronto.ca",
         "mail-type": "ALL"
