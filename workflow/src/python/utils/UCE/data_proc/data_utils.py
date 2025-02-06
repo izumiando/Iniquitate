@@ -30,7 +30,7 @@ from typing import Dict, List, Optional, Tuple
 from scanpy import AnnData
 
 
-from data_proc.gene_embeddings import load_gene_embeddings_adata
+from .gene_embeddings import load_gene_embeddings_adata
 
 def data_to_torch_X(X):
     if isinstance(X, sc.AnnData):

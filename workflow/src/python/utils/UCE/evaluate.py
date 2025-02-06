@@ -15,12 +15,12 @@ import scanpy as sc
 from tqdm.auto import tqdm
 from torch import nn, Tensor
 
-from model import TransformerModel
-from eval_data import MultiDatasetSentences, MultiDatasetSentenceCollator
-from utils import figshare_download
+from .model import TransformerModel
+from .eval_data import MultiDatasetSentences, MultiDatasetSentenceCollator
+from .utils import figshare_download
 
 from torch.utils.data import DataLoader
-from data_proc.data_utils import adata_path_to_prot_chrom_starts, \
+from .data_proc.data_utils import adata_path_to_prot_chrom_starts, \
     get_spec_chrom_csv, process_raw_anndata, get_species_to_pe
 
 import os
@@ -103,7 +103,7 @@ class AnndataProcessor:
                                     self.scp,
                                     self.args.skip,
                                     self.args.filter,
-                                    root=self.adata_root_path,
+                                    self.adata_root_path,
                                     adata)
             if (num_cells is not None) and (num_genes is not None):
                 self.save_shapes_dict(self.name, num_cells, num_genes,

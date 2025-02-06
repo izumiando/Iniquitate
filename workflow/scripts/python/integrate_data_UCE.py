@@ -1,14 +1,16 @@
 import argparse 
 import os 
 import sys 
-sys.path.append("src/python/")
+sys.path.append("src/python/utils") # Strict import due to env conflict 
 os.environ['CUDA_VISIBLE_DEVICES'] = "0, 1"
 
 import scanpy as sc
 import anndata as ann
 import numpy as np
 
-from utils import IntegrationUCE, downsample, faiss_kmeans
+from integrate_UCE import IntegrationUCE # Strict import due to env conflict 
+from sample import downsample
+from kmeans import faiss_kmeans
 
 def none_or_str(value):
     if value == 'None':
