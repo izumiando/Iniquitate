@@ -1,0 +1,12 @@
+name: integrate_helical
+channels:
+  - pytorch
+  - nvidia
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - pip
+    - helical
+variables:
+  TMPDIR: "/tmp" 
