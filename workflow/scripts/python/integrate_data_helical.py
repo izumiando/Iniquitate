@@ -8,7 +8,8 @@ import scanpy as sc
 import anndata as ann
 import numpy as np
 
-from utils import IntegrationHelical, downsample
+from utils.integrate_helical import IntegrationHelical
+from utils.sample import downsample
 
 
 def none_or_str(value):
