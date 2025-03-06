@@ -1,16 +1,27 @@
 import argparse 
 import os 
 import sys 
+import importlib.util
 sys.path.append("src/python/")
 os.environ['CUDA_VISIBLE_DEVICES'] = "0, 1"
+script_dir = os.path.dirname(os.path.abspath(__file__))
+utils_dir = os.path.abspath(os.path.join(script_dir, "../../src/python/utils"))
 
 import scanpy as sc
 import anndata as ann
 import numpy as np
 
-from utils.integrate_helical import IntegrationHelical
-from utils.sample import downsample
+# Load integrate_helical.py and import IntegrationHelical
+helical_path = os.path.join(utils_dir, "integrate_helical.py")
+spec_helical = importlib.util.spec_from_file_location("integrate_helical", helical_path)
+integrate_helical = importlib.util.module_from_spec(spec_helical)
+spec_helical.loader.exec_module(integrate_helical)
 
+# Load sample.py and import downsample
+sample_path = os.path.join(utils_dir, "sample.py")
+spec_sample = importlib.util.spec_from_file_location("sample", sample_path)
+sample = importlib.util.module_from_spec(spec_sample)
+spec_sample.loader.exec_module(sample)
 
 def none_or_str(value):
     if value == 'None':
@@ -55,7 +66,7 @@ def main(h5ad_dir, save_loc, ds_celltypes, ds_proportions, num_batches, seed):
         selected_celltypes_downsampled = np.array(celltypes_selected)
         adata_downsampled = []
         for adata in adata_selected:
-            adata_ds, selected_celltypes_ds = downsample(
+            adata_ds, selected_celltypes_ds = sample.downsample(
                 adata = adata, 
                 num_celltypes = None,
                 celltype_names = celltypes_selected,
@@ -78,7 +89,7 @@ def main(h5ad_dir, save_loc, ds_celltypes, ds_proportions, num_batches, seed):
     adata_concat.obs.drop("batch_name", axis = 1, inplace = True)
     
     # Create integration class instance 
-    integration = IntegrationHelical(adata = adata_concat)
+    integration = integrate_helical.IntegrationHelical(adata = adata_concat)
     
     # Integrate across subsets
     uce_integrated = integration.uce_integrate()
