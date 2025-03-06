@@ -96,6 +96,9 @@ def main(h5ad_dir, save_loc, ds_celltypes, ds_proportions, num_batches, seed):
     ])
     integrated_concat.obs_names = range(len(integrated_concat.obs_names))
     integrated_concat.obs_names_make_unique()
+    
+    # Add placeholder in entire obs dataframe for kmeans clustering
+    integrated_concat.obs["kmeans_faiss"] = np.zeros(len(integrated_concat.obs_names))
 
     # If downsampled celltypes and batches are of array length greater than one, combine them 
     if len(batches_ds) > 1:
