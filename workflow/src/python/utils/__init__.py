@@ -1,4 +1,5 @@
 from .integrate import Integration
+from .integrate_helical import IntegrationHelical
 #from .integrate_ti import IntegrationPAGA
 #from .seurat_integrate import SeuratIntegrate
 #from .liger_integrate import LigerIntegrate
