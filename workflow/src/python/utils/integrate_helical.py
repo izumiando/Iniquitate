@@ -48,7 +48,8 @@ class IntegrationHelical:
         data_loader_uce = uce.process_data(auce)
         embeddings_uce = uce.get_embeddings(data_loader_uce)
         auce.obsm["X_UCE"] = embeddings_uce
-        print("UCE embedding dimensions are" + embeddings_uce.shape + "\n")
+        print("UCE embedding dimensions are:" +"\n")
+        print(embeddings_uce.shape)
         sc.tl.leiden(auce)
         sc.tl.umap(auce)
         print("Done!" + "\n")
@@ -62,7 +63,8 @@ class IntegrationHelical:
         data_loader_scgpt = scgpt.process_data(ascgpt)
         embeddings_scgpt = scgpt.get_embeddings(data_loader_scgpt)
         ascgpt.obsm["X_scGPT"] = embeddings_scgpt
-        print("scGPT embedding dimensions are" + embeddings_scgpt.shape + "\n")
+        print("scGPT embedding dimensions are" + "\n")
+        print(embeddings_scgpt.shape)
         sc.tl.leiden(ascgpt)
         sc.tl.umap(ascgpt)
         print("Done!" + "\n")
@@ -76,7 +78,8 @@ class IntegrationHelical:
         data_loader_geneformer = geneformer.process_data(ageneformer)
         embeddings_geneformer = geneformer.get_embeddings(data_loader_geneformer)
         ageneformer.obsm["X_Geneformer"] = embeddings_geneformer
-        print("Geneformer embedding dimensions are" + embeddings_geneformer.shape + "\n")
+        print("Geneformer embedding dimensions are" + "\n")
+        print(embeddings_geneformer.shape)
         sc.tl.leiden(ageneformer)
         sc.tl.umap(ageneformer)
         print("Done!" + "\n")
