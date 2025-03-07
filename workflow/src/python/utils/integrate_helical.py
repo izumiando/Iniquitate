@@ -50,6 +50,12 @@ class IntegrationHelical:
         auce.obsm["X_UCE"] = embeddings_uce
         print("UCE embedding dimensions are:" +"\n")
         print(embeddings_uce.shape)
+        sc.pp.neighbors(
+            auce,
+            n_neighbors = 15,
+            n_pcs = 20,
+            use_rep = "X_UCE"
+        )
         sc.tl.leiden(auce)
         sc.tl.umap(auce)
         print("Done!" + "\n")
@@ -65,6 +71,12 @@ class IntegrationHelical:
         ascgpt.obsm["X_scGPT"] = embeddings_scgpt
         print("scGPT embedding dimensions are" + "\n")
         print(embeddings_scgpt.shape)
+        sc.pp.neighbors(
+            ascgpt,
+            n_neighbors = 15,
+            n_pcs = 20,
+            use_rep = "X_scGPT"
+        )
         sc.tl.leiden(ascgpt)
         sc.tl.umap(ascgpt)
         print("Done!" + "\n")
@@ -80,6 +92,12 @@ class IntegrationHelical:
         ageneformer.obsm["X_Geneformer"] = embeddings_geneformer
         print("Geneformer embedding dimensions are" + "\n")
         print(embeddings_geneformer.shape)
+        sc.pp.neighbors(
+            ageneformer,
+            n_neighbors = 15,
+            n_pcs = 20,
+            use_rep = "X_Geneformer"
+        )
         sc.tl.leiden(ageneformer)
         sc.tl.umap(ageneformer)
         print("Done!" + "\n")
