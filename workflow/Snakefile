@@ -318,6 +318,7 @@ rule integrate:
 
 
 # Integrate the indicated h5ad files from config, using UCE, scGPT, and Geneformer from Helical
+# shell script should be modified before use 
 rule integrate_helical:
     input:
         "../resources/h5ad_files/int_datasets/{data_folder}"
