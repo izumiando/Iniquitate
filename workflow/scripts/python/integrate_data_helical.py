@@ -103,15 +103,15 @@ def main(h5ad_dir, save_loc, ds_celltypes, ds_proportions, num_batches, seed):
     
     # The block below is for debugging purposes
     # Trying to understand the anndata objects being produced
-    uce_integrated.write_h5ad(
-        filename = save_loc,
-        compression = "gzip"
-    )
-    
-    # scgpt_integrated.write_h5ad(
+    # uce_integrated.write_h5ad(
     #     filename = save_loc,
     #     compression = "gzip"
     # )
+    
+    scgpt_integrated.write_h5ad(
+        filename = save_loc,
+        compression = "gzip"
+    )
     
     # geneformer_integrated.write_h5ad(
     #     filename = save_loc,
