@@ -92,82 +92,59 @@ def main(h5ad_dir, save_loc, ds_celltypes, ds_proportions, num_batches, seed):
     integration = integrate_helical.IntegrationHelical(adata = adata_concat)
     
     # Integrate across subsets
-    # uce_integrated = integration.uce_integrate()
-    # scgpt_integrated = integration.scgpt_integrate()
+    uce_integrated = integration.uce_integrate()
+    scgpt_integrated = integration.scgpt_integrate()
     geneformer_integrated = integration.geneformer_integrate()
     
     # Add integration type to each subset and concatenate
-    # uce_integrated.obs["integration_method"] = "uce" 
-    # scgpt_integrated.obs["integration_method"] = "scgpt"
+    uce_integrated.obs["integration_method"] = "uce" 
+    scgpt_integrated.obs["integration_method"] = "scgpt"
     geneformer_integrated.obs["integration_method"] = "geneformer"
     
-    print("printing geneformer_integrated.var.index.dtype")
-    print(geneformer_integrated.var.index.dtype)  # Should be "object" (string)
-    print("printing geneformer_integrated.var.dtypes")
-    print(geneformer_integrated.var.dtypes)  # Check the columns in `var`
+    # Making sure there are no duplicate var indicies that prevent concatenation
+    # If you get similar issues with obs or for other anndata objects, run this for them as well
+    geneformer_integrated.var_names_make_unique()
     
-    geneformer_integrated.var.index = geneformer_integrated.var.index.astype(str)
-    print("printing geneformer_integrated.var.index.dtype again")
-    print(geneformer_integrated.var.index.dtype)
+    integrated_concat = ann.concat([
+        uce_integrated,
+        scgpt_integrated,
+        geneformer_integrated
+    ])
+    integrated_concat.obs_names = range(len(integrated_concat.obs_names))
+    integrated_concat.obs_names_make_unique()
     
-    # if the above does not work try changing tthe other one
-    
-    # The block below is for debugging purposes
-    # Trying to understand the anndata objects being produced
-    # uce_integrated.write_h5ad(
-    #     filename = save_loc,
-    #     compression = "gzip"
-    # )
-    
-    # scgpt_integrated.write_h5ad(
-    #     filename = save_loc,
-    #     compression = "gzip"
-    # )
-    
-    geneformer_integrated.write_h5ad(
+    # Add placeholder in entire obs dataframe for kmeans clustering
+    integrated_concat.obs["kmeans_faiss"] = np.zeros(len(integrated_concat.obs_names))
+
+    # If downsampled celltypes and batches are of array length greater than one, combine them 
+    if len(batches_ds) > 1:
+        batches_ds = np.array(",".join(batches_ds))
+    if len(selected_celltypes_downsampled) > 1:
+        selected_celltypes_downsampled = np.array(",".join(selected_celltypes_downsampled))
+
+    # Add data about downsampling to .uns of adata_concat
+    if num_batches == 0:
+        integrated_concat.uns["downsampling_stats"] = {
+            "num_batches": 0,
+            "num_celltypes_downsampled": ds_celltypes,
+            "ds_batch_names": "None",
+            "proportion_downsampled": ds_proportions,
+            "downsampled_celltypes": "None"
+        }
+    else:
+        integrated_concat.uns["downsampling_stats"] = {
+            "num_batches": num_batches,
+            "num_celltypes_downsampled": ds_celltypes,
+            "ds_batch_names": "Placeholder due to h5py bug",
+            "proportion_downsampled": ds_proportions,
+            "downsampled_celltypes": selected_celltypes_downsampled
+        }
+        
+    # Save integrated h5ad object
+    integrated_concat.write_h5ad(
         filename = save_loc,
         compression = "gzip"
     )
-    # integrated_concat = ann.concat([
-    #     uce_integrated,
-    #     scgpt_integrated,
-    #     geneformer_integrated
-    # ])
-    # integrated_concat.obs_names = range(len(integrated_concat.obs_names))
-    # integrated_concat.obs_names_make_unique()
-    
-    # # Add placeholder in entire obs dataframe for kmeans clustering
-    # integrated_concat.obs["kmeans_faiss"] = np.zeros(len(integrated_concat.obs_names))
-
-    # # If downsampled celltypes and batches are of array length greater than one, combine them 
-    # if len(batches_ds) > 1:
-    #     batches_ds = np.array(",".join(batches_ds))
-    # if len(selected_celltypes_downsampled) > 1:
-    #     selected_celltypes_downsampled = np.array(",".join(selected_celltypes_downsampled))
-
-    # # Add data about downsampling to .uns of adata_concat
-    # if num_batches == 0:
-    #     integrated_concat.uns["downsampling_stats"] = {
-    #         "num_batches": 0,
-    #         "num_celltypes_downsampled": ds_celltypes,
-    #         "ds_batch_names": "None",
-    #         "proportion_downsampled": ds_proportions,
-    #         "downsampled_celltypes": "None"
-    #     }
-    # else:
-    #     integrated_concat.uns["downsampling_stats"] = {
-    #         "num_batches": num_batches,
-    #         "num_celltypes_downsampled": ds_celltypes,
-    #         "ds_batch_names": "Placeholder due to h5py bug",
-    #         "proportion_downsampled": ds_proportions,
-    #         "downsampled_celltypes": selected_celltypes_downsampled
-    #     }
-        
-    # # Save integrated h5ad object
-    # integrated_concat.write_h5ad(
-    #     filename = save_loc,
-    #     compression = "gzip"
-    # )
     
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
