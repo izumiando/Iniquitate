@@ -101,46 +101,62 @@ def main(h5ad_dir, save_loc, ds_celltypes, ds_proportions, num_batches, seed):
     scgpt_integrated.obs["integration_method"] = "scgpt"
     geneformer_integrated.obs["integration_method"] = "geneformer"
     
-    integrated_concat = ann.concat([
-        uce_integrated,
-        scgpt_integrated,
-        geneformer_integrated
-    ])
-    integrated_concat.obs_names = range(len(integrated_concat.obs_names))
-    integrated_concat.obs_names_make_unique()
-    
-    # Add placeholder in entire obs dataframe for kmeans clustering
-    integrated_concat.obs["kmeans_faiss"] = np.zeros(len(integrated_concat.obs_names))
-
-    # If downsampled celltypes and batches are of array length greater than one, combine them 
-    if len(batches_ds) > 1:
-        batches_ds = np.array(",".join(batches_ds))
-    if len(selected_celltypes_downsampled) > 1:
-        selected_celltypes_downsampled = np.array(",".join(selected_celltypes_downsampled))
-
-    # Add data about downsampling to .uns of adata_concat
-    if num_batches == 0:
-        integrated_concat.uns["downsampling_stats"] = {
-            "num_batches": 0,
-            "num_celltypes_downsampled": ds_celltypes,
-            "ds_batch_names": "None",
-            "proportion_downsampled": ds_proportions,
-            "downsampled_celltypes": "None"
-        }
-    else:
-        integrated_concat.uns["downsampling_stats"] = {
-            "num_batches": num_batches,
-            "num_celltypes_downsampled": ds_celltypes,
-            "ds_batch_names": "Placeholder due to h5py bug",
-            "proportion_downsampled": ds_proportions,
-            "downsampled_celltypes": selected_celltypes_downsampled
-        }
-        
-    # Save integrated h5ad object
-    integrated_concat.write_h5ad(
+    # The block below is for debugging purposes
+    # Trying to understand the anndata objects being produced
+    uce_integrated.write_h5ad(
         filename = save_loc,
         compression = "gzip"
     )
+    
+    # scgpt_integrated.write_h5ad(
+    #     filename = save_loc,
+    #     compression = "gzip"
+    # )
+    
+    # geneformer_integrated.write_h5ad(
+    #     filename = save_loc,
+    #     compression = "gzip"
+    # )
+    # integrated_concat = ann.concat([
+    #     uce_integrated,
+    #     scgpt_integrated,
+    #     geneformer_integrated
+    # ])
+    # integrated_concat.obs_names = range(len(integrated_concat.obs_names))
+    # integrated_concat.obs_names_make_unique()
+    
+    # # Add placeholder in entire obs dataframe for kmeans clustering
+    # integrated_concat.obs["kmeans_faiss"] = np.zeros(len(integrated_concat.obs_names))
+
+    # # If downsampled celltypes and batches are of array length greater than one, combine them 
+    # if len(batches_ds) > 1:
+    #     batches_ds = np.array(",".join(batches_ds))
+    # if len(selected_celltypes_downsampled) > 1:
+    #     selected_celltypes_downsampled = np.array(",".join(selected_celltypes_downsampled))
+
+    # # Add data about downsampling to .uns of adata_concat
+    # if num_batches == 0:
+    #     integrated_concat.uns["downsampling_stats"] = {
+    #         "num_batches": 0,
+    #         "num_celltypes_downsampled": ds_celltypes,
+    #         "ds_batch_names": "None",
+    #         "proportion_downsampled": ds_proportions,
+    #         "downsampled_celltypes": "None"
+    #     }
+    # else:
+    #     integrated_concat.uns["downsampling_stats"] = {
+    #         "num_batches": num_batches,
+    #         "num_celltypes_downsampled": ds_celltypes,
+    #         "ds_batch_names": "Placeholder due to h5py bug",
+    #         "proportion_downsampled": ds_proportions,
+    #         "downsampled_celltypes": selected_celltypes_downsampled
+    #     }
+        
+    # # Save integrated h5ad object
+    # integrated_concat.write_h5ad(
+    #     filename = save_loc,
+    #     compression = "gzip"
+    # )
     
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
