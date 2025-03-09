@@ -103,6 +103,7 @@ def main(h5ad_dir, save_loc, ds_celltypes, ds_proportions, num_batches, seed):
     
     # Making sure there are no duplicate var indicies that prevent concatenation
     # If you get similar issues with obs or for other anndata objects, run this for them as well
+    geneformer_integrated.var.index = geneformer_integrated.var.index.astype(str)
     geneformer_integrated.var_names_make_unique()
     
     integrated_concat = ann.concat([
