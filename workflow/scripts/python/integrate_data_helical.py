@@ -108,15 +108,15 @@ def main(h5ad_dir, save_loc, ds_celltypes, ds_proportions, num_batches, seed):
     #     compression = "gzip"
     # )
     
-    scgpt_integrated.write_h5ad(
-        filename = save_loc,
-        compression = "gzip"
-    )
-    
-    # geneformer_integrated.write_h5ad(
+    # scgpt_integrated.write_h5ad(
     #     filename = save_loc,
     #     compression = "gzip"
     # )
+    
+    geneformer_integrated.write_h5ad(
+        filename = save_loc,
+        compression = "gzip"
+    )
     # integrated_concat = ann.concat([
     #     uce_integrated,
     #     scgpt_integrated,
