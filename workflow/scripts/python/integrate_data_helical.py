@@ -92,14 +92,25 @@ def main(h5ad_dir, save_loc, ds_celltypes, ds_proportions, num_batches, seed):
     integration = integrate_helical.IntegrationHelical(adata = adata_concat)
     
     # Integrate across subsets
-    uce_integrated = integration.uce_integrate()
-    scgpt_integrated = integration.scgpt_integrate()
+    # uce_integrated = integration.uce_integrate()
+    # scgpt_integrated = integration.scgpt_integrate()
     geneformer_integrated = integration.geneformer_integrate()
     
     # Add integration type to each subset and concatenate
-    uce_integrated.obs["integration_method"] = "uce" 
-    scgpt_integrated.obs["integration_method"] = "scgpt"
+    # uce_integrated.obs["integration_method"] = "uce" 
+    # scgpt_integrated.obs["integration_method"] = "scgpt"
     geneformer_integrated.obs["integration_method"] = "geneformer"
+    
+    print("printing geneformer_integrated.var.index.dtype")
+    print(geneformer_integrated.var.index.dtype)  # Should be "object" (string)
+    print("printing geneformer_integrated.var.dtypes")
+    print(geneformer_integrated.var.dtypes)  # Check the columns in `var`
+    
+    geneformer_integrated.var.index = geneformer_integrated.var.index.astype(str)
+    print("printing geneformer_integrated.var.index.dtype again")
+    print(geneformer_integrated.var.index.dtype)
+    
+    # if the above does not work try changing tthe other one
     
     # The block below is for debugging purposes
     # Trying to understand the anndata objects being produced
