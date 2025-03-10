@@ -113,7 +113,7 @@ if config["celltype_list"] == "No":
                         ],
                         [
                             "integrated",
-                            "integrated_uce"
+                            "integrated_helical"
                             "downsample_summary",
                             "clustering_summary",
                             "clustering_concord_summary",
@@ -178,7 +178,7 @@ if config["celltype_list"] == "No":
                             ],
                             [
                                 "integrated",
-                                "integrated_uce",
+                                "integrated_helical",
                                 "downsample_summary",
                                 "clustering_summary",
                                 "clustering_concord_summary",
@@ -248,7 +248,7 @@ if config["celltype_list"] == "No":
                             ],
                             [
                                 "integrated",
-                                "integrated_uce",
+                                "integrated_helical",
                                 "downsample_summary",
                                 "clustering_summary",
                                 "clustering_concord_summary",

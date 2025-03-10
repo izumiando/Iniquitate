@@ -165,9 +165,7 @@ The following steps are necessary to use a custom dataset:
 
 ### Running Iniquitate with foundation models
 
-To run Iniquitate with the newly incorporated foundation models, please download `33l_8ep_1024t_1280.torch` from the link below and add it to the `Iniquitate/workflow/src/python/utils/UCE` directory. The `integrate_UCE` rule cannot execute without this file.
-
-[Figshare for 33l_8ep_1024t_1280.torch](https://figshare.com/articles/dataset/Universal_Cell_Embedding_Model_Files/24320806?file=43423236)
+To run Iniquitate with the newly incorporated foundation models, you will need to set up a virtual environment (venv) instead of letting Snakemake create a conda environment. If you are working on the Cedar cluster on Compute Canada, manually set up a venv called `integrate_helical` and use `workflow/envs/requirements.txt` to set the environment up. Otherwise, you can manually set up a venv valled `integrate_helical`, and manually install the `helical` Python package and resolve any dependency issues/module loads required by your compute environment. You will need to manually adjust the shell script in the `integrate_helical` rule in the Snakefile depending on what relative directory your venv is set up in and whether you need other modules loaded when the environment is activated. 
 
 ### Citation information
 
