@@ -92,9 +92,9 @@ def main(h5ad_dir, save_loc, ds_celltypes, ds_proportions, num_batches, seed):
     integration = integrate_helical.IntegrationHelical(adata = adata_concat)
     
     # Integrate across subsets
-    uce_integrated = integration.uce_integrate(num_batches)
-    scgpt_integrated = integration.scgpt_integrate(num_batches)
-    geneformer_integrated = integration.geneformer_integrate(num_batches)
+    uce_integrated = integration.uce_integrate()
+    scgpt_integrated = integration.scgpt_integrate()
+    geneformer_integrated = integration.geneformer_integrate()
     
     # Add integration type to each subset and concatenate
     uce_integrated.obs["integration_method"] = "uce" 
