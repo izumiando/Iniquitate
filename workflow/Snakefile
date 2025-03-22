@@ -332,6 +332,10 @@ rule integrate_helical:
         "logs/{configname}/integrate/integrate_{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
         "_downsample_{num_batches}_batch_ds_c_{rep}_helical.log"
     priority: 0
+    resources:
+        mem_mb=100000  # 100 GB of memory
+        cpus=10        # 10 CPU cores
+        disk_mb=50000  # 50 GB disk space
     shell:
         """
         module load gcc arrow
