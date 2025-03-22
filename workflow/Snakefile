@@ -333,9 +333,7 @@ rule integrate_helical:
         "_downsample_{num_batches}_batch_ds_c_{rep}_helical.log"
     priority: 0
     resources:
-        mem_mb: 100000  # 100 GB of memory
-        cpus: 10        # 10 CPU cores
-        disk_mb: 50000  # 50 GB disk space
+        mem_mb=100000
     shell:
         """
         module load gcc arrow
