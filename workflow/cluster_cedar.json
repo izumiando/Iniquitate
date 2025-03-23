@@ -41,7 +41,7 @@
     },
     "integrate_helical":
     {
-        "mem": "32G",
+        "mem": "100G",
         "gpus": 1,
         "cpus-per-task": 10,
         "time": "2-00:00:00",
