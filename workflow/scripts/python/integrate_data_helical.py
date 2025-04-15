@@ -142,7 +142,12 @@ def main(h5ad_dir, save_loc, ds_celltypes, ds_proportions, num_batches, seed):
         }
     
     print("done with this round of integrate_helical")
-        
+    
+    output_dir = os.path.dirname(save_loc)
+
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+
     # Save integrated h5ad object
     integrated_concat.write_h5ad(
         filename = save_loc,

@@ -2,7 +2,7 @@ import os
 import hashlib
 import numpy as np
 
-configfile: "configs/test_config_lite.json"
+configfile: "configs/config_control.json"
 configname = config["config_name"]
 
 # Define function to generate seeds from wildcards given the combinations

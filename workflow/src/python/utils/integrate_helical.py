@@ -12,7 +12,7 @@ from helical.models.geneformer.model import Geneformer, GeneformerConfig
 
 # for UCE step
 import os
-.
+
 
 # Undoing scvi's random seed setting
 random.seed(None)
