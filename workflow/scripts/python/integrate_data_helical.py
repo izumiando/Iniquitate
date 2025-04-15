@@ -140,6 +140,8 @@ def main(h5ad_dir, save_loc, ds_celltypes, ds_proportions, num_batches, seed):
             "proportion_downsampled": ds_proportions,
             "downsampled_celltypes": selected_celltypes_downsampled
         }
+    
+    print("done with this round of integrate_helical")
         
     # Save integrated h5ad object
     integrated_concat.write_h5ad(
