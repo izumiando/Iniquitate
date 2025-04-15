@@ -10,6 +10,10 @@ from helical.models.uce.model import UCE, UCEConfig
 from helical.models.scgpt.model import scGPT, scGPTConfig
 from helical.models.geneformer.model import Geneformer, GeneformerConfig
 
+# for UCE step
+import os
+.
+
 # Undoing scvi's random seed setting
 random.seed(None)
 np.random.seed(None)
@@ -42,6 +46,8 @@ class IntegrationHelical:
 
     def uce_integrate(self):
         print("Performing UCE integration.." + "\n")
+        if os.path.exists("../../../test_counts.npz"):
+            os.remove("../../../test_counts.npz")
         auce = self.adata.copy()
         configurer_uce = UCEConfig(model_name="33l_8ep_1024t_1280", device="cuda")
         uce = UCE(configurer=configurer_uce)
