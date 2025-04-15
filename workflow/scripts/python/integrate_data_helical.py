@@ -88,12 +88,6 @@ def main(h5ad_dir, save_loc, ds_celltypes, ds_proportions, num_batches, seed):
     adata_concat.obs["batch"] = adata_concat.obs["batch_name"]
     adata_concat.obs.drop("batch_name", axis = 1, inplace = True)
     
-    # saving data to send to helical - 3/26/2025
-    integrated_concat.write_h5ad(
-        filename = save_loc,
-        compression = "gzip"
-    )
-    
     # Create integration class instance 
     integration = integrate_helical.IntegrationHelical(adata = adata_concat)
     
@@ -150,10 +144,10 @@ def main(h5ad_dir, save_loc, ds_celltypes, ds_proportions, num_batches, seed):
     print("done with this round of integrate_helical")
         
     # Save integrated h5ad object
-    # integrated_concat.write_h5ad(
-    #     filename = save_loc,
-    #     compression = "gzip"
-    # )
+    integrated_concat.write_h5ad(
+        filename = save_loc,
+        compression = "gzip"
+    )
     
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
