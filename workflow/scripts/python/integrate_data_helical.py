@@ -23,6 +23,10 @@ spec_sample = importlib.util.spec_from_file_location("sample", sample_path)
 sample = importlib.util.module_from_spec(spec_sample)
 spec_sample.loader.exec_module(sample)
 
+# to fix concat problems - April 16th, 2025
+from sklearn.preprocessing import StandardScaler as Scale
+from sklearn.decomposition import PCA
+
 def none_or_str(value):
     if value == 'None':
         return None
@@ -106,11 +110,35 @@ def main(h5ad_dir, save_loc, ds_celltypes, ds_proportions, num_batches, seed):
     geneformer_integrated.var.index = geneformer_integrated.var.index.astype(str)
     geneformer_integrated.var_names_make_unique()
     
+    geneformer_integrated.var = uce_integrated.var
+    scgpt_integrated.var = uce_integrated.var
+    scaler_uce = Scale()
+    scaler_scgpt = Scale()
+    scaler_geneformer = Scale()
+    
+    uce_embeddings_scaled = scaler_uce.fit_transform(uce_integrated.obsm["X_UCE"])
+    scgpt_embeddings_scaled = scaler_scgpt.fit_transform(scgpt_integrated.obsm["X_scGPT"])
+    geneformer_embeddings_scaled = scaler_geneformer.fit_transform(geneformer_integrated.obsm["X_Geneformer"])
+
+    uce_pca = PCA(n_components=20)
+    uce_embeddings_reduced = uce_pca.fit_transform(uce_embeddings_scaled)
+    scgpt_pca = PCA(n_components=20)
+    scgpt_embeddings_reduced = scgpt_pca.fit_transform(scgpt_embeddings_scaled)
+    geneformer_pca = PCA(n_components=20)
+    geneformer_embeddings_reduced = geneformer_pca.fit_transform(geneformer_embeddings_scaled)
+
+    uce_integrated.obsm["X_emb_reduced"] = uce_embeddings_reduced
+    scgpt_integrated.obsm["X_emb_reduced"] = scgpt_embeddings_reduced
+    geneformer_integrated.obsm["X_emb_reduced"] = geneformer_embeddings_reduced
+    
     integrated_concat = ann.concat([
         uce_integrated,
         scgpt_integrated,
-        geneformer_integrated
-    ])
+        geneformer_integrated],
+        axis=0,         # concatenate along cells
+        join="inner",   # or "outer" if you want all genes even if some are missing
+        merge="same"    # assumes .var is the same across objects
+    )
     integrated_concat.obs_names = range(len(integrated_concat.obs_names))
     integrated_concat.obs_names_make_unique()
     
@@ -141,8 +169,6 @@ def main(h5ad_dir, save_loc, ds_celltypes, ds_proportions, num_batches, seed):
             "downsampled_celltypes": selected_celltypes_downsampled
         }
     
-    print("done with this round of integrate_helical")
-    
     output_dir = os.path.dirname(save_loc)
 
     if not os.path.exists(output_dir):
@@ -153,6 +179,8 @@ def main(h5ad_dir, save_loc, ds_celltypes, ds_proportions, num_batches, seed):
         filename = save_loc,
         compression = "gzip"
     )
+    
+    print("done with this round of integrate_helical")
     
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
