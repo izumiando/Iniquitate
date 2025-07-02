@@ -2,7 +2,7 @@ import os
 import hashlib
 import numpy as np
 
-configfile: "configs/config_control.json"
+configfile: "configs/test_config_lite.json"
 configname = config["config_name"]
 
 # Define function to generate seeds from wildcards given the combinations
@@ -69,7 +69,7 @@ if config["celltype_list"] == "No":
         rule all:
             input:
                 expand(
-                    "~/scratch/results/{configname}/{outputs[0]}/{dataset}_{outputs[1]}.{outputs[2]}",
+                    "/home/andoizum/scratch/results/{configname}/{outputs[0]}/{dataset}_{outputs[1]}.{outputs[2]}",
                     configname = configname,
                     dataset = get_combinations(config, "int_ti_datasets"),
                     outputs = zip(
@@ -91,7 +91,7 @@ if config["celltype_list"] == "No":
                     )
                 ),
                 expand(
-                    "~/scratch/results/{configname}/{outputs[0]}/{dataset}_{outputs[1]}.{outputs[2]}",
+                    "/home/andoizum/scratch/results/{configname}/{outputs[0]}/{dataset}_{outputs[1]}.{outputs[2]}",
                     configname = configname,
                     dataset = get_combinations(config, "int_datasets"),
                     outputs = zip(
@@ -148,12 +148,12 @@ if config["celltype_list"] == "No":
                     )
                 ),
                 expand(
-                    "~/scratch/results/{configname}/marker_results/{dataset}_preintegration_marker_selection.tsv",
+                    "/home/andoizum/scratch/results/{configname}/marker_results/{dataset}_preintegration_marker_selection.tsv",
                         configname = configname,
                         dataset = [config["int_datasets"][key]["data_folder"] for key in config["int_datasets"].keys()]
                 ),
                 expand(
-                    "~/scratch/results/{configname}/relatedness_results/{dataset}_celltype_relatedness.tsv",
+                    "/home/andoizum/scratch/results/{configname}/relatedness_results/{dataset}_celltype_relatedness.tsv",
                         configname = configname,
                         dataset = [config["int_datasets"][key]["data_folder"] for key in config["int_datasets"].keys()]
                 )
@@ -162,7 +162,7 @@ if config["celltype_list"] == "No":
            rule all:
                 input:
                     expand(
-                        "~/scratch/results/{configname}/{outputs[0]}/{dataset}_{outputs[1]}.{outputs[2]}",
+                        "/home/andoizum/scratch/results/{configname}/{outputs[0]}/{dataset}_{outputs[1]}.{outputs[2]}",
                         configname = configname,
                         dataset = get_combinations(config, "int_datasets"),
                         outputs = zip(
@@ -199,7 +199,7 @@ if config["celltype_list"] == "No":
                         )
                     ),
                     expand(
-                        "~/scratch/results/{configname}/relatedness_results/{dataset}_celltype_relatedness.tsv",
+                        "/home/andoizum/scratch/results/{configname}/relatedness_results/{dataset}_celltype_relatedness.tsv",
                             configname = configname,
                             dataset = [config["int_datasets"][key]["data_folder"] for key in config["int_datasets"].keys()]
                     )
@@ -207,7 +207,7 @@ if config["celltype_list"] == "No":
             rule all:
                 input:
                     expand(
-                        "~/scratch/results/{configname}/{outputs[0]}/{dataset}_{outputs[1]}.{outputs[2]}",
+                        "/home/andoizum/scratch/results/{configname}/{outputs[0]}/{dataset}_{outputs[1]}.{outputs[2]}",
                         configname = configname,
                         dataset = get_combinations(config, "int_ti_datasets"),
                         outputs = zip(
@@ -229,7 +229,7 @@ if config["celltype_list"] == "No":
                         )
                     ),
                     expand(
-                        "~/scratch/results/{configname}/{outputs[0]}/{dataset}_{outputs[1]}.{outputs[2]}",
+                        "/home/andoizum/scratch/results/{configname}/{outputs[0]}/{dataset}_{outputs[1]}.{outputs[2]}",
                         configname = configname,
                         dataset = get_combinations(config, "int_datasets"),
                         outputs = zip(
@@ -277,12 +277,12 @@ if config["celltype_list"] == "No":
                         )
                     ),
                     expand(
-                        "~/scratch/results/{configname}/marker_results/{dataset}_preintegration_marker_selection.tsv",
+                        "/home/andoizum/scratch/results/{configname}/marker_results/{dataset}_preintegration_marker_selection.tsv",
                             configname = configname,
                             dataset = [config["int_datasets"][key]["data_folder"] for key in config["int_datasets"].keys()]
                     ),
                     expand(
-                        "~/scratch/results/{configname}/relatedness_results/{dataset}_celltype_relatedness.tsv",
+                        "/home/andoizum/scratch/results/{configname}/relatedness_results/{dataset}_celltype_relatedness.tsv",
                             configname = configname,
                             dataset = [config["int_datasets"][key]["data_folder"] for key in config["int_datasets"].keys()]
                     )
@@ -296,7 +296,7 @@ rule integrate:
     input:
         "../resources/h5ad_files/int_datasets/{data_folder}"
     output:
-        "~/scratch/results/{configname}/integrated_results/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "/home/andoizum/scratch/results/{configname}/integrated_results/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
         "_downsample_{num_batches}_batch_ds_c_{rep}_integrated.h5ad"
     params:
         script_path = "scripts/python/integrate_data.py",
@@ -323,7 +323,7 @@ rule integrate_helical:
     input:
         "../resources/h5ad_files/int_datasets/{data_folder}"
     output:
-        "~/scratch/results/{configname}/integrated_results/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "/home/andoizum/scratch/results/{configname}/integrated_results/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
         "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_helical.h5ad"
     params:
         script_path = "scripts/python/integrate_data_helical.py",
@@ -354,10 +354,10 @@ rule downsample_summary:
     conda:
         "envs/integrate.yaml"
     input:
-        "~/scratch/results/{configname}/integrated_results/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "/home/andoizum/scratch/results/{configname}/integrated_results/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
         "_downsample_{num_batches}_batch_ds_c_{rep}_integrated.h5ad"
     output:
-        "~/scratch/results/{configname}/downsample_summaries/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "/home/andoizum/scratch/results/{configname}/downsample_summaries/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
         "_downsample_{num_batches}_batch_ds_c_{rep}_downsample_summary.tsv"
     params:
         script_path = "scripts/python/downsample_summary.py",
@@ -380,10 +380,10 @@ rule clustering_summary:
     conda:
         "envs/integrate.yaml"
     input:
-        "~/scratch/results/{configname}/integrated_results/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "/home/andoizum/scratch/results/{configname}/integrated_results/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
         "_downsample_{num_batches}_batch_ds_c_{rep}_integrated.h5ad"
     output:
-        "~/scratch/results/{configname}/clustering_summaries/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "/home/andoizum/scratch/results/{configname}/clustering_summaries/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
         "_downsample_{num_batches}_batch_ds_c_{rep}_clustering_summary.tsv"
     params:
         script_path = "scripts/python/clustering_stats.py",
@@ -406,10 +406,10 @@ rule clustering_concord_summary:
     conda:
         "envs/integrate.yaml"
     input:
-        "~/scratch/results/{configname}/integrated_results/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "/home/andoizum/scratch/results/{configname}/integrated_results/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
         "_downsample_{num_batches}_batch_ds_c_{rep}_integrated.h5ad"
     output:
-        "~/scratch/results/{configname}/clustering_concord_summaries/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "/home/andoizum/scratch/results/{configname}/clustering_concord_summaries/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
         "_downsample_{num_batches}_batch_ds_c_{rep}_clustering_concord_summary.tsv"
     params:
         script_path = "scripts/python/clustering_concordance.py",
@@ -432,10 +432,10 @@ rule dge_ranking_stats:
     conda:
         "envs/integrate.yaml"
     input:
-        "~/scratch/results/{configname}/integrated_results/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "/home/andoizum/scratch/results/{configname}/integrated_results/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
         "_downsample_{num_batches}_batch_ds_c_{rep}_integrated.h5ad"
     output:
-        "~/scratch/results/{configname}/dge_ranking_stats/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "/home/andoizum/scratch/results/{configname}/dge_ranking_stats/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
         "_downsample_{num_batches}_batch_ds_c_{rep}_dge_ranking_stats.tsv"
     params:
         script_path = "scripts/python/dge_ranking_concordance.py",
@@ -459,10 +459,10 @@ rule dge_ranking_stats_per_cluster:
     conda:
         "envs/integrate.yaml"
     input:
-        "~/scratch/results/{configname}/integrated_results/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "/home/andoizum/scratch/results/{configname}/integrated_results/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
         "_downsample_{num_batches}_batch_ds_c_{rep}_integrated.h5ad"
     output:
-        "~/scratch/results/{configname}/dge_ranking_results_per_cluster/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "/home/andoizum/scratch/results/{configname}/dge_ranking_results_per_cluster/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
         "_downsample_{num_batches}_batch_ds_c_{rep}_dge_ranking_results_per_cluster.tsv"
     params:
         script_path = "scripts/python/dge_ranking_per_cluster.py",
@@ -485,10 +485,10 @@ rule imbalance_summary:
     conda:
         "envs/integrate.yaml"
     input:
-        "~/scratch/results/{configname}/integrated_results/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "/home/andoizum/scratch/results/{configname}/integrated_results/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
         "_downsample_{num_batches}_batch_ds_c_{rep}_integrated.h5ad"
     output:
-        "~/scratch/results/{configname}/imbalance_summaries/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "/home/andoizum/scratch/results/{configname}/imbalance_summaries/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
         "_downsample_{num_batches}_batch_ds_c_{rep}_imbalance_summary.tsv"
     params:
         script_path = "scripts/python/imbalance_summary.py",
@@ -511,10 +511,10 @@ rule celltype_imbalance_summary:
     conda:
         "envs/integrate.yaml"
     input:
-        "~/scratch/results/{configname}/integrated_results/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "/home/andoizum/scratch/results/{configname}/integrated_results/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
         "_downsample_{num_batches}_batch_ds_c_{rep}_integrated.h5ad"
     output:
-        "~/scratch/results/{configname}/celltype_imbalance_summaries/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "/home/andoizum/scratch/results/{configname}/celltype_imbalance_summaries/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
         "_downsample_{num_batches}_batch_ds_c_{rep}_celltype_imbalance_summary.tsv"
     params:
         script_path = "scripts/python/celltype_imbalance_summary.py",
@@ -537,10 +537,10 @@ rule knn_classification:
     conda:
         "envs/integrate.yaml"
     input:
-        "~/scratch/results/{configname}/integrated_results/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "/home/andoizum/scratch/results/{configname}/integrated_results/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
         "_downsample_{num_batches}_batch_ds_c_{rep}_integrated.h5ad"
     output:
-        "~/scratch/results/{configname}/knn_classification_reports/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "/home/andoizum/scratch/results/{configname}/knn_classification_reports/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
         "_downsample_{num_batches}_batch_ds_c_{rep}_knn_classification.tsv"
     params:
         script_path = "scripts/python/knn_classification.py",
@@ -565,7 +565,7 @@ rule marker_get:
     input:
         "../resources/h5ad_files/int_datasets/{data_folder}"
     output:
-        "~/scratch/results/{configname}/marker_results/{data_folder}_preintegration_marker_selection.tsv"
+        "/home/andoizum/scratch/results/{configname}/marker_results/{data_folder}_preintegration_marker_selection.tsv"
     params:
         script_path = "scripts/python/marker_get.py",
     log:
@@ -584,11 +584,11 @@ rule dge_rank_marker_subset:
     conda:
         "envs/integrate.yaml"
     input:
-        dge_file="~/scratch/results/{configname}/dge_ranking_stats/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        dge_file="/home/andoizum/scratch/results/{configname}/dge_ranking_stats/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
         "_downsample_{num_batches}_batch_ds_c_{rep}_dge_ranking_stats.tsv",
-        marker_file="~/scratch/results/{configname}/marker_results/{data_folder}_preintegration_marker_selection.tsv"
+        marker_file="/home/andoizum/scratch/results/{configname}/marker_results/{data_folder}_preintegration_marker_selection.tsv"
     output:
-        "~/scratch/results/{configname}/dge_ranking_stats_marker_sub/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "/home/andoizum/scratch/results/{configname}/dge_ranking_stats_marker_sub/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
         "_downsample_{num_batches}_batch_ds_c_{rep}_dge_ranking_stats_marker_sub.tsv"
     params:
         script_path = "scripts/python/dge_ranking_marker_subset.py",
@@ -612,7 +612,7 @@ rule relatedness_metric:
     input:
         "../resources/h5ad_files/int_datasets/{data_folder}"
     output:
-        "~/scratch/results/{configname}/relatedness_results/{data_folder}_celltype_relatedness.tsv"
+        "/home/andoizum/scratch/results/{configname}/relatedness_results/{data_folder}_celltype_relatedness.tsv"
     params:
         script_path = "scripts/python/relatedness_metric.py"
     log:
@@ -632,14 +632,14 @@ rule umap:
     conda:
         "envs/integrate.yaml"
     input:
-        "~/scratch/results/{configname}/integrated_results/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "/home/andoizum/scratch/results/{configname}/integrated_results/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
         "_downsample_{num_batches}_batch_ds_c_{rep}_integrated.h5ad"
     output:
-        leiden_plot = "~/scratch/results/{configname}/umap_plots/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        leiden_plot = "/home/andoizum/scratch/results/{configname}/umap_plots/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
         "_downsample_{num_batches}_batch_ds_c_{rep}_umap_leiden.pdf",
-        celtype_plot = "~/scratch/results/{configname}/umap_plots/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        celtype_plot = "/home/andoizum/scratch/results/{configname}/umap_plots/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
         "_downsample_{num_batches}_batch_ds_c_{rep}_umap_celltype.pdf",
-        batch_plot = "~/scratch/results/{configname}/umap_plots/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        batch_plot = "/home/andoizum/scratch/results/{configname}/umap_plots/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
         "_downsample_{num_batches}_batch_ds_c_{rep}_umap_batch.pdf"
     params:
         script_path = "scripts/python/umap_plots.py"

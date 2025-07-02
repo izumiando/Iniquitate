@@ -11,7 +11,8 @@ random.seed(None)
 np.random.seed(None)
 torch.manual_seed(random.randint(1, 10000000000000000000))
 
-from .integrate_UCE import IntegrationUCE
+# commenting out because UCE is running using helical
+# from .integrate_UCE import IntegrationUCE
 
 class Integration:
     """Class for integrating scRNA-seq data and returning processed data."""
