@@ -89,7 +89,7 @@ def main(h5ad_dir, save_loc, ds_celltypes, ds_proportions, num_batches, seed):
     adata_concat.obs.drop("batch_name", axis = 1, inplace = True)
     
     # Create integration class instance 
-    integration = integrate_helical.IntegrationHelical(adata = adata_concat)
+    integration = IntegrationHelical(adata = adata_concat)
     
     # Integrate across subsets
     uce_integrated = integration.uce_integrate()
