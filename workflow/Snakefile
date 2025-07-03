@@ -339,7 +339,7 @@ rule integrate_helical:
         module load gcc arrow
         source ../../integrate_helical/bin/activate
         module load openblas
-        python {params.script_path} \
+        python -s {params.script_path} \
             --filedir {input} \
             --ds_celltypes {wildcards.ds_celltype} \
             --ds_proportions {wildcards.ds_proportion} \
@@ -367,7 +367,7 @@ rule downsample_summary:
     priority: 100
     shell:
         """
-        python {params.script_path} \
+        python -s {params.script_path} \
             --infile {input} \
             --outfile {output} \
             --dataset {wildcards.data_folder} \
@@ -393,7 +393,7 @@ rule clustering_summary:
     priority: 100
     shell:
         """
-        python {params.script_path} \
+        python -s {params.script_path} \
             --infile {input} \
             --outfile {output} \
             --dataset {wildcards.data_folder} \
@@ -419,7 +419,7 @@ rule clustering_concord_summary:
     priority: 100
     shell:
         """
-        python {params.script_path} \
+        python -s {params.script_path} \
             --infile {input} \
             --outfile {output} \
             --dataset {wildcards.data_folder} \
@@ -445,7 +445,7 @@ rule dge_ranking_stats:
     priority: 100
     shell:
         """
-        python {params.script_path} \
+        python -s {params.script_path} \
             --infile {input} \
             --outfile {output} \
             --dataset {wildcards.data_folder} \
@@ -472,7 +472,7 @@ rule dge_ranking_stats_per_cluster:
     priority: 100
     shell:
         """
-        python {params.script_path} \
+        python -s {params.script_path} \
             --infile {input} \
             --outfile {output} \
             --dataset {wildcards.data_folder} \
@@ -498,7 +498,7 @@ rule imbalance_summary:
     priority: 100
     shell:
         """
-        python {params.script_path} \
+        python -s {params.script_path} \
             --infile {input} \
             --outfile {output} \
             --dataset {wildcards.data_folder} \
@@ -524,7 +524,7 @@ rule celltype_imbalance_summary:
     priority: 100
     shell:
         """
-        python {params.script_path} \
+        python -s {params.script_path} \
             --infile {input} \
             --outfile {output} \
             --dataset {wildcards.data_folder} \
@@ -550,7 +550,7 @@ rule knn_classification:
     priority: 50
     shell:
         """
-        python {params.script_path} \
+        python -s {params.script_path} \
             --infile {input} \
             --outfile {output} \
             --dataset {wildcards.data_folder} \
@@ -573,7 +573,7 @@ rule marker_get:
     priority: 100
     shell:
         """
-        python {params.script_path} \
+        python -s {params.script_path} \
             --filedir {input} \
             --outfile {output} \
             &> {log}
@@ -598,7 +598,7 @@ rule dge_rank_marker_subset:
     priority: 100
     shell:
         """
-        python {params.script_path} \
+        python -s {params.script_path} \
             --infile_dge_rank {input.dge_file} \
             --infile_marker {input.marker_file} \
             --outfile {output} \
@@ -620,7 +620,7 @@ rule relatedness_metric:
     priority: 100
     shell:
         """
-        python {params.script_path} \
+        python -s {params.script_path} \
             --filedir {input} \
             --outfile {output} \
             --dataset {wildcards.data_folder} \
@@ -649,7 +649,7 @@ rule umap:
     priority: 100
     shell:
         """
-        python {params.script_path} \
+        python -s {params.script_path} \
             --infile {input} \
             --leiden_plot_loc {output.leiden_plot} \
             --celltype_plot_loc {output.celtype_plot} \
