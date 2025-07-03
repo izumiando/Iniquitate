@@ -11,11 +11,7 @@ import scanpy as sc
 import anndata as ann
 import numpy as np
 
-# Load integrate_helical.py and import IntegrationHelical
-helical_path = os.path.join(utils_dir, "integrate_helical.py")
-spec_helical = importlib.util.spec_from_file_location("integrate_helical", helical_path)
-integrate_helical = importlib.util.module_from_spec(spec_helical)
-spec_helical.loader.exec_module(integrate_helical)
+from utils_helical import IntegrationHelical
 
 # Load sample.py and import downsample
 sample_path = os.path.join(utils_dir, "sample.py")
