@@ -307,7 +307,7 @@ rule integrate:
     priority: 0
     shell:
         """
-        python {params.script_path} \
+        python -s {params.script_path} \
             --filedir {input} \
             --ds_celltypes {wildcards.ds_celltype} \
             --ds_proportions {wildcards.ds_proportion} \
