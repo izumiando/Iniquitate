@@ -13,6 +13,9 @@ from helical.models.geneformer.model import Geneformer, GeneformerConfig
 # for UCE step
 import os
 
+# for PCA
+from sklearn.preprocessing import StandardScaler as Scale
+from sklearn.decomposition import PCA
 
 # Undoing scvi's random seed setting
 random.seed(None)
@@ -67,6 +70,15 @@ class IntegrationHelical:
         )
         sc.tl.leiden(auce)
         sc.tl.umap(auce)
+        
+        # dimensionality reduction with PCA
+        scaler_uce = Scale()
+        uce_embeddings_scaled = scaler_uce.fit_transform(auce.obsm["X_UCE"])
+        uce_pca = PCA(n_components=20)
+        uce_embeddings_reduced = uce_pca.fit_transform(uce_embeddings_scaled)
+        auce.obsm["X_emb_reduced"] = uce_embeddings_reduced
+        auce.obsm["X_kmeans"] = auce.obsm["X_emb_reduced"][:, 0:20] # 20 is the number of PCs
+        
         print("Done!" + "\n")
         return auce
     
@@ -88,6 +100,15 @@ class IntegrationHelical:
         )
         sc.tl.leiden(ascgpt)
         sc.tl.umap(ascgpt)
+        
+        # dimensionality reduciton with PCA
+        scaler_scgpt = Scale()
+        scgpt_embeddings_scaled = scaler_scgpt.fit_transform(ascgpt.obsm["X_scGPT"])
+        scgpt_pca = PCA(n_components=20)
+        scgpt_embeddings_reduced = scgpt_pca.fit_transform(scgpt_embeddings_scaled)
+        ascgpt.obsm["X_emb_reduced"] = scgpt_embeddings_reduced
+        ascgpt.obsm["X_kmeans"] = ascgpt.obsm["X_emb_reduced"][:, 0:20] # 20 is the number of PCs
+        
         print("Done!" + "\n")
         return ascgpt
         
@@ -109,5 +130,19 @@ class IntegrationHelical:
         )
         sc.tl.leiden(ageneformer)
         sc.tl.umap(ageneformer)
+        
+        # Making sure there are no duplicate var indicies that prevent concatenation
+        # If you get similar issues with obs or for other anndata objects, run this for them as well
+        ageneformer.var.index = ageneformer.var.index.astype(str)
+        ageneformer.var_names_make_unique()
+        
+        # dimensionality reduction with PCA
+        scaler_geneformer = Scale()
+        geneformer_embeddings_scaled = scaler_geneformer.fit_transform(ageneformer.obsm["X_Geneformer"])
+        geneformer_pca = PCA(n_components=20)
+        geneformer_embeddings_reduced = geneformer_pca.fit_transform(geneformer_embeddings_scaled)
+        ageneformer.obsm["X_emb_reduced"] = geneformer_embeddings_reduced
+        ageneformer.obsm["X_kmeans"] = ageneformer.obsm["X_emb_reduced"][:, 0:20] # 20 is the number of PCs
+        
         print("Done!" + "\n")
         return ageneformer
