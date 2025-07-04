@@ -44,7 +44,7 @@
         "mem": "32G",
         "gpus": 1,
         "cpus-per-task": 10,
-        "time": "2-00:00:00",
+        "time": "4:00:00",
         "account": "def-kieranc",
         "mail-user": "izumi.ando@mail.utoronto.ca",
         "mail-type": "ALL"
