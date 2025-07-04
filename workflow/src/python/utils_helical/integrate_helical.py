@@ -43,11 +43,14 @@ class IntegrationHelical:
                 raise Exception("GPU not available. Please set gpu = False.")
         else:
             self.gpu = False
+        
+        # adding this here because this needs to be cleared before UCE gets called
+        # this assumes that uce_integrate is only called once
+        if os.path.exists("../../../test_counts.npz"):
+            os.remove("../../../test_counts.npz")
 
     def uce_integrate(self):
         print("Performing UCE integration.." + "\n")
-        if os.path.exists("../../../test_counts.npz"):
-            os.remove("../../../test_counts.npz")
         auce = self.adata.copy()
         configurer_uce = UCEConfig(model_name="33l_8ep_1024t_1280", device="cuda")
         uce = UCE(configurer=configurer_uce)
