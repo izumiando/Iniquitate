@@ -19,10 +19,6 @@ spec_sample = importlib.util.spec_from_file_location("sample", sample_path)
 sample = importlib.util.module_from_spec(spec_sample)
 spec_sample.loader.exec_module(sample)
 
-# to fix concat problems - April 16th, 2025
-from sklearn.preprocessing import StandardScaler as Scale
-from sklearn.decomposition import PCA
-
 def none_or_str(value):
     if value == 'None':
         return None
@@ -101,31 +97,8 @@ def main(h5ad_dir, save_loc, ds_celltypes, ds_proportions, num_batches, seed):
     scgpt_integrated.obs["integration_method"] = "scgpt"
     geneformer_integrated.obs["integration_method"] = "geneformer"
     
-    # Making sure there are no duplicate var indicies that prevent concatenation
-    # If you get similar issues with obs or for other anndata objects, run this for them as well
-    geneformer_integrated.var.index = geneformer_integrated.var.index.astype(str)
-    geneformer_integrated.var_names_make_unique()
-    
-    geneformer_integrated.var = uce_integrated.var
+    geneformer_integrated.var = uce_integrated.var # might cause errors because code below was moved
     scgpt_integrated.var = uce_integrated.var
-    scaler_uce = Scale()
-    scaler_scgpt = Scale()
-    scaler_geneformer = Scale()
-    
-    uce_embeddings_scaled = scaler_uce.fit_transform(uce_integrated.obsm["X_UCE"])
-    scgpt_embeddings_scaled = scaler_scgpt.fit_transform(scgpt_integrated.obsm["X_scGPT"])
-    geneformer_embeddings_scaled = scaler_geneformer.fit_transform(geneformer_integrated.obsm["X_Geneformer"])
-
-    uce_pca = PCA(n_components=20)
-    uce_embeddings_reduced = uce_pca.fit_transform(uce_embeddings_scaled)
-    scgpt_pca = PCA(n_components=20)
-    scgpt_embeddings_reduced = scgpt_pca.fit_transform(scgpt_embeddings_scaled)
-    geneformer_pca = PCA(n_components=20)
-    geneformer_embeddings_reduced = geneformer_pca.fit_transform(geneformer_embeddings_scaled)
-
-    uce_integrated.obsm["X_emb_reduced"] = uce_embeddings_reduced
-    scgpt_integrated.obsm["X_emb_reduced"] = scgpt_embeddings_reduced
-    geneformer_integrated.obsm["X_emb_reduced"] = geneformer_embeddings_reduced
     
     integrated_concat = ann.concat([
         uce_integrated,

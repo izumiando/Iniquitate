@@ -97,7 +97,8 @@ if config["celltype_list"] == "No":
                     outputs = zip(
                         [
                             "integrated_results",
-                            "integrated_results",
+                            "integrated_results/helical_part1",
+                            "integrated_results/helical_part2",
                             "downsample_summaries",
                             "clustering_summaries",
                             "clustering_concord_summaries",
@@ -113,7 +114,8 @@ if config["celltype_list"] == "No":
                         ],
                         [
                             "integrated",
-                            "integrated_helical"
+                            "integrated_helical_p1",
+                            "integrated_helical_p2",
                             "downsample_summary",
                             "clustering_summary",
                             "clustering_concord_summary",
@@ -128,6 +130,7 @@ if config["celltype_list"] == "No":
                             "umap_batch"
                         ],
                         [
+                            "h5ad",
                             "h5ad",
                             "h5ad",
                             "tsv",
@@ -168,7 +171,8 @@ if config["celltype_list"] == "No":
                         outputs = zip(
                             [
                                 "integrated_results",
-                                "integrateD_results",
+                                "integrated_results/helical_part1",
+                                "integrated_results/helical_part2",
                                 "downsample_summaries",
                                 "clustering_summaries",
                                 "clustering_concord_summaries",
@@ -178,7 +182,8 @@ if config["celltype_list"] == "No":
                             ],
                             [
                                 "integrated",
-                                "integrated_helical",
+                                "integrated_helical_p1",
+                                "integrated_helical_p2",
                                 "downsample_summary",
                                 "clustering_summary",
                                 "clustering_concord_summary",
@@ -187,6 +192,7 @@ if config["celltype_list"] == "No":
                                 "knn_classification"
                             ],
                             [
+                                "h5ad",
                                 "h5ad",
                                 "h5ad",
                                 "tsv",
@@ -235,7 +241,8 @@ if config["celltype_list"] == "No":
                         outputs = zip(
                             [
                                 "integrated_results",
-                                "integrated_results",
+                                "integrated_results/helical_part1",
+                                "integrated_results/helical_part2",
                                 "downsample_summaries",
                                 "clustering_summaries",
                                 "clustering_concord_summaries",
@@ -248,7 +255,8 @@ if config["celltype_list"] == "No":
                             ],
                             [
                                 "integrated",
-                                "integrated_helical",
+                                "integrated_helical_p1",
+                                "integrated_helical_p2",
                                 "downsample_summary",
                                 "clustering_summary",
                                 "clustering_concord_summary",
@@ -260,6 +268,7 @@ if config["celltype_list"] == "No":
                                 "knn_classification"
                             ],
                             [
+                                "h5ad",
                                 "h5ad",
                                 "h5ad",
                                 "tsv",
@@ -323,14 +332,14 @@ rule integrate_helical:
     input:
         "../resources/h5ad_files/int_datasets/{data_folder}"
     output:
-        "/home/andoizum/scratch/results/{configname}/integrated_results/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_helical.h5ad"
+        "/home/andoizum/scratch/results/{configname}/integrated_results/helical_part1/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_helical_p1.h5ad"
     params:
         script_path = "scripts/python/integrate_data_helical.py",
         seed = lambda wildcards: seed_from_wildcards(**wildcards)
     log:
-        "logs/{configname}/integrate/integrate_{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_helical.log"
+        "logs/{configname}/integrate/helical_part1/integrate_{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "_downsample_{num_batches}_batch_ds_c_{rep}_helical_p1.log"
     priority: 0
     resources:
         mem_mb=100000
@@ -348,6 +357,31 @@ rule integrate_helical:
             &> {log}
         """
 
+
+# Kmeans clustering step for h5ad files integrated using UCE, scGPT, and Geneformer from Helical
+# This rule was made to avoid dependency issues with the helical and faiss packages
+rule helical_kmeans:
+    conda:
+        "envs/integrate.yaml"
+    input:
+        "/home/andoizum/scratch/results/{configname}/integrated_results/helical_part1/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_helical_p1.h5ad"
+    output:
+        "/home/andoizum/scratch/results/{configname}/integrated_results/helical_part2/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_helical_p2.h5ad"
+    params:
+        "scripts/python/helical_kmeans.py"
+    log:
+        "logs/{configname}/integrate/helical_part2/integrate_{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "_downsample_{num_batches}_batch_ds_c_{rep}_helical_p2.log"
+    priority: 0
+    shell:
+        """
+        python -s {params} \
+            --inputfile {input} \
+            --outfile {output} \
+            &> {log}
+        """
 
 # Get summary results of downsampling - dataset based
 rule downsample_summary:
