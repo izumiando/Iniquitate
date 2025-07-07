@@ -96,9 +96,10 @@ if config["celltype_list"] == "No":
                     dataset = get_combinations(config, "int_datasets"),
                     outputs = zip(
                         [
-                            "integrated_results",
+                            "integrated_results/baseline",
                             "integrated_results/helical_part1",
                             "integrated_results/helical_part2",
+                            "integrated_results/concatenated",
                             "downsample_summaries",
                             "clustering_summaries",
                             "clustering_concord_summaries",
@@ -113,9 +114,10 @@ if config["celltype_list"] == "No":
                             "umap_plots"
                         ],
                         [
-                            "integrated",
+                            "integrated_baseline",
                             "integrated_helical_p1",
                             "integrated_helical_p2",
+                            "integrated_concat",
                             "downsample_summary",
                             "clustering_summary",
                             "clustering_concord_summary",
@@ -130,6 +132,7 @@ if config["celltype_list"] == "No":
                             "umap_batch"
                         ],
                         [
+                            "h5ad",
                             "h5ad",
                             "h5ad",
                             "h5ad",
@@ -170,9 +173,10 @@ if config["celltype_list"] == "No":
                         dataset = get_combinations(config, "int_datasets"),
                         outputs = zip(
                             [
-                                "integrated_results",
+                                "integrated_results/baseline",
                                 "integrated_results/helical_part1",
                                 "integrated_results/helical_part2",
+                                "integrated_results/concatenated",
                                 "downsample_summaries",
                                 "clustering_summaries",
                                 "clustering_concord_summaries",
@@ -181,9 +185,10 @@ if config["celltype_list"] == "No":
                                 "knn_classification_reports"
                             ],
                             [
-                                "integrated",
+                                "integrated_baseline",
                                 "integrated_helical_p1",
                                 "integrated_helical_p2",
+                                "integrated_concat",
                                 "downsample_summary",
                                 "clustering_summary",
                                 "clustering_concord_summary",
@@ -192,6 +197,7 @@ if config["celltype_list"] == "No":
                                 "knn_classification"
                             ],
                             [
+                                "h5ad",
                                 "h5ad",
                                 "h5ad",
                                 "h5ad",
@@ -240,9 +246,10 @@ if config["celltype_list"] == "No":
                         dataset = get_combinations(config, "int_datasets"),
                         outputs = zip(
                             [
-                                "integrated_results",
+                                "integrated_results/baseline",
                                 "integrated_results/helical_part1",
                                 "integrated_results/helical_part2",
+                                "integrated_results/concatenated",
                                 "downsample_summaries",
                                 "clustering_summaries",
                                 "clustering_concord_summaries",
@@ -254,9 +261,10 @@ if config["celltype_list"] == "No":
                                 "knn_classification_reports"
                             ],
                             [
-                                "integrated",
+                                "integrated_baseline",
                                 "integrated_helical_p1",
                                 "integrated_helical_p2",
+                                "integrated_concat",
                                 "downsample_summary",
                                 "clustering_summary",
                                 "clustering_concord_summary",
@@ -268,6 +276,7 @@ if config["celltype_list"] == "No":
                                 "knn_classification"
                             ],
                             [
+                                "h5ad",
                                 "h5ad",
                                 "h5ad",
                                 "h5ad",
@@ -305,14 +314,14 @@ rule integrate:
     input:
         "../resources/h5ad_files/int_datasets/{data_folder}"
     output:
-        "/home/andoizum/scratch/results/{configname}/integrated_results/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_integrated.h5ad"
+        "/home/andoizum/scratch/results/{configname}/integrated_results/baseline/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_baseline.h5ad"
     params:
         script_path = "scripts/python/integrate_data.py",
         seed = lambda wildcards: seed_from_wildcards(**wildcards)
     log:
-        "logs/{configname}/integrate/integrate_{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}.log"
+        "logs/{configname}/integrate/baseline/integrate_{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "_downsample_{num_batches}_batch_ds_c_{rep}_baseline.log"
     priority: 0
     shell:
         """
@@ -382,6 +391,35 @@ rule helical_kmeans:
             --outfile {output} \
             &> {log}
         """
+
+# Concatenate the two parts of integration (baseline and helical/foundation models) into one h5ad file
+# The outputs are taken fron the rules integrate and helical_kmeans
+rule integrate_output_concat:
+    conda:
+        "envs/integrate.yaml"
+    input:
+        baseline = "/home/andoizum/scratch/results/{configname}/integrated_results/baseline/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_baseline.h5ad",
+        helical = "/home/andoizum/scratch/results/{configname}/integrated_results/helical_part2/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_helical_p2.h5ad"
+    output:
+        "/home/andoizum/scratch/results/{configname}/integrated_results/concatenated/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_concat.h5ad"
+    params:
+        script_path = "scripts/python/integrate_output_concat.py"
+    log:
+        "logs/{configname}/integrate/integrate_output_concat/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "_downsample_{num_batches}_batch_ds_c_{rep}_integrate_output_concat.log"
+    priority: 0
+    shell:
+        """
+        python -s {params.script_path} \
+            --baseline {input.baseline} \
+            --helical {input.helical} \
+            --outfile {output} \
+            &> {log}
+        """
+
 
 # Get summary results of downsampling - dataset based
 rule downsample_summary:
