@@ -426,8 +426,8 @@ rule downsample_summary:
     conda:
         "envs/integrate.yaml"
     input:
-        "/home/andoizum/scratch/results/{configname}/integrated_results/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_integrated.h5ad"
+        "/home/andoizum/scratch/results/{configname}/integrated_results/concatenated/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_concat.h5ad"
     output:
         "/home/andoizum/scratch/results/{configname}/downsample_summaries/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
         "_downsample_{num_batches}_batch_ds_c_{rep}_downsample_summary.tsv"
@@ -452,8 +452,8 @@ rule clustering_summary:
     conda:
         "envs/integrate.yaml"
     input:
-        "/home/andoizum/scratch/results/{configname}/integrated_results/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_integrated.h5ad"
+        "/home/andoizum/scratch/results/{configname}/integrated_results/concatenated/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_concat.h5ad"
     output:
         "/home/andoizum/scratch/results/{configname}/clustering_summaries/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
         "_downsample_{num_batches}_batch_ds_c_{rep}_clustering_summary.tsv"
@@ -478,8 +478,8 @@ rule clustering_concord_summary:
     conda:
         "envs/integrate.yaml"
     input:
-        "/home/andoizum/scratch/results/{configname}/integrated_results/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_integrated.h5ad"
+        "/home/andoizum/scratch/results/{configname}/integrated_results/concatenated/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_concat.h5ad"
     output:
         "/home/andoizum/scratch/results/{configname}/clustering_concord_summaries/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
         "_downsample_{num_batches}_batch_ds_c_{rep}_clustering_concord_summary.tsv"
@@ -504,8 +504,8 @@ rule dge_ranking_stats:
     conda:
         "envs/integrate.yaml"
     input:
-        "/home/andoizum/scratch/results/{configname}/integrated_results/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_integrated.h5ad"
+        "/home/andoizum/scratch/results/{configname}/integrated_results/concatenated/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_concat.h5ad"
     output:
         "/home/andoizum/scratch/results/{configname}/dge_ranking_stats/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
         "_downsample_{num_batches}_batch_ds_c_{rep}_dge_ranking_stats.tsv"
@@ -531,8 +531,8 @@ rule dge_ranking_stats_per_cluster:
     conda:
         "envs/integrate.yaml"
     input:
-        "/home/andoizum/scratch/results/{configname}/integrated_results/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_integrated.h5ad"
+        "/home/andoizum/scratch/results/{configname}/integrated_results/concatenated/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_concat.h5ad"
     output:
         "/home/andoizum/scratch/results/{configname}/dge_ranking_results_per_cluster/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
         "_downsample_{num_batches}_batch_ds_c_{rep}_dge_ranking_results_per_cluster.tsv"
@@ -557,8 +557,8 @@ rule imbalance_summary:
     conda:
         "envs/integrate.yaml"
     input:
-        "/home/andoizum/scratch/results/{configname}/integrated_results/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_integrated.h5ad"
+        "/home/andoizum/scratch/results/{configname}/integrated_results/concatenated/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_concat.h5ad"
     output:
         "/home/andoizum/scratch/results/{configname}/imbalance_summaries/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
         "_downsample_{num_batches}_batch_ds_c_{rep}_imbalance_summary.tsv"
@@ -583,8 +583,8 @@ rule celltype_imbalance_summary:
     conda:
         "envs/integrate.yaml"
     input:
-        "/home/andoizum/scratch/results/{configname}/integrated_results/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_integrated.h5ad"
+        "/home/andoizum/scratch/results/{configname}/integrated_results/concatenated/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_concat.h5ad"
     output:
         "/home/andoizum/scratch/results/{configname}/celltype_imbalance_summaries/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
         "_downsample_{num_batches}_batch_ds_c_{rep}_celltype_imbalance_summary.tsv"
@@ -609,8 +609,8 @@ rule knn_classification:
     conda:
         "envs/integrate.yaml"
     input:
-        "/home/andoizum/scratch/results/{configname}/integrated_results/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_integrated.h5ad"
+        "/home/andoizum/scratch/results/{configname}/integrated_results/concatenated/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_concat.h5ad"
     output:
         "/home/andoizum/scratch/results/{configname}/knn_classification_reports/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
         "_downsample_{num_batches}_batch_ds_c_{rep}_knn_classification.tsv"
@@ -704,8 +704,8 @@ rule umap:
     conda:
         "envs/integrate.yaml"
     input:
-        "/home/andoizum/scratch/results/{configname}/integrated_results/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_integrated.h5ad"
+        "/home/andoizum/scratch/results/{configname}/integrated_results/concatenated/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_concat.h5ad"
     output:
         leiden_plot = "/home/andoizum/scratch/results/{configname}/umap_plots/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
         "_downsample_{num_batches}_batch_ds_c_{rep}_umap_leiden.pdf",
