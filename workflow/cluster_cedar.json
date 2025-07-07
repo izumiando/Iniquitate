@@ -2,7 +2,8 @@
     "install":
     {
         "mem": "32G",
-        "gpus": 1, // not necessary but sbatch won't take --gres=gpu:0
+        "gpus": 1,
+        "__note": "gpus not necessary but sbatch won't take --gres=gpu:0",
         "cpus-per-task": 10,
         "time": "2-00:00:00",
         "account": "def-kieranc",
@@ -13,6 +14,7 @@
     {
         "mem": "100G",
         "gpus": 1,
+        "__note": "gpus needed",
         "cpus-per-task": 10,
         "time": "4:00:00",
         "account": "def-kieranc",
@@ -22,7 +24,8 @@
     "leiden_aggregate":
     {
         "mem": "32G",
-        "gpus": 1, // not necessary but sbatch won't take --gres=gpu:0
+        "gpus": 1,
+        "__note": "gpus not necessary but sbatch won't take --gres=gpu:0",
         "cpus-per-task": 10,
         "time": "4:00:00",
         "account": "def-kieranc",
@@ -33,6 +36,7 @@
     {
         "mem": "100G",
         "gpus": 1,
+        "__note": "gpus needed",
         "cpus-per-task": 10,
         "time": "4:00:00",
         "account": "def-kieranc",
@@ -43,6 +47,7 @@
     {
         "mem": "32G",
         "gpus": 1,
+        "__note": "gpus needed",
         "cpus-per-task": 10,
         "time": "4:00:00",
         "account": "def-kieranc",
@@ -53,6 +58,7 @@
     {
         "mem": "32G",
         "gpus": 1,
+        "__note": "gpus needed",
         "cpus-per-task": 10,
         "time": "4:00:00",
         "account": "def-kieranc",
@@ -62,7 +68,8 @@
     "integrate_output_concat":
     {
         "mem": "32G",
-        "gpus": 1, // not necessary but sbatch won't take --gres=gpu:0
+        "gpus": 1,
+        "__note": "gpus not necessary but sbatch won't take --gres=gpu:0",
         "cpus-per-task": 10,
         "time": "0:30:00",
         "account": "def-kieranc",
@@ -102,7 +109,8 @@
     "downsample_summary":
     {
         "mem": "32G",
-        "gpus": 1, // not necessary but sbatch won't take --gres=gpu:0
+        "gpus": 1,
+        "__note": "gpus not necessary but sbatch won't take --gres=gpu:0",
         "cpus-per-task": 10,
         "time": "4:00:00",
         "account": "def-kieranc",
@@ -112,7 +120,8 @@
     "celltype_imbalance_summary":
     {
         "mem": "32G",
-        "gpus": 1, // not necessary but sbatch won't take --gres=gpu:0
+        "gpus": 1,
+        "__note": "gpus not necessary but sbatch won't take --gres=gpu:0",
         "cpus-per-task": 10,
         "time": "4:00:00",
         "account": "def-kieranc",
@@ -122,7 +131,8 @@
     "clustering_summary":
     {
         "mem": "32G",
-        "gpus": 1, // not necessary but sbatch won't take --gres=gpu:0
+        "gpus": 1,
+        "__note": "gpus not necessary but sbatch won't take --gres=gpu:0",
         "cpus-per-task": 10,
         "time": "4:00:00",
         "account": "def-kieranc",
@@ -132,7 +142,8 @@
     "clustering_concord_summary":
     {
         "mem": "32G",
-        "gpus": 1, // not necessary but sbatch won't take --gres=gpu:0
+        "gpus": 1,
+        "__note": "gpus not necessary but sbatch won't take --gres=gpu:0",
         "cpus-per-task": 10,
         "time": "4:00:00",
         "account": "def-kieranc",
@@ -141,7 +152,8 @@
     },
     "dge_concord_full": {
         "mem": "64G",
-        "gpus": 1, // not necessary but sbatch won't take --gres=gpu:0
+        "gpus": 1,
+        "__note": "gpus not necessary but sbatch won't take --gres=gpu:0",
         "cpus-per-task": 10,
         "time": "4:00:00",
         "account": "def-kieranc",
@@ -150,7 +162,8 @@
     },
     "dge_concord_stats": {
         "mem": "64G",
-        "gpus": 1, // not necessary but sbatch won't take --gres=gpu:0
+        "gpus": 1,
+        "__note": "gpus not necessary but sbatch won't take --gres=gpu:0",
         "cpus-per-task": 10,
         "time": "4:00:00",
         "account": "def-kieranc",
@@ -159,7 +172,8 @@
     },
     "dge_ranking_stats": {
         "mem": "32G",
-        "gpus": 1, // not necessary but sbatch won't take --gres=gpu:0
+        "gpus": 1,
+        "__note": "gpus not necessary but sbatch won't take --gres=gpu:0",
         "cpus-per-task": 10,
         "time": "4:00:00",
         "account": "def-kieranc",
@@ -168,7 +182,8 @@
     },
     "dge_ranking_stats_per_cluster": {
         "mem": "64G",
-        "gpus": 1, // not necessary but sbatch won't take --gres=gpu:0
+        "gpus": 1,
+        "__note": "gpus not necessary but sbatch won't take --gres=gpu:0",
         "cpus-per-task": 10,
         "time": "4:00:00",
         "account": "def-kieranc",
@@ -178,7 +193,8 @@
     "imbalance_summary":
     {
         "mem": "32G",
-        "gpus": 1, // not necessary but sbatch won't take --gres=gpu:0
+        "gpus": 1,
+        "__note": "gpus not necessary but sbatch won't take --gres=gpu:0",
         "cpus-per-task": 10,
         "time": "4:00:00",
         "account": "def-kieranc",
@@ -188,7 +204,8 @@
     "imbalance_summary_paga":
     {
         "mem": "32G",
-        "gpus": 1, // not necessary but sbatch won't take --gres=gpu:0
+        "gpus": 1,
+        "__note": "gpus not necessary but sbatch won't take --gres=gpu:0",
         "cpus-per-task": 10,
         "time": "4:00:00",
         "account": "def-kieranc",
@@ -198,7 +215,8 @@
     "paga_scoring":
     {
         "mem": "32G",
-        "gpus": 1, // not necessary but sbatch won't take --gres=gpu:0
+        "gpus": 1,
+        "__note": "gpus not necessary but sbatch won't take --gres=gpu:0",
         "cpus-per-task": 10,
         "time": "4:00:00",
         "account": "def-kieranc",
@@ -208,7 +226,8 @@
     "knn_classification":
     {
         "mem": "32G",
-        "gpus": 1, // not necessary but sbatch won't take --gres=gpu:0
+        "gpus": 1,
+        "__note": "gpus not necessary but sbatch won't take --gres=gpu:0",
         "cpus-per-task": 10,
         "time": "4:00:00",
         "account": "def-kieranc",
@@ -218,7 +237,8 @@
     "knn_clustering_classification":
     {
         "mem": "32G",
-        "gpus": 1, // not necessary but sbatch won't take --gres=gpu:0
+        "gpus": 1,
+        "__note": "gpus not necessary but sbatch won't take --gres=gpu:0",
         "cpus-per-task": 10,
         "time": "4:00:00",
         "account": "def-kieranc",
@@ -227,7 +247,8 @@
     },
     "marker_get":{
         "mem": "32G",
-        "gpus": 1, // not necessary but sbatch won't take --gres=gpu:0
+        "gpus": 1,
+        "__note": "gpus not necessary but sbatch won't take --gres=gpu:0",
         "cpus-per-task": 10,
         "time": "4:00:00",
         "account": "def-kieranc",
@@ -236,7 +257,8 @@
     },
     "dge_rank_marker_subset":{
         "mem": "64G",
-        "gpus": 1, // not necessary but sbatch won't take --gres=gpu:0
+        "gpus": 1,
+        "__note": "gpus not necessary but sbatch won't take --gres=gpu:0",
         "cpus-per-task": 10,
         "time": "4:00:00",
         "account": "def-kieranc",
@@ -245,7 +267,8 @@
     },
     "annotation_score":{
         "mem": "32G",
-        "gpus": 1, // not necessary but sbatch won't take --gres=gpu:0
+        "gpus": 1,
+        "__note": "gpus not necessary but sbatch won't take --gres=gpu:0",
         "cpus-per-task": 10,
         "time": "4:00:00",
         "account": "def-kieranc",
@@ -254,7 +277,8 @@
     },
     "annotation_result":{
         "mem": "32G",
-        "gpus": 1, // not necessary but sbatch won't take --gres=gpu:0
+        "gpus": 1,
+        "__note": "gpus not necessary but sbatch won't take --gres=gpu:0",
         "cpus-per-task": 10,
         "time": "4:00:00",
         "account": "def-kieranc",
@@ -263,7 +287,8 @@
     },
     "relatedness_metric":{
         "mem": "32G",
-        "gpus": 1, // not necessary but sbatch won't take --gres=gpu:0
+        "gpus": 1,
+        "__note": "gpus not necessary but sbatch won't take --gres=gpu:0",
         "cpus-per-task": 10,
         "time": "4:00:00",
         "account": "def-kieranc",
@@ -272,7 +297,8 @@
     },
     "downsample_control":{
         "mem": "32G",
-        "gpus": 1, // not necessary but sbatch won't take --gres=gpu:0
+        "gpus": 1,
+        "__note": "gpus not necessary but sbatch won't take --gres=gpu:0",
         "cpus-per-task": 10,
         "time": "4:00:00",
         "account": "def-kieranc",
@@ -281,7 +307,8 @@
     },
     "dge_ranking_stats_control":{
         "mem": "64G",
-        "gpus": 1, // not necessary but sbatch won't take --gres=gpu:0
+        "gpus": 1,
+        "__note": "gpus not necessary but sbatch won't take --gres=gpu:0",
         "cpus-per-task": 10,
         "time": "4:00:00",
         "account": "def-kieranc",
@@ -290,7 +317,8 @@
     },
     "dge_rank_control_marker_subset":{
         "mem": "64G",
-        "gpus": 1, // not necessary but sbatch won't take --gres=gpu:0
+        "gpus": 1,
+        "__note": "gpus not necessary but sbatch won't take --gres=gpu:0",
         "cpus-per-task": 10,
         "time": "4:00:00",
         "account": "def-kieranc",
@@ -299,7 +327,8 @@
     },
     "control_imbalance_summary":{
         "mem": "32G",
-        "gpus": 1, // not necessary but sbatch won't take --gres=gpu:0
+        "gpus": 1,
+        "__note": "gpus not necessary but sbatch won't take --gres=gpu:0",
         "cpus-per-task": 10,
         "time": "4:00:00",
         "account": "def-kieranc",
@@ -308,7 +337,8 @@
     },
     "umap":{
         "mem": "64G",
-        "gpus": 1, // not necessary but sbatch won't take --gres=gpu:0
+        "gpus": 1,
+        "__note": "gpus not necessary but sbatch won't take --gres=gpu:0",
         "cpus-per-task": 10,
         "time": "4:00:00",
         "account": "def-kieranc",
