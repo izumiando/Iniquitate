@@ -43,10 +43,11 @@ class Integration:
         print("Performing scVI integration.." + "\n")
         ascvi = self.adata.copy()
         scvi.data.setup_anndata(ascvi, batch_key = "batch")
-        vae = scvi.model.SCVI(ascvi)
+        vae = scvi.model.SCVI(adata=ascvi, n_latent=20) # specifying n_latent to be 20, as this is the default in scVI
         vae.train(use_gpu = self.gpu, max_epochs = 100) #reducing epochs for scVI
         ascvi.obsm["X_scVI"] = vae.get_latent_representation()
         ascvi.obsm["X_kmeans"] = ascvi.obsm["X_scVI"][:, 0:n_pcs]
+        print("(for debugging purposes) ascvi.obsm["X_kmeans"] shape: ", ascvi.obsm["X_kmeans"].shape)　# delete this line later
         sc.pp.neighbors(
             ascvi,
             n_neighbors = n_neighbors,
@@ -84,6 +85,7 @@ class Integration:
             use_rep = "X_pca_harmony"
         )
         aharmony.obsm["X_kmeans"] = aharmony.obsm["X_pca_harmony"][:, 0:n_pcs]
+        print("(for debugging purposes) aharmony.obsm["X_kmeans"] shape: ", aharmony.obsm["X_kmeans"].shape) 　# delete this line later
         sc.tl.leiden(aharmony)
         sc.tl.umap(aharmony)
         print("Done!" + "\n")
