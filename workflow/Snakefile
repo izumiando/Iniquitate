@@ -331,7 +331,7 @@ rule integrate:
         script_path = "scripts/python/integrate_data.py",
         seed = lambda wildcards: seed_from_wildcards(**wildcards)
     log:
-        "logs/{configname}/integrate/baseline/integrate_{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "{output_file_dir}/logs/{configname}/integrate/baseline/integrate_{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
         "_downsample_{num_batches}_batch_ds_c_{rep}_baseline.log"
     priority: 0
     shell:
@@ -358,7 +358,7 @@ rule integrate_helical:
         script_path = "scripts/python/integrate_data_helical.py",
         seed = lambda wildcards: seed_from_wildcards(**wildcards)
     log:
-        "logs/{configname}/integrate/helical_part1/integrate_{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "{output_file_dir}/logs/{configname}/integrate/helical_part1/integrate_{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
         "_downsample_{num_batches}_batch_ds_c_{rep}_helical_p1.log"
     priority: 0
     resources:
@@ -392,7 +392,7 @@ rule helical_kmeans:
     params:
         "scripts/python/helical_kmeans.py"
     log:
-        "logs/{configname}/integrate/helical_part2/integrate_{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "{output_file_dir}/logs/{configname}/integrate/helical_part2/integrate_{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
         "_downsample_{num_batches}_batch_ds_c_{rep}_helical_p2.log"
     priority: 0
     shell:
@@ -419,7 +419,7 @@ rule integrate_output_concat:
     params:
         script_path = "scripts/python/integrate_output_concat.py"
     log:
-        "logs/{configname}/integrate/integrate_output_concat/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "{output_file_dir}/logs/{configname}/integrate/integrate_output_concat/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
         "_downsample_{num_batches}_batch_ds_c_{rep}_integrate_output_concat.log"
     priority: 0
     shell:
@@ -445,7 +445,7 @@ rule downsample_summary:
     params:
         script_path = "scripts/python/downsample_summary.py",
     log:
-        "logs/{configname}/downsample_summary/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "{output_file_dir}/logs/{configname}/downsample_summary/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
         "_downsample_{num_batches}_batch_ds_c_{rep}_downsample_summary.log"
     priority: 100
     shell:
@@ -471,7 +471,7 @@ rule clustering_summary:
     params:
         script_path = "scripts/python/clustering_stats.py",
     log:
-        "logs/{configname}/clustering_summary/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "{output_file_dir}/logs/{configname}/clustering_summary/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
         "_downsample_{num_batches}_batch_ds_c_{rep}_clustering_summary.log"
     priority: 100
     shell:
@@ -497,7 +497,7 @@ rule clustering_concord_summary:
     params:
         script_path = "scripts/python/clustering_concordance.py",
     log:
-        "logs/{configname}/clustering_concord_summary/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "{output_file_dir}/logs/{configname}/clustering_concord_summary/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
         "_downsample_{num_batches}_batch_ds_c_{rep}_clustering_concord_summary.log"
     priority: 100
     shell:
@@ -523,7 +523,7 @@ rule dge_ranking_stats:
     params:
         script_path = "scripts/python/dge_ranking_concordance.py",
     log:
-        "logs/{configname}/dge_ranking_stats/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "{output_file_dir}/logs/{configname}/dge_ranking_stats/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
         "_downsample_{num_batches}_batch_ds_c_{rep}_dge_ranking_stats.log"
     priority: 100
     shell:
@@ -550,7 +550,7 @@ rule dge_ranking_stats_per_cluster:
     params:
         script_path = "scripts/python/dge_ranking_per_cluster.py",
     log:
-        "logs/{configname}/dge_ranking_results_per_cluster/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "{output_file_dir}/logs/{configname}/dge_ranking_results_per_cluster/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
         "_downsample_{num_batches}_batch_ds_c_{rep}_dge_ranking_results_per_cluster.log"
     priority: 100
     shell:
@@ -576,7 +576,7 @@ rule imbalance_summary:
     params:
         script_path = "scripts/python/imbalance_summary.py",
     log:
-        "logs/{configname}/imbalance_summary/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "{output_file_dir}/logs/{configname}/imbalance_summary/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
         "_downsample_{num_batches}_batch_ds_c_{rep}_imbalance_summary.log"
     priority: 100
     shell:
@@ -602,7 +602,7 @@ rule celltype_imbalance_summary:
     params:
         script_path = "scripts/python/celltype_imbalance_summary.py",
     log:
-        "logs/{configname}/celltype_imbalance_summaries/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "{output_file_dir}/logs/{configname}/celltype_imbalance_summaries/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
         "_downsample_{num_batches}_batch_ds_c_{rep}_celltype_imbalance_summary.log"
     priority: 100
     shell:
@@ -628,7 +628,7 @@ rule knn_classification:
     params:
         script_path = "scripts/python/knn_classification.py",
     log:
-        "logs/{configname}/knn_classification_report/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "{output_file_dir}/logs/{configname}/knn_classification_report/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
         "_downsample_{num_batches}_batch_ds_c_{rep}_knn_classification.log"
     priority: 50
     shell:
@@ -652,7 +652,7 @@ rule marker_get:
     params:
         script_path = "scripts/python/marker_get.py",
     log:
-        "logs/{configname}/marker_get/{data_folder}_preintegration_marker_selection.log"
+        "{output_file_dir}/logs/{configname}/marker_get/{data_folder}_preintegration_marker_selection.log"
     priority: 100
     shell:
         """
@@ -676,7 +676,7 @@ rule dge_rank_marker_subset:
     params:
         script_path = "scripts/python/dge_ranking_marker_subset.py",
     log:
-        "logs/{configname}/dge_ranking_stats_marker_sub/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "{output_file_dir}/logs/{configname}/dge_ranking_stats_marker_sub/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
         "_downsample_{num_batches}_batch_ds_c_{rep}_dge_ranking_stats_marker_sub.log"
     priority: 100
     shell:
@@ -699,7 +699,7 @@ rule relatedness_metric:
     params:
         script_path = "scripts/python/relatedness_metric.py"
     log:
-        "logs/{configname}/relatedness_results/{data_folder}_celltype_relatedness.log"
+        "{output_file_dir}/logs/{configname}/relatedness_results/{data_folder}_celltype_relatedness.log"
     priority: 100
     shell:
         """
@@ -727,7 +727,7 @@ rule umap:
     params:
         script_path = "scripts/python/umap_plots.py"
     log:
-        "logs/{configname}/umap_plots/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "{output_file_dir}/{configname}/umap_plots/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
         "_downsample_{num_batches}_batch_ds_c_{rep}_umap_plots.log"
     priority: 100
     shell:
