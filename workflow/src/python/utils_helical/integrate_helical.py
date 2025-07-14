@@ -17,11 +17,6 @@ import os
 from sklearn.preprocessing import StandardScaler as Scale
 from sklearn.decomposition import PCA
 
-# Undoing scvi's random seed setting
-random.seed(None)
-np.random.seed(None)
-torch.manual_seed(random.randint(1, 10000000000000000000))
-
 class IntegrationHelical:
     """Class for integrating scRNA-seq data and returning processed data."""
     
