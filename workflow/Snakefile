@@ -342,6 +342,7 @@ rule integrate:
             --ds_proportions {wildcards.ds_proportion} \
             --num_batches {wildcards.num_batches} \
             --outfile {output} \
+            --seed {params.seed} \
             &> {log}
         """
 
@@ -374,6 +375,7 @@ rule integrate_helical:
             --ds_proportions {wildcards.ds_proportion} \
             --num_batches {wildcards.num_batches} \
             --outfile {output} \
+            --seed {params.seed} \
             &> {log}
         """
 
