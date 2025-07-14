@@ -101,6 +101,9 @@ def main(h5ad_dir, save_loc, ds_celltypes, ds_proportions, num_batches, seed):
     )
     ################### above section is for debugging numpy error in uce integration ###################
     
+    # Checking number of cells
+    print(f"Input cells: {adata_concat.n_obs}\n")
+
     # Create integration class instance 
     integration = IntegrationHelical(adata = adata_concat)
     
@@ -109,6 +112,11 @@ def main(h5ad_dir, save_loc, ds_celltypes, ds_proportions, num_batches, seed):
     scgpt_integrated = integration.scgpt_integrate()
     geneformer_integrated = integration.geneformer_integrate()
     
+    # Checking number of cells post integration
+    print(f"UCE cells: {uce_integrated.n_obs}\n")
+    print(f"scGPT cells: {scgpt_integrated.n_obs}\n")
+    print(f"Geneformer cells: {geneformer_integrated.n_obs}\n")
+
     # Add integration type to each subset and concatenate
     uce_integrated.obs["integration_method"] = "uce" 
     scgpt_integrated.obs["integration_method"] = "scgpt"
