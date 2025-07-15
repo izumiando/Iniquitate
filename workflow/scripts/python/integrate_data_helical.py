@@ -163,6 +163,12 @@ def main(h5ad_dir, save_loc, ds_celltypes, ds_proportions, num_batches, seed):
             "downsampled_celltypes": selected_celltypes_downsampled
         }
     
+    #### for debugging seeding error July 15 ####
+    print(integrated_concat.uns["downsampling_stats"])
+    print("Stopping early")
+    exit()
+    #### for debugging seeding error July 15 ####
+    
     output_dir = os.path.dirname(save_loc)
 
     if not os.path.exists(output_dir):
