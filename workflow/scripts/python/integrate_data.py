@@ -180,11 +180,9 @@ def main(h5ad_dir, save_loc, ds_celltypes, ds_proportions, num_batches, seed):
             "downsampled_celltypes": selected_celltypes_downsampled
         }
 
-    #### for debugging seeding error July 15 ####
+    # initially added for debugging seeding error but keeping it for now
+    print("Downsampling stats:\n")
     print(integrated_concat.uns["downsampling_stats"])
-    print("Stopping early")
-    exit()
-    #### for debugging seeding error July 15 ####
         
     # Save integrated h5ad object
     integrated_concat.write_h5ad(

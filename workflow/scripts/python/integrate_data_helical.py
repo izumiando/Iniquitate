@@ -84,23 +84,6 @@ def main(h5ad_dir, save_loc, ds_celltypes, ds_proportions, num_batches, seed):
     adata_concat.obs["batch"] = adata_concat.obs["batch_name"]
     adata_concat.obs.drop("batch_name", axis = 1, inplace = True)
     
-    ################### below section is for debugging numpy error in uce integration ###################
-    # saving non-integrated h5ad object to send to helical team
-    intermediate_file = save_loc.replace(".h5ad", "_intermediate.h5ad")
-    intermediate_file = intermediate_file.replace("helical_part1", "intermediate_for_helical")
-    
-    intermediate_output_dir = os.path.dirname(intermediate_file)
-
-    if not os.path.exists(intermediate_output_dir):
-        os.makedirs(intermediate_output_dir)
-
-    # Save integrated h5ad object
-    adata_concat.write_h5ad(
-        filename = intermediate_file,
-        compression = "gzip"
-    )
-    ################### above section is for debugging numpy error in uce integration ###################
-    
     # Checking number of cells
     print(f"Input cells: {adata_concat.n_obs}\n")
 
@@ -163,11 +146,9 @@ def main(h5ad_dir, save_loc, ds_celltypes, ds_proportions, num_batches, seed):
             "downsampled_celltypes": selected_celltypes_downsampled
         }
     
-    #### for debugging seeding error July 15 ####
+    # initially added for debugging seeding error but keeping it for now
+    print("Downsampling stats:\n")
     print(integrated_concat.uns["downsampling_stats"])
-    print("Stopping early")
-    exit()
-    #### for debugging seeding error July 15 ####
     
     output_dir = os.path.dirname(save_loc)
 

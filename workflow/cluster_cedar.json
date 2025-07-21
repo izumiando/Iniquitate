@@ -45,7 +45,7 @@
     },
     "integrate_helical":
     {
-        "mem": "32G",
+        "mem": "128G",
         "gpus": 1,
         "__note": "gpus needed",
         "cpus-per-task": 10,
