@@ -50,7 +50,7 @@ class IntegrationHelical:
     def uce_integrate(self):
         print("Performing UCE integration.." + "\n")
         auce = self.adata.copy()
-        configurer_uce = UCEConfig(model_name="33l_8ep_1024t_1280", device="cuda")
+        configurer_uce = UCEConfig(model_name="33l_8ep_1024t_1280", batch_size=16, device="cuda")
         uce = UCE(configurer=configurer_uce)
         data_loader_uce = uce.process_data(auce)
         embeddings_uce = uce.get_embeddings(data_loader_uce)
