@@ -24,7 +24,7 @@
         "account": "def-kieranc",
         "mail-user": "izumi.ando@mail.utoronto.ca",
         "mail-type": "ALL",
-        "gpus": "--gpus-per-node=v100:4"
+        "gpus": "--gpus-per-node=v100l:4"
     },
     "integrate_helical": {
         "mem": "",
@@ -33,7 +33,7 @@
         "account": "def-kieranc",
         "mail-user": "izumi.ando@mail.utoronto.ca",
         "mail-type": "ALL",
-        "gpus": "--gpus-per-node=v100:4"
+        "gpus": "--gpus-per-node=v100l:4"
     },
     "helical_kmeans": {
         "mem": "",
@@ -42,7 +42,7 @@
         "account": "def-kieranc",
         "mail-user": "izumi.ando@mail.utoronto.ca",
         "mail-type": "ALL",
-        "gpus": "--gpus-per-node=v100:4"
+        "gpus": "--gpus-per-node=v100l:4"
     },
     "integrate_output_concat": {
         "mem": "",
@@ -51,7 +51,7 @@
         "account": "def-kieranc",
         "mail-user": "izumi.ando@mail.utoronto.ca",
         "mail-type": "ALL",
-        "gpus": "--gpus-per-node=v100:1"
+        "gpus": "--gpus-per-node=v100l:1"
     },
     "leiden_resolution": {
         "mem": "--mem=100G",
@@ -60,7 +60,7 @@
         "account": "def-kieranc",
         "mail-user": "izumi.ando@mail.utoronto.ca",
         "mail-type": "ALL",
-        "gpus": "--gpus-per-node=v100:1"
+        "gpus": "--gpus-per-node=v100l:1"
     },
     "leiden_aggregate": {
         "mem": "--mem=100G",
@@ -69,7 +69,7 @@
         "account": "def-kieranc",
         "mail-user": "izumi.ando@mail.utoronto.ca",
         "mail-type": "ALL",
-        "gpus": "--gpus-per-node=v100:1"
+        "gpus": "--gpus-per-node=v100l:1"
     },
     "integrate_paga": {
         "mem": "--mem=100G",
@@ -78,7 +78,7 @@
         "account": "def-kieranc",
         "mail-user": "izumi.ando@mail.utoronto.ca",
         "mail-type": "ALL",
-        "gpus": "--gpus-per-node=v100:1"
+        "gpus": "--gpus-per-node=v100l:1"
     },
     "query_to_reference": {
         "mem": "--mem=100G",
@@ -87,7 +87,7 @@
         "account": "def-kieranc",
         "mail-user": "izumi.ando@mail.utoronto.ca",
         "mail-type": "ALL",
-        "gpus": "--gpus-per-node=v100:1"
+        "gpus": "--gpus-per-node=v100l:1"
     },
     "annotation_baseline": {
         "mem": "--mem=100G",
@@ -96,6 +96,6 @@
         "account": "def-kieranc",
         "mail-user": "izumi.ando@mail.utoronto.ca",
         "mail-type": "ALL",
-        "gpus": "--gpus-per-node=v100:1"
+        "gpus": "--gpus-per-node=v100l:1"
     }
 } 
