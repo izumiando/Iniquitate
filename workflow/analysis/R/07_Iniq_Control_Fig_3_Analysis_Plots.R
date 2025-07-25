@@ -4042,4 +4042,3 @@ ggsave(
   height = 6,
   device = cairo_pdf
 )  
-

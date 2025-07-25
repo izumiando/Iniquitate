@@ -47,7 +47,7 @@ class Integration:
         vae.train(use_gpu = self.gpu, max_epochs = 100) #reducing epochs for scVI
         ascvi.obsm["X_scVI"] = vae.get_latent_representation()
         ascvi.obsm["X_kmeans"] = ascvi.obsm["X_scVI"][:, 0:n_pcs]
-        print("(for debugging purposes) shape of obsm[X_kmeans] in ascvi: ", ascvi.obsm["X_kmeans"].shape) # delete this line later
+        print("shape of obsm[X_kmeans] in ascvi: ", ascvi.obsm["X_kmeans"].shape) # for future debugging
         sc.pp.neighbors(
             ascvi,
             n_neighbors = n_neighbors,
@@ -85,7 +85,7 @@ class Integration:
             use_rep = "X_pca_harmony"
         )
         aharmony.obsm["X_kmeans"] = aharmony.obsm["X_pca_harmony"][:, 0:n_pcs]
-        print("(for debugging purposes) shape of obsm[X_kmeans] in aharmony: ", aharmony.obsm["X_kmeans"].shape) # delete this line later
+        print("shape of obsm[X_kmeans] in aharmony: ", aharmony.obsm["X_kmeans"].shape) # for future debugging
         sc.tl.leiden(aharmony)
         sc.tl.umap(aharmony)
         print("Done!" + "\n")

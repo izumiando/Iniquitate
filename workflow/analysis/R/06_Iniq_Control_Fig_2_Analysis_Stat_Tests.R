@@ -5,8 +5,13 @@ library(reshape2)
 # Helper functions
 `%ni%` <- Negate(`%in%`)
 
-# Change to results dir for control data 
+# Change to results dir for control data - assuming in directory of this file
 setwd("../../../results/control/")
+
+# Create output directory if it doesn't exist
+if (!dir.exists("../../../outs/control/results/")) {
+  dir.create("../../../outs/control/results/", recursive = TRUE)
+}
 
 # Set seed for any sampling done 
 set.seed(42)
@@ -46,16 +51,17 @@ clus_concord_files <- grep(
 clus_concord_loaded <- lapply(clus_concord_files, fread)
 clus_concord_concat <- Reduce(rbind, clus_concord_loaded)
 
+# commenting out because we don't have dge concordance summaries as of July 23rd 2025
 # Load in and concatenate dge concordance summaries
-setwd("../dge_concord_stats/")
-dge_files <- list.files()
-dge_files <- grep(
-  "pbmc_2_batch_base_balanced",
-  dge_files,
-  value = TRUE
-)
-dge_loaded <- lapply(dge_files, fread)
-dge_concat <- Reduce(rbind, dge_loaded)
+# setwd("../dge_concord_stats/")
+# dge_files <- list.files()
+# dge_files <- grep(
+#   "pbmc_2_batch_base_balanced",
+#   dge_files,
+#   value = TRUE
+# )
+# dge_loaded <- lapply(dge_files, fread)
+# dge_concat <- Reduce(rbind, dge_loaded)
 
 # Load in and concatenate knn classification summaries
 setwd("../knn_classification_reports/")
@@ -842,18 +848,19 @@ clus_concord_concat <- clus_concord_concat[
   clus_concord_concat$`Method 2` != "liger"
 ]
 
-# Load in and concatenate dge concordance summaries
-setwd("../dge_concord_stats/")
-dge_files <- list.files()
-dge_files <- grep(
-  "pbmc_2_batch_base_balanced",
-  dge_files,
-  value = TRUE
-)
-dge_loaded <- lapply(dge_files, fread)
-dge_concat <- Reduce(rbind, dge_loaded)
-dge_concat <- dge_concat[dge_concat$`Method 1` != "liger"]
-dge_concat <- dge_concat[dge_concat$`Method 2` != "liger"]
+# commenting out because we don't have dge concordance summaries as of July 23rd 2025
+# # Load in and concatenate dge concordance summaries
+# setwd("../dge_concord_stats/")
+# dge_files <- list.files()
+# dge_files <- grep(
+#   "pbmc_2_batch_base_balanced",
+#   dge_files,
+#   value = TRUE
+# )
+# dge_loaded <- lapply(dge_files, fread)
+# dge_concat <- Reduce(rbind, dge_loaded)
+# dge_concat <- dge_concat[dge_concat$`Method 1` != "liger"]
+# dge_concat <- dge_concat[dge_concat$`Method 2` != "liger"]
 
 # Load in and concatenate knn classification summaries
 setwd("../knn_classification_reports/")

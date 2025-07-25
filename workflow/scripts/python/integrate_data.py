@@ -74,12 +74,19 @@ def main(h5ad_dir, save_loc, ds_celltypes, ds_proportions, num_batches, seed):
     adata_concat.obs["batch"] = adata_concat.obs["batch_name"]
     adata_concat.obs.drop("batch_name", axis = 1, inplace = True)
     
+    # Checking number of cells
+    print(f"Input cells: {adata_concat.n_obs}\n")
+    
     # Create integration class instance 
     integration = Integration(adata = adata_concat)
     
     # Integrate across subsets
     harmony_integrated = integration.harmony_integrate()
     scvi_integrated = integration.scvi_integrate()
+    
+    # Checking number of cells post integration
+    print(f"Harmony cells: {harmony_integrated.n_obs}\n")
+    print(f"scVI cells: {scvi_integrated.n_obs}\n")
     
     # Add integration type to each subset and concatenate
     harmony_integrated.obs["integration_method"] = "harmony" 
@@ -172,6 +179,10 @@ def main(h5ad_dir, save_loc, ds_celltypes, ds_proportions, num_batches, seed):
             "proportion_downsampled": ds_proportions,
             "downsampled_celltypes": selected_celltypes_downsampled
         }
+
+    # initially added for debugging seeding error but keeping it for now
+    print("Downsampling stats:\n")
+    print(integrated_concat.uns["downsampling_stats"])
         
     # Save integrated h5ad object
     integrated_concat.write_h5ad(

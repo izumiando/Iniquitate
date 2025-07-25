@@ -13,25 +13,25 @@ class Umap:
         Args:
             coords (dictionary): coordinates of umap in numpy format where
                 keys correspond to following integration methods -
-                'bbknn', 'harmony', 'scanorama', 'seurat', and 'scvi'.
+                'harmony', 'scvi', 'uce', 'scgpt', and 'geneformer'.
             clustering (dictionary): leiden or celltype clustering in numpy
                 format of integrated where keys correspond to following
-                integration methods - 'bbknn', 'harmony', 'scanorama',
-                'seurat', and 'scvi'.
+                integration methods - 'harmony', 'scvi', 'uce', 'scgpt', 
+                and 'geneformer'.
             subset_name (string): name of subset being utilized for clustering
                 comparisons (e.g. batch, celltype).
         """
         self.clustering_harmony = clustering.get("harmony")
         self.clustering_scvi = clustering.get("scvi")
-        self.clustering_bbknn = clustering.get("bbknn")
-        self.clustering_scanorama = clustering.get("scanorama")
-        self.clustering_seurat = clustering.get("seurat")
+        self.clustering_uce = clustering.get("uce")
+        self.clustering_scgpt = clustering.get("scgpt")
+        self.clustering_geneformer = clustering.get("geneformer")
     
         self.umap_harmony = coords.get("harmony")
         self.umap_scvi = coords.get("scvi")
-        self.umap_bbknn = coords.get("bbknn")
-        self.umap_scanorama = coords.get("scanorama")
-        self.umap_seurat = coords.get("seurat")
+        self.umap_uce = coords.get("uce")
+        self.umap_scgpt = coords.get("scgpt")
+        self.umap_geneformer = coords.get("geneformer")
         
         if subset_name is not None:
             self.subset_name = subset_name
@@ -57,26 +57,26 @@ class Umap:
 
     def umap_df(self):
         subset_list = [
-            "bbknn",
             "harmony",
-            "scanorama",
             "scvi",
-            "seurat"
+            "uce",
+            "scgpt",
+            "geneformer"
         ]
         clustering_list = [
-            self.clustering_bbknn,
             self.clustering_harmony,
-            self.clustering_scanorama,
             self.clustering_scvi,
-            self.clustering_seurat
+            self.clustering_uce,
+            self.clustering_scgpt,
+            self.clustering_geneformer
         ]
         clustering_unique = natsorted(np.unique(np.concatenate(clustering_list)))
         coords_list = [
-            self.umap_bbknn,
             self.umap_harmony,
-            self.umap_scanorama,
             self.umap_scvi,
-            self.umap_seurat
+            self.umap_uce,
+            self.umap_scgpt,
+            self.umap_geneformer
         ]
         umap_dfs = [
             self.df_get(i, j, k, category = clustering_unique) for i, j, k in zip(
