@@ -18,7 +18,7 @@
         "gpus": ""
     },
     "integrate": {
-        "mem": "",
+        "mem": "--mem=128G",
         "cpus-per-task": 8,
         "time": "2:00:00",
         "account": "def-kieranc",
@@ -27,7 +27,7 @@
         "gpus": "--gpus-per-node=v100l:4"
     },
     "integrate_helical": {
-        "mem": "",
+        "mem": "--mem=128G",
         "cpus-per-task": 8,
         "time": "2:00:00",
         "account": "def-kieranc",
@@ -36,7 +36,7 @@
         "gpus": "--gpus-per-node=v100l:4"
     },
     "helical_kmeans": {
-        "mem": "",
+        "mem": "--mem=64G",
         "cpus-per-task": 8,
         "time": "1:00:00",
         "account": "def-kieranc",
@@ -45,7 +45,7 @@
         "gpus": "--gpus-per-node=v100l:4"
     },
     "integrate_output_concat": {
-        "mem": "",
+        "mem": "--mem=32G",
         "cpus-per-task": 8,
         "time": "0:30:00",
         "account": "def-kieranc",
