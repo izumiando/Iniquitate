@@ -43,7 +43,7 @@ def main(h5ad_loc, save_loc, dataset_name, rep):
     else:
         # Subset adatas based on method for integration and store lognorm counts in raw
         # attribute for diffexp testing
-        methods = ["harmony", "scvi", "scanorama", "seurat", "liger"]
+        methods = ["harmony", "scvi", "uce", "scgpt", "geneformer"]
         method_adatas = []
         for method in methods:
             adata_copy = adata.copy()
