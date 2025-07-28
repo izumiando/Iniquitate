@@ -727,7 +727,7 @@ rule umap:
     params:
         script_path = "scripts/python/umap_plots.py"
     log:
-        "{output_file_dir}/{configname}/umap_plots/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "{output_file_dir}/logs/{configname}/umap_plots/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
         "_downsample_{num_batches}_batch_ds_c_{rep}_umap_plots.log"
     priority: 100
     shell:
@@ -737,5 +737,173 @@ rule umap:
             --leiden_plot_loc {output.leiden_plot} \
             --celltype_plot_loc {output.celtype_plot} \
             --batch_plot_loc {output.batch_plot} \
+            &> {log}
+        """
+
+###########################################################
+### Adding back some rules taken out earlier for BCB430 ###
+###########################################################
+
+# Get DGE concordance results (full dge) (from different methods) from downsampling
+rule dge_concord_full:
+    conda:
+        "envs/integrate.yaml"
+    input:
+        "{output_file_dir}/results/{configname}/integrated_results/concatenated/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_concat.h5ad"
+    output:
+        "{output_file_dir}/results/{configname}/dge_concord_full/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" + 
+        "_downsample_{num_batches}_batch_ds_c_{rep}_dge_concord_full.tsv"
+    params:
+        script_path = "scripts/python/dge_concordance_full.py",
+    log:
+        "{output_file_dir}/logs/{configname}/dge_concord_full/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "_downsample_{num_batches}_batch_ds_c_{rep}_dge_concord_full.log"
+    priority: 100
+    shell:
+        """
+        python -s {params.script_path} \
+            --infile {input} \
+            --outfile {output} \
+            --dataset {wildcards.data_folder} \
+            --rep {wildcards.rep} \
+            &> {log}
+        """
+
+# Get DGE concordance results (summary stats) (from different methods) from downsampling
+rule dge_concord_stats:
+    conda:
+        "envs/integrate.yaml"
+    input:
+        "{output_file_dir}/results/{configname}/integrated_results/concatenated/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_concat.h5ad"
+    output:
+        "{output_file_dir}/results/{configname}/dge_concord_stats/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" + 
+        "_downsample_{num_batches}_batch_ds_c_{rep}_dge_concord_stats.tsv"
+    params:
+        script_path = "scripts/python/dge_concordance_stats.py",
+    log:
+        "{output_file_dir}/logs/{configname}/dge_concord_stats/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "_downsample_{num_batches}_batch_ds_c_{rep}_dge_concord_stats.log"
+    priority: 100
+    shell:
+        """
+        python -s {params.script_path} \
+            --infile {input} \
+            --outfile {output} \
+            --dataset {wildcards.data_folder} \
+            --rep {wildcards.rep} \
+            &> {log}
+        """
+
+# Perform query to reference mapping experiment and get annotations for each dataset
+rule query_to_reference:
+    conda:
+        "envs/integrate.yaml"
+    input:
+        "{output_file_dir}/results/{configname}/integrated_results/concatenated/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_concat.h5ad"
+    output:
+        "{output_file_dir}/results/{configname}/query_to_reference/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "_downsample_{num_batches}_batch_ds_c_{rep}_reference_annotated.h5ad"
+    params:
+        script_path = "scripts/python/reference_annotation.py",
+        reference_path = "../resources/references/h5Seurat_files/{data_folder}/{data_folder}.h5seurat"
+    log:
+        "{output_file_dir}/logs/{configname}/query_to_reference/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "_downsample_{num_batches}_batch_ds_c_{rep}_reference_annotated.log"
+    priority: 0
+    shell:
+        """
+        python -s {params.script_path} \
+            --infile {input} \
+            --ref_file {params.reference_path} \
+            --outfile {output} \
+            &> {log}
+        """
+
+# Perform baseline reference mapping experiments and get annotations for each dataset 
+rule annotation_baseline:
+    conda:
+        "envs/integrate.yaml"
+    input:
+        "{output_file_dir}/results/{configname}/query_to_reference/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "_downsample_{num_batches}_batch_ds_c_{rep}_reference_annotated.h5ad"
+    output:
+        "{output_file_dir}/results/{configname}/reference_full_annotated/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "_downsample_{num_batches}_batch_ds_c_{rep}_reference_full_annotated.h5ad"
+    params:
+        script_path = "scripts/python/reference_control_annotation.py",
+        reference_path = "../resources/references/h5ad_files/{data_folder}/{data_folder}.h5ad"
+    log:
+        "{output_file_dir}/logs/{configname}/reference_full_annotated/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "_downsample_{num_batches}_batch_ds_c_{rep}_reference_full_annotated.log"
+    priority: 100
+    shell:
+        """
+        python -s {params.script_path} \
+            --infile {input} \
+            --ref_file {params.reference_path} \
+            --outfile {output} \
+            &> {log}
+        """
+
+# Returning overall query to reference annotation results - both seurat annotation and baseline annotation 
+rule annotation_result:
+    conda:
+        "envs/integrate.yaml"
+    input:
+        "{output_file_dir}/results/{configname}/reference_full_annotated/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "_downsample_{num_batches}_batch_ds_c_{rep}_reference_full_annotated.h5ad"
+    output:
+        "{output_file_dir}/results/{configname}/annotation_results/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "_downsample_{num_batches}_batch_ds_c_{rep}_annotation_result.tsv"
+    params:
+        script_path = "scripts/python/annotation_results.py"
+    log:
+        "{output_file_dir}/logs/{configname}/annotation_results/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "_downsample_{num_batches}_batch_ds_c_{rep}_annotation_result.log"
+    priority: 100
+    shell:
+        """
+        python -s {params.script_path} \
+            --infile {input} \
+            --outfile {output} \
+            --dataset {wildcards.data_folder} \
+            --rep {wildcards.rep} \
+            --ds_celltypes {wildcards.ds_celltype} \
+            --ds_proportions {wildcards.ds_proportion} \
+            --num_batches {wildcards.num_batches} \
+            &> {log}
+        """    
+
+# Analysis of query to reference annotation results - both seurat annotation and baseline annotation
+rule annotation_score:
+    conda:
+        "envs/integrate.yaml"
+    input:
+        "{output_file_dir}/results/{configname}/reference_full_annotated/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "_downsample_{num_batches}_batch_ds_c_{rep}_reference_full_annotated.h5ad"
+    output:
+        "{output_file_dir}/results/{configname}/annotation_scores/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "_downsample_{num_batches}_batch_ds_c_{rep}_annotation_score.tsv"
+    params:
+        script_path = "scripts/python/annotation_scoring.py",
+        score_guide_path = "../resources/annotation_guides/{data_folder}/{data_folder}_score_guide.tsv"
+    log:
+        "{output_file_dir}/logs/{configname}/annotation_scores/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "_downsample_{num_batches}_batch_ds_c_{rep}_annotation_score.log"
+    priority: 100
+    shell:
+        """
+        python -s {params.script_path} \
+            --infile {input} \
+            --outfile {output} \
+            --annofile {params.score_guide_path} \
+            --dataset {wildcards.data_folder} \
+            --rep {wildcards.rep} \
+            --ds_celltypes {wildcards.ds_celltype} \
+            --ds_proportions {wildcards.ds_proportion} \
+            --num_batches {wildcards.num_batches} \
             &> {log}
         """
