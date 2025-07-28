@@ -1,0 +1,168 @@
+## Only Fig A3 because I am missing data for the other figures, revisit when you add the rules back 
+
+Loading in libraries.
+```{r}
+library(data.table)
+library(tidyverse)
+library(reshape2)
+library(ggplot2)
+library(ggthemes)
+library(ggExtra)
+library(ggpubr)
+library(dotwhisker)
+# library(Seurat)         # Not needed for Fig 3A, 3B, 3C
+# library(SeuratDisk)     # Not needed for Fig 3A, 3B, 3C
+# library(ComplexHeatmap) # Only needed for Fig 3B heatmap
+# library(circlize)       # Only needed for Fig 3B heatmap
+# library(RColorBrewer)   # Only needed for Fig 3B heatmap
+library(Cairo)
+```
+
+```{r}
+# Helper functions
+`%ni%` <- Negate(`%in%`)
+
+# Kevin's palette for plotting many catagoricals 
+kev_palette <- c(
+  "dodgerblue2", "#E31A1C",
+  "green4",
+  "#6A3D9A", 
+  "#FF7F00", 
+  "black", "gold1",
+  "skyblue2", "#FB9A99", 
+  "palegreen2",
+  "#CAB2D6", 
+  "#FDBF6F", 
+  "gray70", "khaki2",
+  "maroon", "orchid1", "deeppink1", "blue1", "steelblue4",
+  "darkturquoise", "green1", "yellow4", "yellow3",
+  "darkorange4", "brown"
+)
+
+# Change to results dir for control data 
+setwd("../../../results/control/")
+```
+
+```{r}
+# Load in and concatenate imbalance summary files 
+setwd("imbalance_summaries/")
+imba_files <- list.files()
+imba_files <- grep(
+  "pbmc_2_batch_base_balanced",
+  imba_files,
+  value = TRUE
+)
+imba_loaded <- lapply(imba_files, fread)
+imba_concat <- Reduce(rbind, imba_loaded)
+gc()
+
+# Load in and concatenate the clustering summary results 
+setwd("../clustering_summaries/")
+clus_files <- list.files()
+clus_files <- grep(
+  "pbmc_2_batch_base_balanced",
+  clus_files,
+  value = TRUE
+)
+clus_loaded <- lapply(clus_files, fread)
+clus_concat <- Reduce(rbind, clus_loaded)
+gc()
+
+# Change to top level dir 
+setwd("../../..")
+```
+```{r}
+
+### Fig 3A) - Variability in number of clusters after downsampling the control
+### dataset using different celltypes 
+
+# Merge together imbalance and cluster number results
+imba_clus_merged <- merge(
+  clus_concat,
+  imba_concat,
+  by = c(
+    "Number of batches downsampled",
+    "Number of celltypes downsampled",
+    "Proportion downsampled",
+    "Replicate"
+  )
+)
+
+# Indicate which panels are control and which ones are ablations or downsampling
+imba_clus_merged$type <- ifelse(
+  imba_clus_merged$`Number of batches downsampled` == 0,
+  "Control",
+  ifelse(
+    imba_clus_merged$`Proportion downsampled` == 0,
+    "Ablated",
+    "Downsampled"
+  )
+)
+
+# Format celltype names
+imba_clus_merged$`Downsampled celltypes` <- plyr::mapvalues(
+  imba_clus_merged$`Downsampled celltypes`,
+  from = c(
+    "Monocyte_CD14",
+    "Monocyte_FCGR3A",
+    "CD4 T cell",
+    "CD8 T cell"
+  ),
+  to = c(
+    "CD14+ Monocyte",
+    "FCGR3A+ Monocyte",
+    "CD4+ T cell",
+    "CD8+ T cell"
+  )
+)
+
+# Create plot of effects on cluster number, facetted by method, filled by
+# type (control, ablation, downsampling), and plotted based on downsampled
+# celltype 
+ggplot(data = imba_clus_merged, aes(
+    x = `Downsampled celltypes`,
+    y = `Cluster number`
+  )
+) +
+  geom_boxplot(
+    aes(
+      fill = factor(`type`, levels = c("Control", "Downsampled", "Ablated")),
+    ),
+    notch = FALSE,
+    alpha = 0.8,
+    width = 0.7  # Adjust this value: smaller = narrower boxes
+) + 
+  geom_jitter(color = "black", size = 0.4, alpha = 0.7) +
+  facet_wrap(.~Method, scales = "fixed") +
+  scale_fill_manual( 
+    breaks = c("Control", "Downsampled", "Ablated"),
+    values = c("forestgreen", "darkorchid3", "firebrick2")
+  ) +
+  labs(
+    fill = "Type",
+    x = "Celltype downsampled",
+    y = "Number of Leiden clusters post-integration"
+  ) +
+  coord_flip() +
+  ylim(10, 15) +  # limiting y axis
+  theme_few() +
+  theme(axis.title.x = element_text(size = 16)) +
+  theme(axis.title.y = element_text(size = 16)) +
+  theme(strip.text.x = element_text(size = 16)) +
+  theme(plot.title = element_text(size = 14)) +
+  theme(axis.text.x = element_text(size = 16)) +
+  theme(axis.text.y = element_text(size = 16)) +
+  theme(legend.title = element_text(size = 16)) +
+  theme(legend.text = element_text(size = 16))
+ggsave(
+  "outs/control/figures/07_pbmc_ds_ablate_allmethod_cluster_number.pdf",
+  width = 18,  # Increased from 14 to make figure wider
+  height = 8,
+  device = cairo_pdf
+) 
+```
+
+
+
+
+:::
