@@ -114,7 +114,13 @@ if config["celltype_list"] == "No":
                             "knn_classification_reports",
                             "umap_plots",
                             "umap_plots",
-                            "umap_plots"
+                            "umap_plots",
+                            "dge_concord_full",
+                            "dge_concord_stats",
+                            "reference_full_annotated",
+                            "query_to_reference",
+                            "annotation_results",
+                            "annotation_scores"
                         ],
                         [
                             "integrated_baseline",
@@ -132,7 +138,13 @@ if config["celltype_list"] == "No":
                             "knn_classification",
                             "umap_leiden",
                             "umap_celltype",
-                            "umap_batch"
+                            "umap_batch",
+                            "dge_concord_full",
+                            "dge_concord_stats",
+                            "reference_full_annotated",
+                            "reference_annotated",
+                            "annotation_result",
+                            "annotation_score"
                         ],
                         [
                             "h5ad",
@@ -149,11 +161,16 @@ if config["celltype_list"] == "No":
                             "tsv",
                             "tsv",
                             "tsv",
-
                             "tsv",
                             "pdf",
                             "pdf",
-                            "pdf"
+                            "pdf",
+                            "tsv",
+                            "tsv",
+                            "h5ad",
+                            "h5ad",
+                            "tsv",
+                            "tsv"
                         ]
                     )
                 ),
@@ -268,7 +285,9 @@ if config["celltype_list"] == "No":
                                 "dge_ranking_stats_marker_sub",
                                 "imbalance_summaries",
                                 "celltype_imbalance_summaries",
-                                "knn_classification_reports"
+                                "knn_classification_reports",
+                                "dge_concord_full",
+                                "dge_concord_stats"
                             ],
                             [
                                 "integrated_baseline",
@@ -283,13 +302,17 @@ if config["celltype_list"] == "No":
                                 "dge_ranking_stats_marker_sub",
                                 "imbalance_summary",
                                 "celltype_imbalance_summary",
-                                "knn_classification"
+                                "knn_classification",
+                                "dge_concord_full",
+                                "dge_concord_stats"
                             ],
                             [
                                 "h5ad",
                                 "h5ad",
                                 "h5ad",
                                 "h5ad",
+                                "tsv",
+                                "tsv",
                                 "tsv",
                                 "tsv",
                                 "tsv",
@@ -907,4 +930,4 @@ rule annotation_score:
             --ds_proportions {wildcards.ds_proportion} \
             --num_batches {wildcards.num_batches} \
             &> {log}
-        """        """
+        """ 
