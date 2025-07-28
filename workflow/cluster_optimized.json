@@ -18,7 +18,7 @@
         "gpus": ""
     },
     "integrate": {
-        "mem": "--mem=256G",
+        "mem": "--mem=150G",
         "cpus-per-task": 8,
         "time": "2:00:00",
         "account": "def-kieranc",
@@ -27,7 +27,7 @@
         "gpus": "--gpus-per-node=v100l:4"
     },
     "integrate_helical": {
-        "mem": "--mem=256G",
+        "mem": "--mem=150G",
         "cpus-per-task": 8,
         "time": "2:00:00",
         "account": "def-kieranc",
