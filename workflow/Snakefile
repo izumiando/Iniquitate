@@ -149,6 +149,7 @@ if config["celltype_list"] == "No":
                             "tsv",
                             "tsv",
                             "tsv",
+
                             "tsv",
                             "pdf",
                             "pdf",
@@ -906,4 +907,4 @@ rule annotation_score:
             --ds_proportions {wildcards.ds_proportion} \
             --num_batches {wildcards.num_batches} \
             &> {log}
-        """
+        """        """
