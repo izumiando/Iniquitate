@@ -173,18 +173,6 @@ if config["celltype_list"] == "No":
                             "tsv"
                         ]
                     )
-                ),
-                expand(
-                    "{output_file_dir}/results/{configname}/marker_results/{dataset}_preintegration_marker_selection.tsv",
-                        configname = configname,
-                        output_file_dir = output_file_dir,
-                        dataset = [config["int_datasets"][key]["data_folder"] for key in config["int_datasets"].keys()]
-                ),
-                expand(
-                    "{output_file_dir}/results/{configname}/relatedness_results/{dataset}_celltype_relatedness.tsv",
-                        configname = configname,
-                        output_file_dir = output_file_dir,
-                        dataset = [config["int_datasets"][key]["data_folder"] for key in config["int_datasets"].keys()]
                 )
     else:
         if config["config_name"] == "pdac_comp_reanno":
@@ -234,12 +222,12 @@ if config["celltype_list"] == "No":
                             ]
                         )
                     ),
-                    expand(
-                        "{output_file_dir}/results/{configname}/relatedness_results/{dataset}_celltype_relatedness.tsv",
-                            configname = configname,
-                            output_file_dir = output_file_dir,
-                            dataset = [config["int_datasets"][key]["data_folder"] for key in config["int_datasets"].keys()]
-                    )
+                    # expand(
+                    #     "{output_file_dir}/results/{configname}/relatedness_results/{dataset}_celltype_relatedness.tsv",
+                    #         configname = configname,
+                    #         output_file_dir = output_file_dir,
+                    #         dataset = [config["int_datasets"][key]["data_folder"] for key in config["int_datasets"].keys()]
+                    # )
         else:
             rule all:
                 input:
@@ -326,19 +314,19 @@ if config["celltype_list"] == "No":
                                 "tsv"
                             ]
                         )
-                    ),
-                    expand(
-                        "{output_file_dir}/results/{configname}/marker_results/{dataset}_preintegration_marker_selection.tsv",
-                            configname = configname,
-                            output_file_dir = output_file_dir,
-                            dataset = [config["int_datasets"][key]["data_folder"] for key in config["int_datasets"].keys()]
-                    ),
-                    expand(
-                        "{output_file_dir}/results/{configname}/relatedness_results/{dataset}_celltype_relatedness.tsv",
-                            configname = configname,
-                            output_file_dir = output_file_dir,
-                            dataset = [config["int_datasets"][key]["data_folder"] for key in config["int_datasets"].keys()]
-                    )
+                                    ),
+                # expand(
+                #     "{output_file_dir}/results/{configname}/marker_results/{dataset}_preintegration_marker_selection.tsv",
+                #         configname = configname,
+                #         output_file_dir = output_file_dir,
+                #         dataset = [config["int_datasets"][key]["data_folder"] for key in config["int_datasets"].keys()]
+                # ),
+                # expand(
+                #     "{output_file_dir}/results/{configname}/relatedness_results/{dataset}_celltype_relatedness.tsv",
+                #         configname = configname,
+                #         output_file_dir = output_file_dir,
+                #         dataset = [config["int_datasets"][key]["data_folder"] for key in config["int_datasets"].keys()]
+                # )
 else:
     print("No")
 
