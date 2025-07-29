@@ -10,6 +10,10 @@ from helical.models.uce.model import UCE, UCEConfig
 from helical.models.scgpt.model import scGPT, scGPTConfig
 from helical.models.geneformer.model import Geneformer, GeneformerConfig
 
+# Finetuning imports
+from sklearn.model_selection import train_test_split
+from helical.models.uce import UCEFineTuningModel
+
 # for UCE step
 import os
 
@@ -76,6 +80,16 @@ class IntegrationHelical:
         
         print("Done!" + "\n")
         return auce
+    
+    def uce_integrate_finetuned(self):
+        # # weridly, UCE does not have a get_embeddings function as of July 29th, 2025
+        # print("Performing UCE integration with finetuning.." + "\n")
+        # auce = self.adata.copy()
+        # label_set = set(list(auce.obs["celltype"]))
+        # configurer_uce = UCEConfig(model_name="33l_8ep_1024t_1280", batch_size=16, device="cuda")
+        # uce_finetune = UCEFineTuningModel(configurer=configurer_uce, fine_tuning_head="classification", output_size=len(label_set))
+        # # splitting the data into train / test / validate sets
+        # dataset = uce_finetune.process_data(auce)
     
     def scgpt_integrate(self):
         print("Performing scGPT integration.." + "\n")
