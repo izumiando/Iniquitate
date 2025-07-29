@@ -1,0 +1,13 @@
+{
+    "__default__": {
+        "partition": "gpu",
+        "nodelist": "gpu2",
+        "gres": "gpu:1",
+        "mem": "56G",
+        "cpus-per-task": 8,
+        "time": "10:00:00",
+        "account": "def-kieranc",
+        "mail-user": "izumi.ando@mail.utoronto.ca",
+        "mail-type": "ALL"
+    }
+} 
