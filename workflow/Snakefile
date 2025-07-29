@@ -4,7 +4,7 @@ import numpy as np
 
 configfile: "configs/config_control.json"
 configname = config["config_name"]
-output_file_dir = "/home/andoizum/scratch" # do not add / at the end
+output_file_dir = "/ddn_exa/campbell/iando/Iniquitate" # do not add / at the end
 
 # Define function to generate seeds from wildcards given the combinations
 def seed_from_wildcards(**wildcards):
@@ -99,76 +99,76 @@ if config["celltype_list"] == "No":
                     dataset = get_combinations(config, "int_datasets"),
                     outputs = zip(
                         [
-                            "integrated_results/baseline",
-                            "integrated_results/helical_part1",
-                            "integrated_results/helical_part2",
-                            "integrated_results/concatenated",
-                            "downsample_summaries",
-                            "clustering_summaries",
-                            "clustering_concord_summaries",
-                            "dge_ranking_stats",
-                            "dge_ranking_results_per_cluster",
-                            "dge_ranking_stats_marker_sub",
-                            "imbalance_summaries",
-                            "celltype_imbalance_summaries",
-                            "knn_classification_reports",
-                            "umap_plots",
-                            "umap_plots",
-                            "umap_plots",
+                            # "integrated_results/baseline",
+                            # "integrated_results/helical_part1",
+                            # "integrated_results/helical_part2",
+                            # "integrated_results/concatenated",
+                            # "downsample_summaries",
+                            # "clustering_summaries",
+                            # "clustering_concord_summaries",
+                            # "dge_ranking_stats",
+                            # "dge_ranking_results_per_cluster",
+                            # "dge_ranking_stats_marker_sub",
+                            # "imbalance_summaries",
+                            # "celltype_imbalance_summaries",
+                            # "knn_classification_reports",
+                            # "umap_plots",
+                            # "umap_plots",
+                            # "umap_plots",
                             "dge_concord_full",
-                            "dge_concord_stats",
-                            "reference_full_annotated",
-                            "query_to_reference",
-                            "annotation_results",
-                            "annotation_scores"
+                            "dge_concord_stats"
+                            # "reference_full_annotated",
+                            # "query_to_reference",
+                            # "annotation_results",
+                            # "annotation_scores"
                         ],
                         [
-                            "integrated_baseline",
-                            "integrated_helical_p1",
-                            "integrated_helical_p2",
-                            "integrated_concat",
-                            "downsample_summary",
-                            "clustering_summary",
-                            "clustering_concord_summary",
-                            "dge_ranking_stats",
-                            "dge_ranking_results_per_cluster",
-                            "dge_ranking_stats_marker_sub",
-                            "imbalance_summary",
-                            "celltype_imbalance_summary",
-                            "knn_classification",
-                            "umap_leiden",
-                            "umap_celltype",
-                            "umap_batch",
+                            # "integrated_baseline",
+                            # "integrated_helical_p1",
+                            # "integrated_helical_p2",
+                            # "integrated_concat",
+                            # "downsample_summary",
+                            # "clustering_summary",
+                            # "clustering_concord_summary",
+                            # "dge_ranking_stats",
+                            # "dge_ranking_results_per_cluster",
+                            # "dge_ranking_stats_marker_sub",
+                            # "imbalance_summary",
+                            # "celltype_imbalance_summary",
+                            # "knn_classification",
+                            # "umap_leiden",
+                            # "umap_celltype",
+                            # "umap_batch",
                             "dge_concord_full",
-                            "dge_concord_stats",
-                            "reference_full_annotated",
-                            "reference_annotated",
-                            "annotation_result",
-                            "annotation_score"
+                            "dge_concord_stats"
+                            # "reference_full_annotated",
+                            # "reference_annotated",
+                            # "annotation_result",
+                            # "annotation_score"
                         ],
                         [
-                            "h5ad",
-                            "h5ad",
-                            "h5ad",
-                            "h5ad",
-                            "tsv",
-                            "tsv",
-                            "tsv",
-                            "tsv",
-                            "tsv",
-                            "tsv",
-                            "tsv",
-                            "tsv",
-                            "tsv",
-                            "tsv",
-                            "tsv",
-                            "pdf",
-                            "pdf",
-                            "pdf",
-                            "tsv",
-                            "tsv",
-                            "h5ad",
-                            "h5ad",
+                            # "h5ad",
+                            # "h5ad",
+                            # "h5ad",
+                            # "h5ad",
+                            # "tsv",
+                            # "tsv",
+                            # "tsv",
+                            # "tsv",
+                            # "tsv",
+                            # "tsv",
+                            # "tsv",
+                            # "tsv",
+                            # "tsv",
+                            # "tsv",
+                            # "tsv",
+                            # "pdf",
+                            # "pdf",
+                            # "pdf",
+                            # "tsv",
+                            # "tsv",
+                            # "h5ad",
+                            # "h5ad",
                             "tsv",
                             "tsv"
                         ]
@@ -197,40 +197,40 @@ if config["celltype_list"] == "No":
                         dataset = get_combinations(config, "int_datasets"),
                         outputs = zip(
                             [
-                                "integrated_results/baseline",
-                                "integrated_results/helical_part1",
-                                "integrated_results/helical_part2",
-                                "integrated_results/concatenated",
-                                "downsample_summaries",
-                                "clustering_summaries",
-                                "clustering_concord_summaries",
-                                "imbalance_summaries",
-                                "celltype_imbalance_summaries",
-                                "knn_classification_reports"
+                                # "integrated_results/baseline",
+                                # "integrated_results/helical_part1",
+                                # "integrated_results/helical_part2",
+                                # "integrated_results/concatenated",
+                                # "downsample_summaries",
+                                # "clustering_summaries",
+                                # "clustering_concord_summaries",
+                                # "imbalance_summaries",
+                                # "celltype_imbalance_summaries",
+                                # "knn_classification_reports"
                             ],
                             [
-                                "integrated_baseline",
-                                "integrated_helical_p1",
-                                "integrated_helical_p2",
-                                "integrated_concat",
-                                "downsample_summary",
-                                "clustering_summary",
-                                "clustering_concord_summary",
-                                "imbalance_summary",
-                                "celltype_imbalance_summary",
-                                "knn_classification"
+                                # "integrated_baseline",
+                                # "integrated_helical_p1",
+                                # "integrated_helical_p2",
+                                # "integrated_concat",
+                                # "downsample_summary",
+                                # "clustering_summary",
+                                # "clustering_concord_summary",
+                                # "imbalance_summary",
+                                # "celltype_imbalance_summary",
+                                # "knn_classification"
                             ],
                             [
-                                "h5ad",
-                                "h5ad",
-                                "h5ad",
-                                "h5ad",
-                                "tsv",
-                                "tsv",
-                                "tsv",
-                                "tsv",
-                                "tsv",
-                                "tsv"
+                                # "h5ad",
+                                # "h5ad",
+                                # "h5ad",
+                                # "h5ad",
+                                # "tsv",
+                                # "tsv",
+                                # "tsv",
+                                # "tsv",
+                                # "tsv",
+                                # "tsv"
                             ]
                         )
                     ),
@@ -273,55 +273,55 @@ if config["celltype_list"] == "No":
                         dataset = get_combinations(config, "int_datasets"),
                         outputs = zip(
                             [
-                                "integrated_results/baseline",
-                                "integrated_results/helical_part1",
-                                "integrated_results/helical_part2",
-                                "integrated_results/concatenated",
-                                "downsample_summaries",
-                                "clustering_summaries",
-                                "clustering_concord_summaries",
-                                "dge_ranking_stats",
-                                "dge_ranking_results_per_cluster",
-                                "dge_ranking_stats_marker_sub",
-                                "imbalance_summaries",
-                                "celltype_imbalance_summaries",
-                                "knn_classification_reports",
+                                # "integrated_results/baseline",
+                                # "integrated_results/helical_part1",
+                                # "integrated_results/helical_part2",
+                                # "integrated_results/concatenated",
+                                # "downsample_summaries",
+                                # "clustering_summaries",
+                                # "clustering_concord_summaries",
+                                # "dge_ranking_stats",
+                                # "dge_ranking_results_per_cluster",
+                                # "dge_ranking_stats_marker_sub",
+                                # "imbalance_summaries",
+                                # "celltype_imbalance_summaries",
+                                # "knn_classification_reports",
                                 "dge_concord_full",
                                 "dge_concord_stats"
                             ],
                             [
-                                "integrated_baseline",
-                                "integrated_helical_p1",
-                                "integrated_helical_p2",
-                                "integrated_concat",
-                                "downsample_summary",
-                                "clustering_summary",
-                                "clustering_concord_summary",
-                                "dge_ranking_stats",
-                                "dge_ranking_results_per_cluster",
-                                "dge_ranking_stats_marker_sub",
-                                "imbalance_summary",
-                                "celltype_imbalance_summary",
-                                "knn_classification",
+                                # "integrated_baseline",
+                                # "integrated_helical_p1",
+                                # "integrated_helical_p2",
+                                # "integrated_concat",
+                                # "downsample_summary",
+                                # "clustering_summary",
+                                # "clustering_concord_summary",
+                                # "dge_ranking_stats",
+                                # "dge_ranking_results_per_cluster",
+                                # "dge_ranking_stats_marker_sub",
+                                # "imbalance_summary",
+                                # "celltype_imbalance_summary",
+                                # "knn_classification",
                                 "dge_concord_full",
                                 "dge_concord_stats"
                             ],
                             [
-                                "h5ad",
-                                "h5ad",
-                                "h5ad",
-                                "h5ad",
-                                "tsv",
-                                "tsv",
-                                "tsv",
-                                "tsv",
-                                "tsv",
-                                "tsv",
-                                "tsv",
-                                "tsv",
-                                "tsv",
-                                "tsv",
-                                "tsv",
+                                # "h5ad",
+                                # "h5ad",
+                                # "h5ad",
+                                # "h5ad",
+                                # "tsv",
+                                # "tsv",
+                                # "tsv",
+                                # "tsv",
+                                # "tsv",
+                                # "tsv",
+                                # "tsv",
+                                # "tsv",
+                                # "tsv",
+                                # "tsv",
+                                # "tsv",
                                 "tsv",
                                 "tsv"
                             ]
@@ -342,427 +342,427 @@ if config["celltype_list"] == "No":
 else:
     print("No")
 
-# Integrate the indicated h5ad files from config, based on dataset
-rule integrate:
-    conda:
-        "envs/integrate.yaml"
-    input:
-        "../resources/h5ad_files/int_datasets/{data_folder}"
-    output:
-        "{output_file_dir}/results/{configname}/integrated_results/baseline/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_baseline.h5ad"
-    params:
-        script_path = "scripts/python/integrate_data.py",
-        seed = lambda wildcards: seed_from_wildcards(**wildcards)
-    log:
-        "{output_file_dir}/logs/{configname}/integrate/baseline/integrate_{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_baseline.log"
-    priority: 0
-    shell:
-        """
-        python -s {params.script_path} \
-            --filedir {input} \
-            --ds_celltypes {wildcards.ds_celltype} \
-            --ds_proportions {wildcards.ds_proportion} \
-            --num_batches {wildcards.num_batches} \
-            --outfile {output} \
-            --seed {params.seed} \
-            &> {log}
-        """
+# # Integrate the indicated h5ad files from config, based on dataset
+# rule integrate:
+#     conda:
+#         "envs/integrate.yaml"
+#     input:
+#         "../resources/h5ad_files/int_datasets/{data_folder}"
+#     output:
+#         "{output_file_dir}/results/{configname}/integrated_results/baseline/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+#         "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_baseline.h5ad"
+#     params:
+#         script_path = "scripts/python/integrate_data.py",
+#         seed = lambda wildcards: seed_from_wildcards(**wildcards)
+#     log:
+#         "{output_file_dir}/logs/{configname}/integrate/baseline/integrate_{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+#         "_downsample_{num_batches}_batch_ds_c_{rep}_baseline.log"
+#     priority: 0
+#     shell:
+#         """
+#         python -s {params.script_path} \
+#             --filedir {input} \
+#             --ds_celltypes {wildcards.ds_celltype} \
+#             --ds_proportions {wildcards.ds_proportion} \
+#             --num_batches {wildcards.num_batches} \
+#             --outfile {output} \
+#             --seed {params.seed} \
+#             &> {log}
+#         """
 
 
-# Integrate the indicated h5ad files from config, using UCE, scGPT, and Geneformer from Helical
-# shell script should be modified before use 
-rule integrate_helical:
-    input:
-        "../resources/h5ad_files/int_datasets/{data_folder}"
-    output:
-        "{output_file_dir}/results/{configname}/integrated_results/helical_part1/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_helical_p1.h5ad"
-    params:
-        script_path = "scripts/python/integrate_data_helical.py",
-        seed = lambda wildcards: seed_from_wildcards(**wildcards)
-    log:
-        "{output_file_dir}/logs/{configname}/integrate/helical_part1/integrate_{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_helical_p1.log"
-    priority: 0
-    shell:
-        """
-        module load gcc arrow
-        source ../../helical_mod/bin/activate
-        module load openblas
-        python -s {params.script_path} \
-            --filedir {input} \
-            --ds_celltypes {wildcards.ds_celltype} \
-            --ds_proportions {wildcards.ds_proportion} \
-            --num_batches {wildcards.num_batches} \
-            --outfile {output} \
-            --seed {params.seed} \
-            &> {log}
-        """
+# # Integrate the indicated h5ad files from config, using UCE, scGPT, and Geneformer from Helical
+# # shell script should be modified before use 
+# rule integrate_helical:
+#     input:
+#         "../resources/h5ad_files/int_datasets/{data_folder}"
+#     output:
+#         "{output_file_dir}/results/{configname}/integrated_results/helical_part1/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+#         "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_helical_p1.h5ad"
+#     params:
+#         script_path = "scripts/python/integrate_data_helical.py",
+#         seed = lambda wildcards: seed_from_wildcards(**wildcards)
+#     log:
+#         "{output_file_dir}/logs/{configname}/integrate/helical_part1/integrate_{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+#         "_downsample_{num_batches}_batch_ds_c_{rep}_helical_p1.log"
+#     priority: 0
+#     shell:
+#         """
+#         module load gcc arrow
+#         source ../../helical_mod/bin/activate
+#         module load openblas
+#         python -s {params.script_path} \
+#             --filedir {input} \
+#             --ds_celltypes {wildcards.ds_celltype} \
+#             --ds_proportions {wildcards.ds_proportion} \
+#             --num_batches {wildcards.num_batches} \
+#             --outfile {output} \
+#             --seed {params.seed} \
+#             &> {log}
+#         """
 
 
-# Kmeans clustering step for h5ad files integrated using UCE, scGPT, and Geneformer from Helical
-# This rule was made to avoid dependency issues with the helical and faiss packages
-rule helical_kmeans:
-    conda:
-        "envs/integrate.yaml"
-    input:
-        "{output_file_dir}/results/{configname}/integrated_results/helical_part1/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_helical_p1.h5ad"
-    output:
-        "{output_file_dir}/results/{configname}/integrated_results/helical_part2/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_helical_p2.h5ad"
-    params:
-        "scripts/python/helical_kmeans.py"
-    log:
-        "{output_file_dir}/logs/{configname}/integrate/helical_part2/integrate_{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_helical_p2.log"
-    priority: 0
-    shell:
-        """
-        python -s {params} \
-            --inputfile {input} \
-            --outfile {output} \
-            &> {log}
-        """
+# # Kmeans clustering step for h5ad files integrated using UCE, scGPT, and Geneformer from Helical
+# # This rule was made to avoid dependency issues with the helical and faiss packages
+# rule helical_kmeans:
+#     conda:
+#         "envs/integrate.yaml"
+#     input:
+#         "{output_file_dir}/results/{configname}/integrated_results/helical_part1/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+#         "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_helical_p1.h5ad"
+#     output:
+#         "{output_file_dir}/results/{configname}/integrated_results/helical_part2/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+#         "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_helical_p2.h5ad"
+#     params:
+#         "scripts/python/helical_kmeans.py"
+#     log:
+#         "{output_file_dir}/logs/{configname}/integrate/helical_part2/integrate_{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+#         "_downsample_{num_batches}_batch_ds_c_{rep}_helical_p2.log"
+#     priority: 0
+#     shell:
+#         """
+#         python -s {params} \
+#             --inputfile {input} \
+#             --outfile {output} \
+#             &> {log}
+#         """
 
-# Concatenate the two parts of integration (baseline and helical/foundation models) into one h5ad file
-# The outputs are taken fron the rules integrate and helical_kmeans
-rule integrate_output_concat:
-    conda:
-        "envs/integrate.yaml"
-    input:
-        baseline = "{output_file_dir}/results/{configname}/integrated_results/baseline/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_baseline.h5ad",
-        helical = "{output_file_dir}/results/{configname}/integrated_results/helical_part2/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_helical_p2.h5ad"
-    output:
-        "{output_file_dir}/results/{configname}/integrated_results/concatenated/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_concat.h5ad"
-    params:
-        script_path = "scripts/python/integrate_output_concat.py"
-    log:
-        "{output_file_dir}/logs/{configname}/integrate/integrate_output_concat/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_integrate_output_concat.log"
-    priority: 0
-    shell:
-        """
-        python -s {params.script_path} \
-            --baseline {input.baseline} \
-            --helical {input.helical} \
-            --outfile {output} \
-            &> {log}
-        """
+# # Concatenate the two parts of integration (baseline and helical/foundation models) into one h5ad file
+# # The outputs are taken fron the rules integrate and helical_kmeans
+# rule integrate_output_concat:
+#     conda:
+#         "envs/integrate.yaml"
+#     input:
+#         baseline = "{output_file_dir}/results/{configname}/integrated_results/baseline/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+#         "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_baseline.h5ad",
+#         helical = "{output_file_dir}/results/{configname}/integrated_results/helical_part2/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+#         "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_helical_p2.h5ad"
+#     output:
+#         "{output_file_dir}/results/{configname}/integrated_results/concatenated/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+#         "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_concat.h5ad"
+#     params:
+#         script_path = "scripts/python/integrate_output_concat.py"
+#     log:
+#         "{output_file_dir}/logs/{configname}/integrate/integrate_output_concat/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+#         "_downsample_{num_batches}_batch_ds_c_{rep}_integrate_output_concat.log"
+#     priority: 0
+#     shell:
+#         """
+#         python -s {params.script_path} \
+#             --baseline {input.baseline} \
+#             --helical {input.helical} \
+#             --outfile {output} \
+#             &> {log}
+#         """
 
 
-# Get summary results of downsampling - dataset based
-rule downsample_summary:
-    conda:
-        "envs/integrate.yaml"
-    input:
-        "{output_file_dir}/results/{configname}/integrated_results/concatenated/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_concat.h5ad"
-    output:
-        "{output_file_dir}/results/{configname}/downsample_summaries/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_downsample_summary.tsv"
-    params:
-        script_path = "scripts/python/downsample_summary.py",
-    log:
-        "{output_file_dir}/logs/{configname}/downsample_summary/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_downsample_summary.log"
-    priority: 100
-    shell:
-        """
-        python -s {params.script_path} \
-            --infile {input} \
-            --outfile {output} \
-            --dataset {wildcards.data_folder} \
-            --rep {wildcards.rep} \
-            &> {log}
-        """
+# # Get summary results of downsampling - dataset based
+# rule downsample_summary:
+#     conda:
+#         "envs/integrate.yaml"
+#     input:
+#         "{output_file_dir}/results/{configname}/integrated_results/concatenated/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+#         "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_concat.h5ad"
+#     output:
+#         "{output_file_dir}/results/{configname}/downsample_summaries/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+#         "_downsample_{num_batches}_batch_ds_c_{rep}_downsample_summary.tsv"
+#     params:
+#         script_path = "scripts/python/downsample_summary.py",
+#     log:
+#         "{output_file_dir}/logs/{configname}/downsample_summary/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+#         "_downsample_{num_batches}_batch_ds_c_{rep}_downsample_summary.log"
+#     priority: 100
+#     shell:
+#         """
+#         python -s {params.script_path} \
+#             --infile {input} \
+#             --outfile {output} \
+#             --dataset {wildcards.data_folder} \
+#             --rep {wildcards.rep} \
+#             &> {log}
+#         """
 
-# Get cluster summary results of downsampling, pertaining to integration stats
-rule clustering_summary:
-    conda:
-        "envs/integrate.yaml"
-    input:
-        "{output_file_dir}/results/{configname}/integrated_results/concatenated/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_concat.h5ad"
-    output:
-        "{output_file_dir}/results/{configname}/clustering_summaries/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_clustering_summary.tsv"
-    params:
-        script_path = "scripts/python/clustering_stats.py",
-    log:
-        "{output_file_dir}/logs/{configname}/clustering_summary/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_clustering_summary.log"
-    priority: 100
-    shell:
-        """
-        python -s {params.script_path} \
-            --infile {input} \
-            --outfile {output} \
-            --dataset {wildcards.data_folder} \
-            --rep {wildcards.rep} \
-            &> {log}
-        """
+# # Get cluster summary results of downsampling, pertaining to integration stats
+# rule clustering_summary:
+#     conda:
+#         "envs/integrate.yaml"
+#     input:
+#         "{output_file_dir}/results/{configname}/integrated_results/concatenated/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+#         "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_concat.h5ad"
+#     output:
+#         "{output_file_dir}/results/{configname}/clustering_summaries/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+#         "_downsample_{num_batches}_batch_ds_c_{rep}_clustering_summary.tsv"
+#     params:
+#         script_path = "scripts/python/clustering_stats.py",
+#     log:
+#         "{output_file_dir}/logs/{configname}/clustering_summary/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+#         "_downsample_{num_batches}_batch_ds_c_{rep}_clustering_summary.log"
+#     priority: 100
+#     shell:
+#         """
+#         python -s {params.script_path} \
+#             --infile {input} \
+#             --outfile {output} \
+#             --dataset {wildcards.data_folder} \
+#             --rep {wildcards.rep} \
+#             &> {log}
+#         """
 
-# Get clustering concordance results from different methods after intergration
-rule clustering_concord_summary:
-    conda:
-        "envs/integrate.yaml"
-    input:
-        "{output_file_dir}/results/{configname}/integrated_results/concatenated/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_concat.h5ad"
-    output:
-        "{output_file_dir}/results/{configname}/clustering_concord_summaries/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_clustering_concord_summary.tsv"
-    params:
-        script_path = "scripts/python/clustering_concordance.py",
-    log:
-        "{output_file_dir}/logs/{configname}/clustering_concord_summary/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_clustering_concord_summary.log"
-    priority: 100
-    shell:
-        """
-        python -s {params.script_path} \
-            --infile {input} \
-            --outfile {output} \
-            --dataset {wildcards.data_folder} \
-            --rep {wildcards.rep} \
-            &> {log}
-        """
+# # Get clustering concordance results from different methods after intergration
+# rule clustering_concord_summary:
+#     conda:
+#         "envs/integrate.yaml"
+#     input:
+#         "{output_file_dir}/results/{configname}/integrated_results/concatenated/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+#         "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_concat.h5ad"
+#     output:
+#         "{output_file_dir}/results/{configname}/clustering_concord_summaries/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+#         "_downsample_{num_batches}_batch_ds_c_{rep}_clustering_concord_summary.tsv"
+#     params:
+#         script_path = "scripts/python/clustering_concordance.py",
+#     log:
+#         "{output_file_dir}/logs/{configname}/clustering_concord_summary/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+#         "_downsample_{num_batches}_batch_ds_c_{rep}_clustering_concord_summary.log"
+#     priority: 100
+#     shell:
+#         """
+#         python -s {params.script_path} \
+#             --infile {input} \
+#             --outfile {output} \
+#             --dataset {wildcards.data_folder} \
+#             --rep {wildcards.rep} \
+#             &> {log}
+#         """
 
-# Get DGE ranking concordance results (from different methods) from downsampling using Leiden clustering
-rule dge_ranking_stats:
-    conda:
-        "envs/integrate.yaml"
-    input:
-        "{output_file_dir}/results/{configname}/integrated_results/concatenated/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_concat.h5ad"
-    output:
-        "{output_file_dir}/results/{configname}/dge_ranking_stats/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_dge_ranking_stats.tsv"
-    params:
-        script_path = "scripts/python/dge_ranking_concordance.py",
-    log:
-        "{output_file_dir}/logs/{configname}/dge_ranking_stats/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_dge_ranking_stats.log"
-    priority: 100
-    shell:
-        """
-        python -s {params.script_path} \
-            --infile {input} \
-            --outfile {output} \
-            --dataset {wildcards.data_folder} \
-            --rep {wildcards.rep} \
-            &> {log}
-        """
+# # Get DGE ranking concordance results (from different methods) from downsampling using Leiden clustering
+# rule dge_ranking_stats:
+#     conda:
+#         "envs/integrate.yaml"
+#     input:
+#         "{output_file_dir}/results/{configname}/integrated_results/concatenated/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+#         "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_concat.h5ad"
+#     output:
+#         "{output_file_dir}/results/{configname}/dge_ranking_stats/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+#         "_downsample_{num_batches}_batch_ds_c_{rep}_dge_ranking_stats.tsv"
+#     params:
+#         script_path = "scripts/python/dge_ranking_concordance.py",
+#     log:
+#         "{output_file_dir}/logs/{configname}/dge_ranking_stats/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+#         "_downsample_{num_batches}_batch_ds_c_{rep}_dge_ranking_stats.log"
+#     priority: 100
+#     shell:
+#         """
+#         python -s {params.script_path} \
+#             --infile {input} \
+#             --outfile {output} \
+#             --dataset {wildcards.data_folder} \
+#             --rep {wildcards.rep} \
+#             &> {log}
+#         """
 
-# Get DGE ranking results (from different methods) from downsampling on a per-cluster basis using Leiden clustering -
-# this rule returns the top 50 DGEs per cluster across all methods and subsets (n_genes can be modified in the script)
-rule dge_ranking_stats_per_cluster:
-    conda:
-        "envs/integrate.yaml"
-    input:
-        "{output_file_dir}/results/{configname}/integrated_results/concatenated/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_concat.h5ad"
-    output:
-        "{output_file_dir}/results/{configname}/dge_ranking_results_per_cluster/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_dge_ranking_results_per_cluster.tsv"
-    params:
-        script_path = "scripts/python/dge_ranking_per_cluster.py",
-    log:
-        "{output_file_dir}/logs/{configname}/dge_ranking_results_per_cluster/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_dge_ranking_results_per_cluster.log"
-    priority: 100
-    shell:
-        """
-        python -s {params.script_path} \
-            --infile {input} \
-            --outfile {output} \
-            --dataset {wildcards.data_folder} \
-            --rep {wildcards.rep} \
-            &> {log}
-        """
+# # Get DGE ranking results (from different methods) from downsampling on a per-cluster basis using Leiden clustering -
+# # this rule returns the top 50 DGEs per cluster across all methods and subsets (n_genes can be modified in the script)
+# rule dge_ranking_stats_per_cluster:
+#     conda:
+#         "envs/integrate.yaml"
+#     input:
+#         "{output_file_dir}/results/{configname}/integrated_results/concatenated/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+#         "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_concat.h5ad"
+#     output:
+#         "{output_file_dir}/results/{configname}/dge_ranking_results_per_cluster/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+#         "_downsample_{num_batches}_batch_ds_c_{rep}_dge_ranking_results_per_cluster.tsv"
+#     params:
+#         script_path = "scripts/python/dge_ranking_per_cluster.py",
+#     log:
+#         "{output_file_dir}/logs/{configname}/dge_ranking_results_per_cluster/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+#         "_downsample_{num_batches}_batch_ds_c_{rep}_dge_ranking_results_per_cluster.log"
+#     priority: 100
+#     shell:
+#         """
+#         python -s {params.script_path} \
+#             --infile {input} \
+#             --outfile {output} \
+#             --dataset {wildcards.data_folder} \
+#             --rep {wildcards.rep} \
+#             &> {log}
+#         """
 
-# Get imbalance summary results for integration datasets - vanilla integration
-rule imbalance_summary:
-    conda:
-        "envs/integrate.yaml"
-    input:
-        "{output_file_dir}/results/{configname}/integrated_results/concatenated/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_concat.h5ad"
-    output:
-        "{output_file_dir}/results/{configname}/imbalance_summaries/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_imbalance_summary.tsv"
-    params:
-        script_path = "scripts/python/imbalance_summary.py",
-    log:
-        "{output_file_dir}/logs/{configname}/imbalance_summary/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_imbalance_summary.log"
-    priority: 100
-    shell:
-        """
-        python -s {params.script_path} \
-            --infile {input} \
-            --outfile {output} \
-            --dataset {wildcards.data_folder} \
-            --rep {wildcards.rep} \
-            &> {log}
-        """
+# # Get imbalance summary results for integration datasets - vanilla integration
+# rule imbalance_summary:
+#     conda:
+#         "envs/integrate.yaml"
+#     input:
+#         "{output_file_dir}/results/{configname}/integrated_results/concatenated/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+#         "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_concat.h5ad"
+#     output:
+#         "{output_file_dir}/results/{configname}/imbalance_summaries/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+#         "_downsample_{num_batches}_batch_ds_c_{rep}_imbalance_summary.tsv"
+#     params:
+#         script_path = "scripts/python/imbalance_summary.py",
+#     log:
+#         "{output_file_dir}/logs/{configname}/imbalance_summary/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+#         "_downsample_{num_batches}_batch_ds_c_{rep}_imbalance_summary.log"
+#     priority: 100
+#     shell:
+#         """
+#         python -s {params.script_path} \
+#             --infile {input} \
+#             --outfile {output} \
+#             --dataset {wildcards.data_folder} \
+#             --rep {wildcards.rep} \
+#             &> {log}
+#         """
 
-# Get imbalance summary at a celltype level for integration datasets - vanilla integration
-rule celltype_imbalance_summary:
-    conda:
-        "envs/integrate.yaml"
-    input:
-        "{output_file_dir}/results/{configname}/integrated_results/concatenated/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_concat.h5ad"
-    output:
-        "{output_file_dir}/results/{configname}/celltype_imbalance_summaries/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_celltype_imbalance_summary.tsv"
-    params:
-        script_path = "scripts/python/celltype_imbalance_summary.py",
-    log:
-        "{output_file_dir}/logs/{configname}/celltype_imbalance_summaries/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_celltype_imbalance_summary.log"
-    priority: 100
-    shell:
-        """
-        python -s {params.script_path} \
-            --infile {input} \
-            --outfile {output} \
-            --dataset {wildcards.data_folder} \
-            --rep {wildcards.rep} \
-            &> {log}
-        """
+# # Get imbalance summary at a celltype level for integration datasets - vanilla integration
+# rule celltype_imbalance_summary:
+#     conda:
+#         "envs/integrate.yaml"
+#     input:
+#         "{output_file_dir}/results/{configname}/integrated_results/concatenated/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+#         "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_concat.h5ad"
+#     output:
+#         "{output_file_dir}/results/{configname}/celltype_imbalance_summaries/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+#         "_downsample_{num_batches}_batch_ds_c_{rep}_celltype_imbalance_summary.tsv"
+#     params:
+#         script_path = "scripts/python/celltype_imbalance_summary.py",
+#     log:
+#         "{output_file_dir}/logs/{configname}/celltype_imbalance_summaries/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+#         "_downsample_{num_batches}_batch_ds_c_{rep}_celltype_imbalance_summary.log"
+#     priority: 100
+#     shell:
+#         """
+#         python -s {params.script_path} \
+#             --infile {input} \
+#             --outfile {output} \
+#             --dataset {wildcards.data_folder} \
+#             --rep {wildcards.rep} \
+#             &> {log}
+#         """
 
-# Get KNN classification statistics for each celltype post integration for each method
-rule knn_classification:
-    conda:
-        "envs/integrate.yaml"
-    input:
-        "{output_file_dir}/results/{configname}/integrated_results/concatenated/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_concat.h5ad"
-    output:
-        "{output_file_dir}/results/{configname}/knn_classification_reports/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_knn_classification.tsv"
-    params:
-        script_path = "scripts/python/knn_classification.py",
-    log:
-        "{output_file_dir}/logs/{configname}/knn_classification_report/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_knn_classification.log"
-    priority: 50
-    shell:
-        """
-        python -s {params.script_path} \
-            --infile {input} \
-            --outfile {output} \
-            --dataset {wildcards.data_folder} \
-            --rep {wildcards.rep} \
-            &> {log}
-        """
+# # Get KNN classification statistics for each celltype post integration for each method
+# rule knn_classification:
+#     conda:
+#         "envs/integrate.yaml"
+#     input:
+#         "{output_file_dir}/results/{configname}/integrated_results/concatenated/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+#         "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_concat.h5ad"
+#     output:
+#         "{output_file_dir}/results/{configname}/knn_classification_reports/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+#         "_downsample_{num_batches}_batch_ds_c_{rep}_knn_classification.tsv"
+#     params:
+#         script_path = "scripts/python/knn_classification.py",
+#     log:
+#         "{output_file_dir}/logs/{configname}/knn_classification_report/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+#         "_downsample_{num_batches}_batch_ds_c_{rep}_knn_classification.log"
+#     priority: 50
+#     shell:
+#         """
+#         python -s {params.script_path} \
+#             --infile {input} \
+#             --outfile {output} \
+#             --dataset {wildcards.data_folder} \
+#             --rep {wildcards.rep} \
+#             &> {log}
+#         """
 
-# Get Marker genes for each celltype before any integration (top 10) across batches for subsetting DGE results
-rule marker_get:
-    conda:
-        "envs/integrate.yaml"
-    input:
-        "../resources/h5ad_files/int_datasets/{data_folder}"
-    output:
-        "{output_file_dir}/results/{configname}/marker_results/{data_folder}_preintegration_marker_selection.tsv"
-    params:
-        script_path = "scripts/python/marker_get.py",
-    log:
-        "{output_file_dir}/logs/{configname}/marker_get/{data_folder}_preintegration_marker_selection.log"
-    priority: 100
-    shell:
-        """
-        python -s {params.script_path} \
-            --filedir {input} \
-            --outfile {output} \
-            &> {log}
-        """
+# # Get Marker genes for each celltype before any integration (top 10) across batches for subsetting DGE results
+# rule marker_get:
+#     conda:
+#         "envs/integrate.yaml"
+#     input:
+#         "../resources/h5ad_files/int_datasets/{data_folder}"
+#     output:
+#         "{output_file_dir}/results/{configname}/marker_results/{data_folder}_preintegration_marker_selection.tsv"
+#     params:
+#         script_path = "scripts/python/marker_get.py",
+#     log:
+#         "{output_file_dir}/logs/{configname}/marker_get/{data_folder}_preintegration_marker_selection.log"
+#     priority: 100
+#     shell:
+#         """
+#         python -s {params.script_path} \
+#             --filedir {input} \
+#             --outfile {output} \
+#             &> {log}
+#         """
 
-# Subset dge ranking dfs for marker genes
-rule dge_rank_marker_subset:
-    conda:
-        "envs/integrate.yaml"
-    input:
-        dge_file="{output_file_dir}/results/{configname}/dge_ranking_stats/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_dge_ranking_stats.tsv",
-        marker_file="{output_file_dir}/results/{configname}/marker_results/{data_folder}_preintegration_marker_selection.tsv"
-    output:
-        "{output_file_dir}/results/{configname}/dge_ranking_stats_marker_sub/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_dge_ranking_stats_marker_sub.tsv"
-    params:
-        script_path = "scripts/python/dge_ranking_marker_subset.py",
-    log:
-        "{output_file_dir}/logs/{configname}/dge_ranking_stats_marker_sub/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_dge_ranking_stats_marker_sub.log"
-    priority: 100
-    shell:
-        """
-        python -s {params.script_path} \
-            --infile_dge_rank {input.dge_file} \
-            --infile_marker {input.marker_file} \
-            --outfile {output} \
-            &> {log}
-        """
+# # Subset dge ranking dfs for marker genes
+# rule dge_rank_marker_subset:
+#     conda:
+#         "envs/integrate.yaml"
+#     input:
+#         dge_file="{output_file_dir}/results/{configname}/dge_ranking_stats/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+#         "_downsample_{num_batches}_batch_ds_c_{rep}_dge_ranking_stats.tsv",
+#         marker_file="{output_file_dir}/results/{configname}/marker_results/{data_folder}_preintegration_marker_selection.tsv"
+#     output:
+#         "{output_file_dir}/results/{configname}/dge_ranking_stats_marker_sub/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+#         "_downsample_{num_batches}_batch_ds_c_{rep}_dge_ranking_stats_marker_sub.tsv"
+#     params:
+#         script_path = "scripts/python/dge_ranking_marker_subset.py",
+#     log:
+#         "{output_file_dir}/logs/{configname}/dge_ranking_stats_marker_sub/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+#         "_downsample_{num_batches}_batch_ds_c_{rep}_dge_ranking_stats_marker_sub.log"
+#     priority: 100
+#     shell:
+#         """
+#         python -s {params.script_path} \
+#             --infile_dge_rank {input.dge_file} \
+#             --infile_marker {input.marker_file} \
+#             --outfile {output} \
+#             &> {log}
+#         """
 
-# Rule for relatedness metric between celltypes in a dataset
-rule relatedness_metric:
-    conda:
-        "envs/integrate.yaml"
-    input:
-        "../resources/h5ad_files/int_datasets/{data_folder}"
-    output:
-        "{output_file_dir}/results/{configname}/relatedness_results/{data_folder}_celltype_relatedness.tsv"
-    params:
-        script_path = "scripts/python/relatedness_metric.py"
-    log:
-        "{output_file_dir}/logs/{configname}/relatedness_results/{data_folder}_celltype_relatedness.log"
-    priority: 100
-    shell:
-        """
-        python -s {params.script_path} \
-            --filedir {input} \
-            --outfile {output} \
-            --dataset {wildcards.data_folder} \
-            &> {log}
-        """
+# # Rule for relatedness metric between celltypes in a dataset
+# rule relatedness_metric:
+#     conda:
+#         "envs/integrate.yaml"
+#     input:
+#         "../resources/h5ad_files/int_datasets/{data_folder}"
+#     output:
+#         "{output_file_dir}/results/{configname}/relatedness_results/{data_folder}_celltype_relatedness.tsv"
+#     params:
+#         script_path = "scripts/python/relatedness_metric.py"
+#     log:
+#         "{output_file_dir}/logs/{configname}/relatedness_results/{data_folder}_celltype_relatedness.log"
+#     priority: 100
+#     shell:
+#         """
+#         python -s {params.script_path} \
+#             --filedir {input} \
+#             --outfile {output} \
+#             --dataset {wildcards.data_folder} \
+#             &> {log}
+#         """
 
-# Rule for generating umap plot of the integrated datasets
-rule umap:
-    conda:
-        "envs/integrate.yaml"
-    input:
-        "{output_file_dir}/results/{configname}/integrated_results/concatenated/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_concat.h5ad"
-    output:
-        leiden_plot = "{output_file_dir}/results/{configname}/umap_plots/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_umap_leiden.pdf",
-        celtype_plot = "{output_file_dir}/results/{configname}/umap_plots/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_umap_celltype.pdf",
-        batch_plot = "{output_file_dir}/results/{configname}/umap_plots/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_umap_batch.pdf"
-    params:
-        script_path = "scripts/python/umap_plots.py"
-    log:
-        "{output_file_dir}/logs/{configname}/umap_plots/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_umap_plots.log"
-    priority: 100
-    shell:
-        """
-        python -s {params.script_path} \
-            --infile {input} \
-            --leiden_plot_loc {output.leiden_plot} \
-            --celltype_plot_loc {output.celtype_plot} \
-            --batch_plot_loc {output.batch_plot} \
-            &> {log}
-        """
+# # Rule for generating umap plot of the integrated datasets
+# rule umap:
+#     conda:
+#         "envs/integrate.yaml"
+#     input:
+#         "{output_file_dir}/results/{configname}/integrated_results/concatenated/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+#         "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_concat.h5ad"
+#     output:
+#         leiden_plot = "{output_file_dir}/results/{configname}/umap_plots/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+#         "_downsample_{num_batches}_batch_ds_c_{rep}_umap_leiden.pdf",
+#         celtype_plot = "{output_file_dir}/results/{configname}/umap_plots/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+#         "_downsample_{num_batches}_batch_ds_c_{rep}_umap_celltype.pdf",
+#         batch_plot = "{output_file_dir}/results/{configname}/umap_plots/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+#         "_downsample_{num_batches}_batch_ds_c_{rep}_umap_batch.pdf"
+#     params:
+#         script_path = "scripts/python/umap_plots.py"
+#     log:
+#         "{output_file_dir}/logs/{configname}/umap_plots/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+#         "_downsample_{num_batches}_batch_ds_c_{rep}_umap_plots.log"
+#     priority: 100
+#     shell:
+#         """
+#         python -s {params.script_path} \
+#             --infile {input} \
+#             --leiden_plot_loc {output.leiden_plot} \
+#             --celltype_plot_loc {output.celtype_plot} \
+#             --batch_plot_loc {output.batch_plot} \
+#             &> {log}
+#         """
 
 ###########################################################
 ### Adding back some rules taken out earlier for BCB430 ###
