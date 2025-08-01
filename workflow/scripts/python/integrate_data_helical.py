@@ -94,16 +94,20 @@ def main(h5ad_dir, save_loc, ds_celltypes, ds_proportions, num_batches, seed):
     uce_integrated = integration.uce_integrate()
     scgpt_integrated = integration.scgpt_integrate()
     geneformer_integrated = integration.geneformer_integrate()
+    transcriptformer_integrated = integration.transcriptformer_integrate()
     
     # Checking number of cells post integration
     print(f"UCE cells: {uce_integrated.n_obs}\n")
     print(f"scGPT cells: {scgpt_integrated.n_obs}\n")
     print(f"Geneformer cells: {geneformer_integrated.n_obs}\n")
+    print(f"Transcriptformer cells: {transcriptformer_integrated.n_obs}\n")
 
     # Add integration type to each subset and concatenate
     uce_integrated.obs["integration_method"] = "uce" 
     scgpt_integrated.obs["integration_method"] = "scgpt"
     geneformer_integrated.obs["integration_method"] = "geneformer"
+    transcriptformer_integrated.obs["integration_method"] = "transcriptformer"
+    # NOTE FOR LATER: make sure transcriptformer .var is the same as the others
     
     geneformer_integrated.var = uce_integrated.var # might cause errors because code below was moved
     scgpt_integrated.var = uce_integrated.var
@@ -111,7 +115,8 @@ def main(h5ad_dir, save_loc, ds_celltypes, ds_proportions, num_batches, seed):
     integrated_concat = ann.concat([
         uce_integrated,
         scgpt_integrated,
-        geneformer_integrated],
+        geneformer_integrated,
+        transcriptformer_integrated],
         axis=0,         # concatenate along cells
         join="inner",   # or "outer" if you want all genes even if some are missing
         merge="same"    # assumes .var is the same across objects
