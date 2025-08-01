@@ -50,7 +50,7 @@ class IntegrationHelical:
     def uce_integrate(self):
         print("Performing UCE integration.." + "\n")
         auce = self.adata.copy()
-        configurer_uce = UCEConfig(model_name="33l_8ep_1024t_1280", batch_size=16, device="cuda")
+        configurer_uce = UCEConfig(model_name="33l_8ep_1024t_1280", batch_size=8, device="cuda")
         uce = UCE(configurer=configurer_uce)
         data_loader_uce = uce.process_data(auce)
         embeddings_uce = uce.get_embeddings(data_loader_uce)
@@ -80,7 +80,7 @@ class IntegrationHelical:
     def scgpt_integrate(self):
         print("Performing scGPT integration.." + "\n")
         ascgpt = self.adata.copy()
-        configurer_scgpt = scGPTConfig(device="cuda")
+        configurer_scgpt = scGPTConfig(batch_size=8, device="cuda")
         scgpt = scGPT(configurer=configurer_scgpt)
         data_loader_scgpt = scgpt.process_data(ascgpt)
         embeddings_scgpt = scgpt.get_embeddings(data_loader_scgpt)
@@ -110,7 +110,7 @@ class IntegrationHelical:
     def geneformer_integrate(self):
         print("Performing Geneformer integration.." + "\n")
         ageneformer = self.adata.copy()
-        configurer_geneformer = GeneformerConfig(model_name="gf-12L-30M-i2048", device="cuda")
+        configurer_geneformer = GeneformerConfig(model_name="gf-12L-30M-i2048", batch_size= 8, device="cuda")
         geneformer = Geneformer(configurer=configurer_geneformer)
         data_loader_geneformer = geneformer.process_data(ageneformer)
         embeddings_geneformer = geneformer.get_embeddings(data_loader_geneformer)
