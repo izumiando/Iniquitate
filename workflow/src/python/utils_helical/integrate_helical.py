@@ -1,9 +1,11 @@
-import random 
+# import random  # i think this was for the unseeding which we may reintroduce later
 
 import numpy as np
 import scanpy as sc
 import anndata as ann
 import torch
+import torch._dynamo
+torch._dynamo.config.suppress_errors = True # Suppress errors for torch dynamo triggered by Transcriptformer
 
 # Helical-specific imports
 from helical.models.uce.model import UCE, UCEConfig
@@ -18,6 +20,11 @@ import os
 # for PCA
 from sklearn.preprocessing import StandardScaler as Scale
 from sklearn.decomposition import PCA
+
+# unseeding
+# random.seed(None)
+# np.random.seed(None)
+# torch.manual_seed(random.randint(1, 10000000000000000000))
 
 class IntegrationHelical:
     """Class for integrating scRNA-seq data and returning processed data."""
