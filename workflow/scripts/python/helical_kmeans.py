@@ -23,7 +23,7 @@ def main(h5ad_file, save_loc):
     # Define method subsets and iterate over them until the same number of k clusters is found
     k = 10
     k_initial = k # Integers are immutable 
-    methods = ["uce", "scgpt", "geneformer"]
+    methods = ["uce", "scgpt", "geneformer", "transcriptformer"]
     method_kmeans_adatas = []
     i = 0
     while i < len(methods):

@@ -1,4 +1,4 @@
-# import random  # i think this was for the unseeding which we may reintroduce later
+import random  
 
 import numpy as np
 import scanpy as sc
@@ -21,10 +21,10 @@ import os
 from sklearn.preprocessing import StandardScaler as Scale
 from sklearn.decomposition import PCA
 
-# unseeding
-# random.seed(None)
-# np.random.seed(None)
-# torch.manual_seed(random.randint(1, 10000000000000000000))
+# unseeding, added back in Aug 5, 2025
+random.seed(None)
+np.random.seed(None)
+torch.manual_seed(random.randint(1, 10000000000000000000))
 
 class IntegrationHelical:
     """Class for integrating scRNA-seq data and returning processed data."""
