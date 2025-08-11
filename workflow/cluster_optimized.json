@@ -18,7 +18,7 @@
         "gpus": ""
     },
     "integrate": {
-        "mem": "--mem=150G",
+        "mem": "--mem=128G",
         "cpus-per-task": 8,
         "time": "2:00:00",
         "account": "def-kieranc",
@@ -27,7 +27,7 @@
         "gpus": "--gpus-per-node=v100l:1"
     },
     "integrate_helical": {
-        "mem": "--mem=150G",
+        "mem": "--mem=128G",
         "cpus-per-task": 8,
         "time": "2:00:00",
         "account": "def-kieranc",
@@ -48,51 +48,6 @@
         "mem": "--mem=32G",
         "cpus-per-task": 8,
         "time": "0:30:00",
-        "account": "def-kieranc",
-        "mail-user": "izumi.ando@mail.utoronto.ca",
-        "mail-type": "ALL",
-        "gpus": "--gpus-per-node=v100l:1"
-    },
-    "leiden_resolution": {
-        "mem": "--mem=100G",
-        "cpus-per-task": 8,
-        "time": "2:00:00",
-        "account": "def-kieranc",
-        "mail-user": "izumi.ando@mail.utoronto.ca",
-        "mail-type": "ALL",
-        "gpus": "--gpus-per-node=v100l:1"
-    },
-    "leiden_aggregate": {
-        "mem": "--mem=100G",
-        "cpus-per-task": 8,
-        "time": "2:00:00",
-        "account": "def-kieranc",
-        "mail-user": "izumi.ando@mail.utoronto.ca",
-        "mail-type": "ALL",
-        "gpus": "--gpus-per-node=v100l:1"
-    },
-    "integrate_paga": {
-        "mem": "--mem=100G",
-        "cpus-per-task": 8,
-        "time": "4:00:00",
-        "account": "def-kieranc",
-        "mail-user": "izumi.ando@mail.utoronto.ca",
-        "mail-type": "ALL",
-        "gpus": "--gpus-per-node=v100l:1"
-    },
-    "query_to_reference": {
-        "mem": "--mem=100G",
-        "cpus-per-task": 8,
-        "time": "4:00:00",
-        "account": "def-kieranc",
-        "mail-user": "izumi.ando@mail.utoronto.ca",
-        "mail-type": "ALL",
-        "gpus": "--gpus-per-node=v100l:1"
-    },
-    "annotation_baseline": {
-        "mem": "--mem=100G",
-        "cpus-per-task": 8,
-        "time": "2:00:00",
         "account": "def-kieranc",
         "mail-user": "izumi.ando@mail.utoronto.ca",
         "mail-type": "ALL",
