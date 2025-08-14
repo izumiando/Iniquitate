@@ -347,7 +347,7 @@ rule integrate:
         """
 
 
-# Integrate the indicated h5ad files from config, using UCE, scGPT, and Geneformer from Helical
+# Integrate the indicated h5ad files from config, using UCE, scGPT, Geneformer, and Transcriptformer from Helical
 # shell script should be modified before use 
 rule integrate_helical:
     input:
@@ -378,7 +378,7 @@ rule integrate_helical:
         """
 
 
-# Kmeans clustering step for h5ad files integrated using UCE, scGPT, and Geneformer from Helical
+# Kmeans clustering step for h5ad files integrated using UCE, scGPT, Geneformer, Transcriptformer from Helical
 # This rule was made to avoid dependency issues with the helical and faiss packages
 rule helical_kmeans:
     conda:
