@@ -114,7 +114,8 @@ if config["celltype_list"] == "No":
                             "knn_classification_reports",
                             "umap_plots",
                             "umap_plots",
-                            "umap_plots"
+                            "umap_plots",
+                            "scib_batch_metrics"
                         ],
                         [
                             "integrated_baseline",
@@ -132,7 +133,8 @@ if config["celltype_list"] == "No":
                             "knn_classification",
                             "umap_leiden",
                             "umap_celltype",
-                            "umap_batch"
+                            "umap_batch",
+                            "scib_batch_metrics"
                         ],
                         [
                             "h5ad",
@@ -152,7 +154,8 @@ if config["celltype_list"] == "No":
                             "tsv",
                             "pdf",
                             "pdf",
-                            "pdf"
+                            "pdf",
+                            "tsv"
                         ]
                     )
                 ),
@@ -188,7 +191,8 @@ if config["celltype_list"] == "No":
                                 "clustering_concord_summaries",
                                 "imbalance_summaries",
                                 "celltype_imbalance_summaries",
-                                "knn_classification_reports"
+                                "knn_classification_reports",
+                                "scib_batch_metrics"
                             ],
                             [
                                 "integrated_baseline",
@@ -200,13 +204,15 @@ if config["celltype_list"] == "No":
                                 "clustering_concord_summary",
                                 "imbalance_summary",
                                 "celltype_imbalance_summary",
-                                "knn_classification"
+                                "knn_classification",
+                                "scib_batch_metrics"
                             ],
                             [
                                 "h5ad",
                                 "h5ad",
                                 "h5ad",
                                 "h5ad",
+                                "tsv",
                                 "tsv",
                                 "tsv",
                                 "tsv",
@@ -267,7 +273,8 @@ if config["celltype_list"] == "No":
                                 "dge_ranking_stats_marker_sub",
                                 "imbalance_summaries",
                                 "celltype_imbalance_summaries",
-                                "knn_classification_reports"
+                                "knn_classification_reports",
+                                "scib_batch_metrics"
                             ],
                             [
                                 "integrated_baseline",
@@ -282,13 +289,15 @@ if config["celltype_list"] == "No":
                                 "dge_ranking_stats_marker_sub",
                                 "imbalance_summary",
                                 "celltype_imbalance_summary",
-                                "knn_classification"
+                                "knn_classification",
+                                "scib_batch_metrics"
                             ],
                             [
                                 "h5ad",
                                 "h5ad",
                                 "h5ad",
                                 "h5ad",
+                                "tsv",
                                 "tsv",
                                 "tsv",
                                 "tsv",
@@ -737,5 +746,37 @@ rule umap:
             --leiden_plot_loc {output.leiden_plot} \
             --celltype_plot_loc {output.celtype_plot} \
             --batch_plot_loc {output.batch_plot} \
+            &> {log}
+        """
+
+# Get batch correction metrics from scib package
+rule scib_batch_metrics:
+    input:
+        pre_int_adata="{output_file_dir}/results/{configname}/integrated_results/intermediate_for_helical/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_helical_p1_intermediate.h5ad",
+        post_int_adata="{output_file_dir}/results/{configname}/integrated_results/concatenated/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_concat.h5ad"
+    output:
+        "{output_file_dir}/results/{configname}/scib_batch_metrics/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "_downsample_{num_batches}_batch_ds_c_{rep}_scib_batch_metrics.tsv"
+    params:
+        script_path = "scripts/python/scib_batch_metrics.py",
+    log:
+        "{output_file_dir}/logs/{configname}/scib_batch_metrics/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "_downsample_{num_batches}_batch_ds_c_{rep}_scib_batch_metrics.log"
+    priority: 50
+    shell:
+        """
+        source ~/.bashrc
+        conda activate scib_env
+        python -s {params.script_path} \
+            --adata {input.pre_int_adata} \
+            --adata_int {input.post_int_adata} \
+            --dataset_name {wildcards.data_folder} \
+            --rep {wildcards.rep} \
+            --ds_celltypes {wildcards.ds_celltype} \
+            --ds_proportions {wildcards.ds_proportion} \
+            --num_batches {wildcards.num_batches} \
+            --save_loc {output} \
             &> {log}
         """
