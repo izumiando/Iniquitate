@@ -365,7 +365,7 @@ rule integrate_helical:
     shell:
         """
         module load gcc arrow
-        source ../../helical_mod/bin/activate
+        source /home/andoizum/projects/def-kieranc/andoizum/helical_1.4.1/bin/activate
         module load openblas
         python -s {params.script_path} \
             --filedir {input} \
