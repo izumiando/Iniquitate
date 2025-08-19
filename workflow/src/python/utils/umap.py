@@ -13,24 +13,24 @@ class Umap:
         Args:
             coords (dictionary): coordinates of umap in numpy format where
                 keys correspond to following integration methods -
-                'harmony', 'scvi', 'uce', 'scgpt', 'geneformer', and 'transcriptformer'.
+                'harmony', 'scvi', 'scgpt', 'geneformer', and 'transcriptformer'.
             clustering (dictionary): leiden or celltype clustering in numpy
                 format of integrated where keys correspond to following
-                integration methods - 'harmony', 'scvi', 'uce', 'scgpt', 
+                integration methods - 'harmony', 'scvi', 'scgpt', 
                 and 'geneformer'.
             subset_name (string): name of subset being utilized for clustering
                 comparisons (e.g. batch, celltype).
         """
         self.clustering_harmony = clustering.get("harmony")
         self.clustering_scvi = clustering.get("scvi")
-        self.clustering_uce = clustering.get("uce")
+        # self.clustering_uce = clustering.get("uce")
         self.clustering_scgpt = clustering.get("scgpt")
         self.clustering_geneformer = clustering.get("geneformer")
         self.clustering_transcriptformer = clustering.get("transcriptformer")
     
         self.umap_harmony = coords.get("harmony")
         self.umap_scvi = coords.get("scvi")
-        self.umap_uce = coords.get("uce")
+        # self.umap_uce = coords.get("uce")
         self.umap_scgpt = coords.get("scgpt")
         self.umap_geneformer = coords.get("geneformer")
         self.umap_transcriptformer = coords.get("transcriptformer")
@@ -61,7 +61,7 @@ class Umap:
         subset_list = [
             "harmony",
             "scvi",
-            "uce",
+            # "uce",
             "scgpt",
             "geneformer",
             "transcriptformer"
@@ -69,7 +69,7 @@ class Umap:
         clustering_list = [
             self.clustering_harmony,
             self.clustering_scvi,
-            self.clustering_uce,
+            # self.clustering_uce,
             self.clustering_scgpt,
             self.clustering_geneformer,
             self.clustering_transcriptformer
@@ -78,7 +78,7 @@ class Umap:
         coords_list = [
             self.umap_harmony,
             self.umap_scvi,
-            self.umap_uce,
+            # self.umap_uce,
             self.umap_scgpt,
             self.umap_geneformer,
             self.umap_transcriptformer

@@ -108,19 +108,19 @@ def main(h5ad_dir, save_loc, ds_celltypes, ds_proportions, num_batches, seed):
     integration = IntegrationHelical(adata = adata_concat)
     
     # Integrate across subsets
-    uce_integrated = integration.uce_integrate()
+    # uce_integrated = integration.uce_integrate()
     scgpt_integrated = integration.scgpt_integrate()
     geneformer_integrated = integration.geneformer_integrate()
     transcriptformer_integrated = integration.transcriptformer_integrate()
     
     # Checking number of cells post integration
-    print(f"UCE cells: {uce_integrated.n_obs}\n")
+    #print(f"UCE cells: {uce_integrated.n_obs}\n")
     print(f"scGPT cells: {scgpt_integrated.n_obs}\n")
     print(f"Geneformer cells: {geneformer_integrated.n_obs}\n")
     print(f"Transcriptformer cells: {transcriptformer_integrated.n_obs}\n")
 
     # Add integration type to each subset and concatenate
-    uce_integrated.obs["integration_method"] = "uce" 
+    # uce_integrated.obs["integration_method"] = "uce" 
     scgpt_integrated.obs["integration_method"] = "scgpt"
     geneformer_integrated.obs["integration_method"] = "geneformer"
     transcriptformer_integrated.obs["integration_method"] = "transcriptformer"
@@ -130,7 +130,7 @@ def main(h5ad_dir, save_loc, ds_celltypes, ds_proportions, num_batches, seed):
     scgpt_integrated.var = uce_integrated.var
     
     integrated_concat = ann.concat([
-        uce_integrated,
+        # uce_integrated,
         scgpt_integrated,
         geneformer_integrated,
         transcriptformer_integrated],

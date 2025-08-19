@@ -4,7 +4,7 @@ from sklearn import metrics
 
 def cluster_concordance(adata):
     # Pull out clustering values per subset
-    methods = ["harmony", "scvi", "uce", "scgpt", "geneformer", "transcriptformer"]
+    methods = ["harmony", "scvi", "scgpt", "geneformer", "transcriptformer"] # removed uce Aug 19th 2025
     adata_subsets = []
     for method in methods:
         adata_subsets.append(adata[adata.obs["integration_method"] == method])
