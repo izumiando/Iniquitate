@@ -126,8 +126,8 @@ def main(h5ad_dir, save_loc, ds_celltypes, ds_proportions, num_batches, seed):
     transcriptformer_integrated.obs["integration_method"] = "transcriptformer"
     # NOTE FOR LATER: make sure transcriptformer .var is the same as the others
     
-    geneformer_integrated.var = uce_integrated.var # might cause errors because code below was moved
-    scgpt_integrated.var = uce_integrated.var
+    geneformer_integrated.var = transcriptformer_integrated.var # might cause errors because code below was moved
+    scgpt_integrated.var = transcriptformer_integrated.var
     
     integrated_concat = ann.concat([
         # uce_integrated,
