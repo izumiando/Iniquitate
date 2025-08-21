@@ -15,8 +15,7 @@ from helical.models.transcriptformer.model import TranscriptFormer
 from helical.models.transcriptformer.transcriptformer_config import TranscriptFormerConfig
 
 # Finetuning imports
-from sklearn.model_selection import train_test_split
-from helical.models.uce import UCEFineTuningModel
+from helical.models.geneformer import GeneformerFineTuningModel, GeneformerConfig
 
 # for UCE step
 import os
@@ -89,16 +88,6 @@ class IntegrationHelical:
         
         print("Done!" + "\n")
         return auce
-    
-    def uce_integrate_finetuned(self):
-        # # weridly, UCE does not have a get_embeddings function as of July 29th, 2025
-        # print("Performing UCE integration with finetuning.." + "\n")
-        # auce = self.adata.copy()
-        # label_set = set(list(auce.obs["celltype"]))
-        # configurer_uce = UCEConfig(model_name="33l_8ep_1024t_1280", batch_size=16, device="cuda")
-        # uce_finetune = UCEFineTuningModel(configurer=configurer_uce, fine_tuning_head="classification", output_size=len(label_set))
-        # # splitting the data into train / test / validate sets
-        # dataset = uce_finetune.process_data(auce)
     
     def scgpt_integrate(self):
         print("Performing scGPT integration.." + "\n")
@@ -194,3 +183,51 @@ class IntegrationHelical:
         
         print("Done!" + "\n")
         return atranscriptformer
+    
+    ############################ FINE TUNING #####################################
+    def geneformer_integrate_finetuned(self):
+        """
+        Geneformer is not designed to be fine tuned for batch integration, rather
+        it is designed to be fine tuned for downstream tasks.
+        """
+        print("Performing fine-tuned Geneformer integration.." + "\n")
+        ageneformer = self.adata.copy()
+        celltypes = list(ageneformer.obs["celltype"])
+        label_set = set(celltypes)
+        configurer_geneformer = GeneformerConfig(model_name="gf-12L-30M-i2048", batch_size=8, device="cuda")
+        geneformer_fine_tune = GeneformerFineTuningModel(geneformer_config=configurer_geneformer, fine_tuning_head="classification", output_size=len(label_set))
+        data = geneformer_fine_tune.process_data(ageneformer)
+        data = data.add_column('celltype', celltypes)
+        class_id_dict = dict(zip(label_set, range(len(label_set))))
+        
+        def classes_to_ids(example):
+            example["celltype"] = class_id_dict[example["celltype"]]
+            return example
+        data = data.map(classes_to_ids, num_proc=1)
+        
+        geneformer_fine_tune.train(train_dataset=data, label="celltype")
+        embeddings = geneformer_fine_tune.get_embeddings(data) # embedding
+        
+        # 
+        ageneformer.obsm["X_Geneformer_ft"] = embeddings
+        print("Geneformer embedding dimensions are" + "\n")
+        print(embeddings.shape)
+        sc.pp.neighbors(
+            ageneformer,
+            n_neighbors = 15,
+            n_pcs = 20,
+            use_rep = "X_Geneformer_ft"
+        )
+        sc.tl.leiden(ageneformer)
+        sc.tl.umap(ageneformer)
+        
+        # dimensionality reduction with PCA
+        scaler_geneformer = Scale()
+        geneformer_ft_embeddings_scaled = scaler_geneformer.fit_transform(ageneformer.obsm["X_Geneformer_ft"])
+        geneformer_pca = PCA(n_components=20)
+        geneformer_embeddings_reduced = geneformer_pca.fit_transform(geneformer_ft_embeddings_scaled)
+        ageneformer.obsm["X_emb_reduced"] = geneformer_embeddings_reduced
+        ageneformer.obsm["X_kmeans"] = ageneformer.obsm["X_emb_reduced"][:, 0:20] # 20 is the number of PCs
+        
+        print("\n Done!")
+        return ageneformer
