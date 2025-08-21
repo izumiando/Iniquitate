@@ -21,7 +21,7 @@ def main(h5ad_loc, save_loc, dataset_name, rep):
 
     # Subset adatas based on method for integration and store lognorm counts in raw
     # attribute for diffexp testing
-    methods = ["harmony", "scvi", "uce", "scgpt", "geneformer"]
+    methods = ["harmony", "scvi", "scgpt", "geneformer", "transcriptformer"] # removed uce Aug 19th 2025
     method_adatas = []
     for method in methods:
         adata_copy = adata.copy()

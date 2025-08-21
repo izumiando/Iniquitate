@@ -2,7 +2,7 @@ import os
 import hashlib
 import numpy as np
 
-configfile: "configs/config_control.json"
+configfile: "configs/config_complex_datasets.json"
 configname = config["config_name"]
 output_file_dir = "/home/andoizum/scratch" # do not add / at the end
 
@@ -347,7 +347,7 @@ rule integrate:
         """
 
 
-# Integrate the indicated h5ad files from config, using UCE, scGPT, and Geneformer from Helical
+# Integrate the indicated h5ad files from config, using UCE, scGPT, Geneformer, and Transcriptformer from Helical
 # shell script should be modified before use 
 rule integrate_helical:
     input:
@@ -365,7 +365,7 @@ rule integrate_helical:
     shell:
         """
         module load gcc arrow
-        source ../../helical_mod/bin/activate
+        source /home/andoizum/projects/def-kieranc/andoizum/helical_1.4.1/bin/activate
         module load openblas
         python -s {params.script_path} \
             --filedir {input} \
@@ -378,7 +378,7 @@ rule integrate_helical:
         """
 
 
-# Kmeans clustering step for h5ad files integrated using UCE, scGPT, and Geneformer from Helical
+# Kmeans clustering step for h5ad files integrated using UCE, scGPT, Geneformer, Transcriptformer from Helical
 # This rule was made to avoid dependency issues with the helical and faiss packages
 rule helical_kmeans:
     conda:
