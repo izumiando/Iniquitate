@@ -99,6 +99,9 @@ def main(h5ad_dir, save_loc, ds_celltypes, ds_proportions, num_batches, seed):
         filename = intermediate_file,
         compression = "gzip"
     )
+    
+    sys.exit("exiting as we only want the intermediate files for now for scgpt ft testing")
+    
     ################### above section is to use later in scib rule ###################
     
     # Checking number of cells
