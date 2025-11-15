@@ -222,7 +222,7 @@ if config["celltype_list"] == "No":
                             output_file_dir = output_file_dir,
                             dataset = [config["int_datasets"][key]["data_folder"] for key in config["int_datasets"].keys()]
                     )
-        else if config["config_name"] == "control_finetune":
+        elif config["config_name"] == "control_finetune":
             rule all:
                 input:
                     expand(
