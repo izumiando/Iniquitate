@@ -232,7 +232,7 @@ if config["celltype_list"] == "No":
                         dataset = get_combinations(config, "int_datasets"),
                         outputs = zip(
                             [
-                                "integrated_results/helical_ft_part1"
+                                "integrated_results/helical_ft_part1",
                                 "integrated_results/concatenated",
                                 "downsample_summaries",
                                 "clustering_summaries",
