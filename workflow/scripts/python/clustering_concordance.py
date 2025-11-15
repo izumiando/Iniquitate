@@ -19,7 +19,11 @@ def main(h5ad_loc, save_loc, dataset_name, rep):
     prop_ds = adata.uns["downsampling_stats"]["proportion_downsampled"]
     
     # Get clustering concordance results 
-    cluster_concordance_df = cluster_concordance(adata = adata)
+    if "control_finetune" in h5ad_loc:
+        methods = ["scgpt_ft", "geneformer_ft"]
+    else:
+        methods = ["harmony", "scvi", "scgpt", "geneformer", "transcriptformer"] # removed uce Aug 19th 2025
+    cluster_concordance_df = cluster_concordance(adata = adata, methods = methods)
     
     # Create cluster concordance summary df 
     cluster_concordance_summary_df = pd.DataFrame({
