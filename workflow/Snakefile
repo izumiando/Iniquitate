@@ -511,7 +511,7 @@ rule integrate_finetune:
     shell:
         """
         module load gcc arrow
-        source /home/andoizum/projects/def-kieranc/andoizum/helical_ft/helical_finetune/bin/activate
+        source /ddn_exa/campbell/iando/helical_ft/helical_finetune/bin/activate
         module load openblas
         python -s {params.script_path} \
             --filedir {input} \
