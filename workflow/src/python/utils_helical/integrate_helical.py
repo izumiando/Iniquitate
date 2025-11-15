@@ -1,5 +1,10 @@
 import random  
-
+import sys
+import os
+import logging
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 import numpy as np
 import scanpy as sc
 import anndata as ann
