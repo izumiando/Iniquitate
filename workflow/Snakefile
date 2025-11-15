@@ -469,31 +469,33 @@ rule helical_kmeans:
 
 # Concatenate the two parts of integration (baseline and helical/foundation models) into one h5ad file
 # The outputs are taken fron the rules integrate and helical_kmeans
-rule integrate_output_concat:
-    conda:
-        "envs/integrate.yaml"
-    input:
-        baseline = "{output_file_dir}/results/{configname}/integrated_results/baseline/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_baseline.h5ad",
-        helical = "{output_file_dir}/results/{configname}/integrated_results/helical_part2/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_helical_p2.h5ad"
-    output:
-        "{output_file_dir}/results/{configname}/integrated_results/concatenated/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_concat.h5ad"
-    params:
-        script_path = "scripts/python/integrate_output_concat.py"
-    log:
-        "{output_file_dir}/logs/{configname}/integrate/integrate_output_concat/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
-        "_downsample_{num_batches}_batch_ds_c_{rep}_integrate_output_concat.log"
-    priority: 0
-    shell:
-        """
-        python -s {params.script_path} \
-            --baseline {input.baseline} \
-            --helical {input.helical} \
-            --outfile {output} \
-            &> {log}
-        """
+
+##### COMMENTED OUT FOR FINETUNE RUN #####
+# rule integrate_output_concat:
+#     conda:
+#         "envs/integrate.yaml"
+#     input:
+#         baseline = "{output_file_dir}/results/{configname}/integrated_results/baseline/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+#         "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_baseline.h5ad",
+#         helical = "{output_file_dir}/results/{configname}/integrated_results/helical_part2/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+#         "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_helical_p2.h5ad"
+#     output:
+#         "{output_file_dir}/results/{configname}/integrated_results/concatenated/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+#         "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_concat.h5ad"
+#     params:
+#         script_path = "scripts/python/integrate_output_concat.py"
+#     log:
+#         "{output_file_dir}/logs/{configname}/integrate/integrate_output_concat/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+#         "_downsample_{num_batches}_batch_ds_c_{rep}_integrate_output_concat.log"
+#     priority: 0
+#     shell:
+#         """
+#         python -s {params.script_path} \
+#             --baseline {input.baseline} \
+#             --helical {input.helical} \
+#             --outfile {output} \
+#             &> {log}
+#         """
 
 rule integrate_finetune:
     input:
