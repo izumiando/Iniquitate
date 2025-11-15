@@ -2,9 +2,9 @@ import os
 import hashlib
 import numpy as np
 
-configfile: "configs/config_complex_datasets.json"
+configfile: "configs/config_control_ft.json"
 configname = config["config_name"]
-output_file_dir = "/home/andoizum/scratch" # do not add / at the end
+output_file_dir = "/ddn_exa/campbell/iando/Iniquitate" # do not add / at the end
 
 # Define function to generate seeds from wildcards given the combinations
 def seed_from_wildcards(**wildcards):
