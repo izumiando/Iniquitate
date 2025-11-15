@@ -22,8 +22,11 @@ def main(h5ad_file, save_loc):
     # Perform kmeans clustering on integrated data 
     # Define method subsets and iterate over them until the same number of k clusters is found
     k = 10
-    k_initial = k # Integers are immutable 
-    methods = ["scgpt", "geneformer", "transcriptformer"] # removed uce Aug 19th 2025
+    k_initial = k # Integers are immutable
+    if "_integrated_ft_p1.h5ad" in h5ad_file:
+        methods = ["scgpt_ft", "geneformer_ft"] 
+    else:
+        methods = ["scgpt", "geneformer", "transcriptformer"]  # removed uce Aug 19th 2025
     method_kmeans_adatas = []
     i = 0
     while i < len(methods):

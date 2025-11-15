@@ -222,6 +222,70 @@ if config["celltype_list"] == "No":
                             output_file_dir = output_file_dir,
                             dataset = [config["int_datasets"][key]["data_folder"] for key in config["int_datasets"].keys()]
                     )
+        else if config["config_name"] == "control_finetune":
+            rule all:
+                input:
+                    expand(
+                        "{output_file_dir}/results/{configname}/{outputs[0]}/{dataset}_{outputs[1]}.{outputs[2]}",
+                        configname = configname,
+                        output_file_dir = output_file_dir,
+                        dataset = get_combinations(config, "int_datasets"),
+                        outputs = zip(
+                            [
+                                "integrated_results/helical_ft_part1"
+                                "integrated_results/concatenated",
+                                "downsample_summaries",
+                                "clustering_summaries",
+                                "clustering_concord_summaries",
+                                "dge_ranking_stats",
+                                "dge_ranking_results_per_cluster",
+                                "dge_ranking_stats_marker_sub",
+                                "imbalance_summaries",
+                                "celltype_imbalance_summaries",
+                                "knn_classification_reports"
+                            ],
+                            [
+                                "integrated_ft_p1",
+                                "integrated_concat",
+                                "downsample_summary",
+                                "clustering_summary",
+                                "clustering_concord_summary",
+                                "dge_ranking_stats",
+                                "dge_ranking_results_per_cluster",
+                                "dge_ranking_stats_marker_sub",
+                                "imbalance_summary",
+                                "celltype_imbalance_summary",
+                                "knn_classification"
+                            ],
+                            [
+                                "h5ad",
+                                "h5ad",
+                                "tsv",
+                                "tsv",
+                                "tsv",
+                                "tsv",
+                                "tsv",
+                                "tsv",
+                                "tsv",
+                                "tsv",
+                                "tsv",
+                                "tsv",
+                                "tsv"
+                            ]
+                        )
+                    ),
+                    expand(
+                        "{output_file_dir}/results/{configname}/marker_results/{dataset}_preintegration_marker_selection.tsv",
+                            configname = configname,
+                            output_file_dir = output_file_dir,
+                            dataset = [config["int_datasets"][key]["data_folder"] for key in config["int_datasets"].keys()]
+                    ),
+                    expand(
+                        "{output_file_dir}/results/{configname}/relatedness_results/{dataset}_celltype_relatedness.tsv",
+                            configname = configname,
+                            output_file_dir = output_file_dir,
+                            dataset = [config["int_datasets"][key]["data_folder"] for key in config["int_datasets"].keys()]
+                    )
         else:
             rule all:
                 input:
@@ -418,6 +482,58 @@ rule integrate_output_concat:
         "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_concat.h5ad"
     params:
         script_path = "scripts/python/integrate_output_concat.py"
+    log:
+        "{output_file_dir}/logs/{configname}/integrate/integrate_output_concat/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "_downsample_{num_batches}_batch_ds_c_{rep}_integrate_output_concat.log"
+    priority: 0
+    shell:
+        """
+        python -s {params.script_path} \
+            --baseline {input.baseline} \
+            --helical {input.helical} \
+            --outfile {output} \
+            &> {log}
+        """
+
+rule integrate_finetune:
+    input:
+        "../resources/h5ad_files/int_datasets/{data_folder}"
+    output:
+        "{output_file_dir}/results/{configname}/integrated_results/helical_ft_part1/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_ft_p1.h5ad"
+    params:
+        script_path = "scripts/python/integrate_data_helical_finetune.py",
+        seed = lambda wildcards: seed_from_wildcards(**wildcards)
+    log:
+        "{output_file_dir}/logs/{configname}/integrate/helical_ft_part1/integrate_{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_ft_p1.log"
+    priority: 0
+    shell:
+        """
+        module load gcc arrow
+        source /home/andoizum/projects/def-kieranc/andoizum/helical_ft/helical_finetune/bin/activate
+        module load openblas
+        python -s {params.script_path} \
+            --filedir {input} \
+            --ds_celltypes {wildcards.ds_celltype} \
+            --ds_proportions {wildcards.ds_proportion} \
+            --num_batches {wildcards.num_batches} \
+            --outfile {output} \
+            --seed {params.seed} \
+            &> {log}
+        """
+
+rule helical_kmeans_ft:
+    conda:
+        "envs/integrate.yaml"
+    input:
+        "{output_file_dir}/results/{configname}/integrated_results/helical_ft_part1/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_ft_p1.h5ad"
+    output:
+        "{output_file_dir}/results/{configname}/integrated_results/concatenated/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
+        "_downsample_{num_batches}_batch_ds_c_{rep}_integrated_concat.h5ad"
+    params:
+        script_path = "scripts/python/helical_kmeans.py"
     log:
         "{output_file_dir}/logs/{configname}/integrate/integrate_output_concat/{data_folder}_{ds_celltype}_celltypes_{ds_proportion}" +
         "_downsample_{num_batches}_batch_ds_c_{rep}_integrate_output_concat.log"

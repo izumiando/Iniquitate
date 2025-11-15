@@ -15,7 +15,10 @@ from helical.models.transcriptformer.model import TranscriptFormer
 from helical.models.transcriptformer.transcriptformer_config import TranscriptFormerConfig
 
 # Finetuning imports
-from helical.models.geneformer import GeneformerFineTuningModel, GeneformerConfig
+from helical.models.geneformer.model import GeneformerConfig
+from helical.models.geneformer import GeneformerFineTuningModel
+from helical.models.scgpt import scGPTFineTuningModel, scGPTConfig
+from helical.models.fine_tune.data_integration_head import DataIntegrationHead
 
 # for UCE step
 import os
@@ -208,7 +211,6 @@ class IntegrationHelical:
         geneformer_fine_tune.train(train_dataset=data, label="celltype")
         embeddings = geneformer_fine_tune.get_embeddings(data) # embedding
         
-        # 
         ageneformer.obsm["X_Geneformer_ft"] = embeddings
         print("Geneformer embedding dimensions are" + "\n")
         print(embeddings.shape)
@@ -231,3 +233,89 @@ class IntegrationHelical:
         
         print("\n Done!")
         return ageneformer
+    
+    def scgpt_integrate_finetuned(self):
+        batch_key = "batch"
+        print("Performing fine-tuned scGPT integration.." + "\n")
+        ascgpt = adata.copy()
+        ascgpt.obs[f"str_{batch_key}"] = ascgpt.obs[batch_key].astype(str)
+        batch_id_labels = ascgpt.obs[f"str_{batch_key}"].astype("category").cat.codes.values
+        ascgpt.obs["batch_id"] = batch_id_labels
+        num_batches = len(ascgpt.obs[f"str_{batch_key}"].unique())
+
+        # Define training parameters
+        batch_size = 8
+        epochs = 15
+        mask_ratio = 0.4
+        dab_weight = 1.0
+
+        configurer_scgpt = scGPTConfig(batch_size=batch_size, device="cuda")
+        # Create custom data integration head
+        integration_head = DataIntegrationHead(
+            num_batches=num_batches,
+            ecs_threshold=0.8,
+            dab_weight=dab_weight,
+            use_dsbn=True,
+            dropout=0.2
+        )
+
+        # Create fine-tuning model
+        scgpt_model = scGPTFineTuningModel(
+            scGPT_config=configurer_scgpt,
+            fine_tuning_head=integration_head,
+            output_size=None  # Not needed when passing head instance
+        )
+
+        # Process data for scGPT with batch labels for data integration
+        logger.info("Processing data for scGPT...")
+        dataset = scgpt_model.process_data(ascgpt, fine_tuning=True, use_batch_labels=True)
+
+        # Train the integration model
+        logger.info("Starting integration training...")
+        scgpt_model.train_data_integration(
+            train_input_data=dataset,
+            train_batch_labels=batch_id_labels,
+            epochs=epochs,
+            mask_ratio=mask_ratio,
+            ecs_weight=10.0,
+            dab_weight=dab_weight,
+            optimizer_params={"lr": 1e-4},
+            lr_scheduler_params={
+                'name': 'linear',
+                'num_warmup_steps': 0,
+                'num_training_steps': len(dataset) // batch_size * epochs
+            }
+        )
+
+        outputs = scgpt_model.get_outputs(dataset)
+
+        # If using DataIntegrationHead, extract embeddings from the output dict
+        if isinstance(outputs, dict) and 'embeddings' in outputs:
+            embeddings = outputs['embeddings']
+        else:
+            embeddings = outputs
+
+        # Normalize embeddings
+        embeddings = embeddings / np.linalg.norm(embeddings, axis=1, keepdims=True)
+
+        ascgpt.obsm["X_scGPT_ft"] = embeddings
+        print("scGPT embedding dimensions are" + "\n")
+        print(embeddings.shape)
+        sc.pp.neighbors(
+            ascgpt,
+            n_neighbors = 15,
+            n_pcs = 20,
+            use_rep = "X_scGPT_ft"
+        )
+        sc.tl.leiden(ascgpt)
+        sc.tl.umap(ascgpt)
+
+        # dimensionality reduction with PCA
+        scaler_scgpt = Scale()
+        scgpt_ft_embeddings_scaled = scaler_scgpt.fit_transform(ascgpt.obsm["X_scGPT_ft"])
+        scgpt_pca = PCA(n_components=20)
+        scgpt_embeddings_reduced = scgpt_pca.fit_transform(scgpt_ft_embeddings_scaled)
+        ascgpt.obsm["X_emb_reduced"] = scgpt_embeddings_reduced
+        ascgpt.obsm["X_kmeans"] = ascgpt.obsm["X_emb_reduced"][:, 0:20] # 20 is the number of PCs
+        print("\n Done!")
+        return ascgpt

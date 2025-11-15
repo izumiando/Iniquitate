@@ -87,7 +87,7 @@ def main(h5ad_dir, save_loc, ds_celltypes, ds_proportions, num_batches, seed):
     ################### below section is to use later in scib rule ###################
     # saving non-integrated h5ad object to send to helical team
     intermediate_file = save_loc.replace(".h5ad", "_intermediate.h5ad")
-    intermediate_file = intermediate_file.replace("helical_part1", "intermediate_for_helical")
+    intermediate_file = intermediate_file.replace("helical_ft_part1", "intermediate_for_helical")
     
     intermediate_output_dir = os.path.dirname(intermediate_file)
 
@@ -109,32 +109,23 @@ def main(h5ad_dir, save_loc, ds_celltypes, ds_proportions, num_batches, seed):
     integration = IntegrationHelical(adata = adata_concat)
     
     # Integrate across subsets
-    # uce_integrated = integration.uce_integrate()
-    scgpt_integrated = integration.scgpt_integrate()
-    geneformer_integrated = integration.geneformer_integrate()
-    transcriptformer_integrated = integration.transcriptformer_integrate()
+    scgpt_ft_integrated = integration.scgpt_ft_integrate()
+    geneformer_ft_integrated = integration.geneformer_ft_integrate()
     
     # Checking number of cells post integration
-    #print(f"UCE cells: {uce_integrated.n_obs}\n")
-    print(f"scGPT cells: {scgpt_integrated.n_obs}\n")
-    print(f"Geneformer cells: {geneformer_integrated.n_obs}\n")
-    print(f"Transcriptformer cells: {transcriptformer_integrated.n_obs}\n")
+    print(f"scGPT cells: {scgpt_ft_integrated.n_obs}\n")
+    print(f"Geneformer cells: {geneformer_ft_integrated.n_obs}\n")
 
     # Add integration type to each subset and concatenate
-    # uce_integrated.obs["integration_method"] = "uce" 
-    scgpt_integrated.obs["integration_method"] = "scgpt"
-    geneformer_integrated.obs["integration_method"] = "geneformer"
-    transcriptformer_integrated.obs["integration_method"] = "transcriptformer"
+    scgpt_ft_integrated.obs["integration_method"] = "scgpt_ft"
+    geneformer_ft_integrated.obs["integration_method"] = "geneformer_ft"
     # NOTE FOR LATER: make sure transcriptformer .var is the same as the others
     
-    geneformer_integrated.var = transcriptformer_integrated.var # might cause errors because code below was moved
-    scgpt_integrated.var = transcriptformer_integrated.var
+    geneformer_ft_integrated.var =  scgpt_ft_integrated.var
     
     integrated_concat = ann.concat([
-        # uce_integrated,
-        scgpt_integrated,
-        geneformer_integrated,
-        transcriptformer_integrated],
+        scgpt_ft_integrated,
+        geneformer_ft_integrated],
         axis=0,         # concatenate along cells
         join="inner",   # or "outer" if you want all genes even if some are missing
         merge="same"    # assumes .var is the same across objects
@@ -184,7 +175,7 @@ def main(h5ad_dir, save_loc, ds_celltypes, ds_proportions, num_batches, seed):
         compression = "gzip"
     )
     
-    print("done with this round of integrate_helical")
+    print("done with this round of integrate_finetune")
     
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
