@@ -237,7 +237,7 @@ class IntegrationHelical:
     def scgpt_integrate_finetuned(self):
         batch_key = "batch"
         print("Performing fine-tuned scGPT integration.." + "\n")
-        ascgpt = adata.copy()
+        ascgpt = self.adata.copy()
         ascgpt.obs[f"str_{batch_key}"] = ascgpt.obs[batch_key].astype(str)
         batch_id_labels = ascgpt.obs[f"str_{batch_key}"].astype("category").cat.codes.values
         ascgpt.obs["batch_id"] = batch_id_labels
