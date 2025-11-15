@@ -541,8 +541,8 @@ rule helical_kmeans_ft:
     priority: 0
     shell:
         """
-        python -s {params.script_path} \
-            --helical {input} \
+        python -s {params} \
+            --inputfile {input} \
             --outfile {output} \
             &> {log}
         """
