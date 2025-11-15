@@ -542,8 +542,7 @@ rule helical_kmeans_ft:
     shell:
         """
         python -s {params.script_path} \
-            --baseline {input.baseline} \
-            --helical {input.helical} \
+            --helical {input} \
             --outfile {output} \
             &> {log}
         """
