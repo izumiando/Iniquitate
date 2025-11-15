@@ -109,8 +109,8 @@ def main(h5ad_dir, save_loc, ds_celltypes, ds_proportions, num_batches, seed):
     integration = IntegrationHelical(adata = adata_concat)
     
     # Integrate across subsets
-    scgpt_ft_integrated = integration.scgpt_ft_integrate()
-    geneformer_ft_integrated = integration.geneformer_ft_integrate()
+    scgpt_ft_integrated = integration.scgpt_integrate_finetuned()
+    geneformer_ft_integrated = integration.geneformer_integrate_finetuned()
     
     # Checking number of cells post integration
     print(f"scGPT cells: {scgpt_ft_integrated.n_obs}\n")

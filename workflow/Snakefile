@@ -512,7 +512,6 @@ rule integrate_finetune:
     priority: 0
     shell:
         """
-        module load gcc arrow
         source /ddn_exa/campbell/iando/helical_ft/helical_finetune/bin/activate
         module load openblas
         python -s {params.script_path} \
