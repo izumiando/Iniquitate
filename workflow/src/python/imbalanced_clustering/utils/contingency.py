@@ -66,7 +66,12 @@ def contingency_matrix(
     if reweigh is True:
         contingency = contingency.astype(np.float64)
         counts_sum_per_class = np.ravel(contingency.sum(1))
-        target = round(np.mean(counts_sum_per_class))
+        # Handle empty array case to avoid NaN
+        if len(counts_sum_per_class) == 0 or np.all(counts_sum_per_class == 0):
+            target = 1  # Default value to avoid division by zero
+        else:
+            mean_counts = np.mean(counts_sum_per_class)
+            target = round(mean_counts) if not np.isnan(mean_counts) else 1
         counts_norm = counts_sum_per_class / target
         sparsefuncs.inplace_row_scale(contingency, 1 / counts_norm)
         contingency = contingency.astype(np.int64)
