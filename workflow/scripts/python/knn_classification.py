@@ -22,7 +22,7 @@ def main(h5ad_loc, save_loc, dataset_name, rep):
     
     # Subset h5ad based on batch-correction method used
     adata_method_sub = []
-    if "control_finetune" h5ad_loc or "complex_datasets_ft" in h5ad_loc:
+    if "control_finetune" in h5ad_loc or "complex_datasets_ft" in h5ad_loc:
         methods = ["scgpt_ft", "geneformer_ft"]
     else:
         methods = ["harmony", "scvi", "scgpt", "geneformer", "transcriptformer"] # removed uce Aug 19th 2025
